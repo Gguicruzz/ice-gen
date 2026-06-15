@@ -1,0 +1,10 @@
+{
+  "name": "prata-lumina",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Loja online de joias em prata com montagem de presentes e conjuntos.",
+  "scripts": {
+    "dev": "node server.js",
+    "assets": "powershell -ExecutionPolicy Bypass -File scripts/generate-assets.ps1"
+  }
+}
