@@ -83,6 +83,7 @@ function renderProducts() {
           </div>
           <strong class="price">${formatMoney(product.price)}</strong>
         </div>
+        <a class="add-button" type="button" href="produto.html?id=${product.id}">Ver produto</a>
         <button class="add-button" type="button" data-add="${product.id}">Adicionar ao carrinho</button>
       </div>
     </article>
@@ -301,6 +302,21 @@ addGift.addEventListener("click", () => {
   });
   renderCart();
   toggleCart(true);
+
+  const params = new URLSearchParams(window.location.search);
+const productId = params.get("id");
+
+if (productId) {
+  const product = products.find(product => product.id === productId);
+
+  if (product) {
+    const productName = document.querySelector("#product-name");
+    const productPrice = document.querySelector("#product-price");
+
+    productName.textContent = product.name;
+    productPrice.textContent = formatMoney(product.price);
+  }
+}
 });
 
 renderProducts();
