@@ -20,10 +20,10 @@ const state = { cart: JSON.parse(localStorage.getItem("icegen-cart") || "[]"), f
 const $ = selector => document.querySelector(selector);
 const productGrid = $("#productGrid");
 const slides = [
-  { eyebrow: "Prata 925 selecionada", title: "Joias que traduzem<br>o seu jeito de ser.", description: "Prata, brilho e personalidade em peças para acompanhar você todos os dias.", image: "https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946", alt: "Colar de prata e brincos delicados" },
-  { eyebrow: "Detalhes que fazem diferença", title: "O brilho certo<br>para cada momento.", description: "Descubra brincos, pulseiras e colares que acompanham o seu ritmo, do dia à noite.", image: "https://www.giva.co/cdn/shop/files/ER03488_5.jpg?v=1775055888&width=1946", alt: "Argolas de prata com acabamento polido" },
-  { eyebrow: "Escolha, combine, use", title: "Sua composição.<br>Suas regras.", description: "Misture correntes, pingentes e pulseiras para criar combinações com a sua identidade.", image: "https://www.giva.co/cdn/shop/files/BR01372_1_f45a0406-9e28-47be-81ce-ab358967ca93.jpg?v=1786452468&width=1946", alt: "Pulseira em prata delicada" },
-  { eyebrow: "Mais que uma joia", title: "Uma forma de<br>se expressar.", description: "A ICE GEN nasceu para unir luxo, estilo urbano e identidade em peças que fazem parte de quem usa.", image: "https://kapurjewels.com/cdn/shop/files/20250626144034046_295a2b7c.jpg?v=1752474300&width=1946", alt: "Pingente de prata sobre fundo claro" }
+  { eyebrow: "Nova coleção", title: "Vista sua<br>identidade.", description: "Prata 925 em peças frias, limpas e marcantes para acompanhar o seu ritmo.", image: "https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946", alt: "Colar de prata e brincos delicados", position: "center 42%" },
+  { eyebrow: "Detalhes que fazem diferença", title: "Brilho preciso.<br>Presença leve.", description: "Joias essenciais com acabamento polido e leitura contemporânea.", image: "https://www.giva.co/cdn/shop/files/ER03488_5.jpg?v=1775055888&width=1946", alt: "Argolas de prata com acabamento polido", position: "center 46%" },
+  { eyebrow: "Escolha, combine, use", title: "Sua composição.<br>Suas regras.", description: "Misture correntes, pingentes e pulseiras para criar uma assinatura própria.", image: "https://www.giva.co/cdn/shop/files/BR01372_1_f45a0406-9e28-47be-81ce-ab358967ca93.jpg?v=1786452468&width=1946", alt: "Pulseira em prata delicada", position: "center 52%" },
+  { eyebrow: "Mais que uma joia", title: "Frio no tom.<br>Forte no gesto.", description: "A ICE GEN une luxo minimalista, cultura urbana e identidade.", image: "https://kapurjewels.com/cdn/shop/files/20250626144034046_295a2b7c.jpg?v=1752474300&width=1946", alt: "Pingente de prata sobre fundo claro", position: "center 48%" }
 ];
 
 function renderProducts() {
@@ -69,6 +69,7 @@ function toggleFavorite(id) { state.favorites = state.favorites.includes(id) ? s
 function renderSlide(index) {
   state.activeSlide = (index + slides.length) % slides.length;
   const slide = slides[state.activeSlide];
+  $(".hero").style.setProperty("--hero-position", slide.position || "center");
   $("#heroEyebrow").textContent = slide.eyebrow; $("#heroTitle").innerHTML = slide.title; $("#heroDescription").textContent = slide.description;
   const image = $("#heroImage"); image.classList.add("is-changing"); window.setTimeout(() => { image.src = slide.image; image.alt = slide.alt; image.classList.remove("is-changing"); }, 160);
   $("#heroIndex").textContent = `${String(state.activeSlide + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
