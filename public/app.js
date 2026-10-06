@@ -100,6 +100,7 @@ function updateGift() {
   const total = (chain?.price || 0) + (pendant?.price || 0) + (wrap?.price || 0);
   $("#giftTotal").textContent = chain && pendant && wrap ? money(total) : "Selecione os itens";
   $("#addGift").disabled = !(chain && pendant && wrap);
+  updateGiftSummary(chain, pendant, wrap);
   document.querySelectorAll(".choice-card").forEach(button => { const selected = state.gift[button.dataset.giftKind] === button.dataset.giftId; button.classList.toggle("selected", selected); button.setAttribute("aria-pressed", String(selected)); });
   for (const kind of ["chain", "pendant", "wrap"]) {
     const selectedIndex = giftChoices[kind].findIndex(item => item.id === state.gift[kind]);
@@ -107,6 +108,19 @@ function updateGift() {
     progress.querySelector("span").textContent = `${selectedIndex < 0 ? 1 : selectedIndex + 1} de ${giftChoices[kind].length}`;
     progress.querySelectorAll("i").forEach((dot, index) => dot.classList.toggle("active", index <= (selectedIndex < 0 ? 0 : selectedIndex)));
   }
+}
+function updateGiftSummary(chain, pendant, wrap) {
+  const lines = [
+    ["giftChain", chain],
+    ["giftPendant", pendant],
+    ["giftWrap", wrap]
+  ];
+  for (const [prefix, item] of lines) {
+    $(`#${prefix}Name`).textContent = item?.name || "Pendente";
+    $(`#${prefix}Price`).textContent = item ? money(item.price) : "—";
+  }
+  const complete = Boolean(chain && pendant && wrap);
+  $("#giftStatus").textContent = complete ? "Conjunto completo. Pronto para adicionar à sacola." : "Complete as 3 etapas para adicionar à sacola.";
 }
 function selectGift(kind, id) {
   if (kind === "pendant" && !state.gift.chain || kind === "wrap" && !state.gift.pendant) return;
