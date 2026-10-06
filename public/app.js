@@ -81,11 +81,31 @@ const giftChoices = {
   pendant: products.filter(item => item.category === "pingente"),
   wrap: [{ id: "wrap-paper", name: "Caixa gelo", price: 39, image: "/assets/gift-box.png" }, { id: "wrap-velvet", name: "Estojo veludo", price: 59, image: "/assets/gift-box.png" }]
 };
+const giftCarouselIndex = { chain: 0, pendant: 0, wrap: 0 };
+const giftKindLabels = { chain: "corrente", pendant: "pingente", wrap: "embalagem" };
 function renderGiftChoices() {
   for (const kind of ["chain", "pendant", "wrap"]) {
     const container = $(`#${kind}Choices`);
     const disabled = kind === "pendant" && !state.gift.chain || kind === "wrap" && !state.gift.pendant;
-    container.innerHTML = giftChoices[kind].map(item => `<button class="choice-card ${state.gift[kind] === item.id ? "selected" : ""}" type="button" data-gift-kind="${kind}" data-gift-id="${item.id}" aria-pressed="${state.gift[kind] === item.id}" ${disabled ? "disabled" : ""}><img src="${kind === "wrap" ? item.image : item.images[0]}" data-local-fallback="${kind === "chain" ? "corrente-1.png" : kind === "pendant" ? "pingente-1.png" : "gift-box.png"}" alt=""><span>${item.name}</span><strong>${money(item.price)}</strong><b class="choice-check" aria-hidden="true">✓</b></button>`).join("");
+    const items = giftChoices[kind];
+    const index = Math.min(giftCarouselIndex[kind], items.length - 1);
+    giftCarouselIndex[kind] = index;
+    const item = items[index];
+    const selected = state.gift[kind] === item.id;
+    const image = kind === "wrap" ? item.image : item.images[0];
+    const fallback = kind === "chain" ? "corrente-1.png" : kind === "pendant" ? "pingente-1.png" : "gift-box.png";
+    container.innerHTML = `<div class="carousel-stage" data-carousel-stage="${kind}" tabindex="0" role="group" aria-label="${item.name}, ${index + 1} de ${items.length}">
+      <img class="carousel-image" src="${image}" data-local-fallback="${fallback}" alt="${item.name}" draggable="false">
+      <button class="carousel-arrow carousel-prev" type="button" data-carousel-move="-1" data-carousel-kind="${kind}" aria-label="${kind === "wrap" ? "Embalagem" : kind === "chain" ? "Corrente" : "Pingente"} anterior" ${disabled ? "disabled" : ""}>←</button>
+      <button class="carousel-arrow carousel-next" type="button" data-carousel-move="1" data-carousel-kind="${kind}" aria-label="Próxima opção de ${giftKindLabels[kind]}" ${disabled ? "disabled" : ""}>→</button>
+      <span class="carousel-count">${String(index + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}</span>
+      ${selected ? '<span class="carousel-selected">✓ Selecionado</span>' : ""}
+    </div>
+    <div class="carousel-caption" aria-live="polite">
+      <div class="carousel-product-info"><p>${giftKindLabels[kind]}</p><h4>${item.name}</h4><strong>${money(item.price)}</strong></div>
+      <button class="carousel-select ${selected ? "is-selected" : ""}" type="button" data-gift-kind="${kind}" data-gift-id="${item.id}" aria-pressed="${selected}" ${disabled ? "disabled" : ""}>${selected ? "Selecionado ✓" : "Escolher peça"}</button>
+    </div>
+    <div class="carousel-dots" role="group" aria-label="Escolher ${giftKindLabels[kind]}">${items.map((choice, dot) => `<button class="carousel-dot ${dot === index ? "is-active" : ""} ${choice.id === state.gift[kind] ? "is-selected" : ""}" type="button" data-carousel-kind="${kind}" data-carousel-index="${dot}" aria-label="${choice.name}" aria-current="${dot === index ? "true" : "false"}" ${disabled ? "disabled" : ""}></button>`).join("")}</div>`;
   }
   updateGift();
 }
@@ -93,21 +113,11 @@ function updateGift() {
   const chain = products.find(item => item.id === state.gift.chain), pendant = products.find(item => item.id === state.gift.pendant), wrap = giftChoices.wrap.find(item => item.id === state.gift.wrap);
   const chainReady = Boolean(chain), pendantReady = Boolean(pendant), wrapReady = Boolean(wrap);
   $("#pendantStep").classList.toggle("is-locked", !chainReady); $("#wrapStep").classList.toggle("is-locked", !pendantReady);
-  if (chain) { $("#chainPreview").src = chain.images[0]; $("#chainPreview").alt = chain.name; }
-  else { $("#chainPreview").src = giftChoices.chain[0].images[0]; $("#chainPreview").alt = "Prévia de corrente em prata"; }
-  if (pendant) { $("#pendantPreview").src = pendant.images[0]; $("#pendantPreview").alt = pendant.name; }
-  else { $("#pendantPreview").src = giftChoices.pendant[0].images[0]; $("#pendantPreview").alt = "Prévia de pingente em prata"; }
   const total = (chain?.price || 0) + (pendant?.price || 0) + (wrap?.price || 0);
-  $("#giftTotal").textContent = chain && pendant && wrap ? money(total) : "Selecione os itens";
+  $("#giftTotal").textContent = chain && pendant && wrap ? money(total) : "A selecionar";
   $("#addGift").disabled = !(chain && pendant && wrap);
   updateGiftSummary(chain, pendant, wrap);
-  document.querySelectorAll(".choice-card").forEach(button => { const selected = state.gift[button.dataset.giftKind] === button.dataset.giftId; button.classList.toggle("selected", selected); button.setAttribute("aria-pressed", String(selected)); });
-  for (const kind of ["chain", "pendant", "wrap"]) {
-    const selectedIndex = giftChoices[kind].findIndex(item => item.id === state.gift[kind]);
-    const progress = $(`#${kind}Step .step-progress`);
-    progress.querySelector("span").textContent = `${selectedIndex < 0 ? 1 : selectedIndex + 1} de ${giftChoices[kind].length}`;
-    progress.querySelectorAll("i").forEach((dot, index) => dot.classList.toggle("active", index <= (selectedIndex < 0 ? 0 : selectedIndex)));
-  }
+  document.querySelectorAll(".carousel-select").forEach(button => { const selected = state.gift[button.dataset.giftKind] === button.dataset.giftId; button.classList.toggle("is-selected", selected); button.setAttribute("aria-pressed", String(selected)); });
 }
 function updateGiftSummary(chain, pendant, wrap) {
   const lines = [
@@ -124,6 +134,9 @@ function updateGiftSummary(chain, pendant, wrap) {
 }
 function selectGift(kind, id) {
   if (kind === "pendant" && !state.gift.chain || kind === "wrap" && !state.gift.pendant) return;
+  const itemIndex = giftChoices[kind].findIndex(item => item.id === id);
+  if (itemIndex < 0) return;
+  giftCarouselIndex[kind] = itemIndex;
   state.gift[kind] = id;
   if (kind === "chain") { state.gift.pendant = null; state.gift.wrap = null; }
   if (kind === "pendant") state.gift.wrap = null;
@@ -134,12 +147,27 @@ function selectGift(kind, id) {
   if (kind === "wrap") $("#addGift").focus({ preventScroll: true });
 }
 
+function moveGiftCarousel(kind, targetIndex, preserveFocus = false) {
+  if (!giftChoices[kind] || kind === "pendant" && !state.gift.chain || kind === "wrap" && !state.gift.pendant) return;
+  const length = giftChoices[kind].length;
+  const active = preserveFocus ? document.activeElement : null;
+  let focusSelector = "";
+  if (active?.dataset.carouselKind === kind && active.hasAttribute("data-carousel-move")) focusSelector = `[data-carousel-move="${active.dataset.carouselMove}"]`;
+  else if (active?.dataset.carouselKind === kind && active.hasAttribute("data-carousel-index")) focusSelector = `[data-carousel-index="${active.dataset.carouselIndex}"]`;
+  else if (active?.matches(".carousel-stage")) focusSelector = ".carousel-stage";
+  giftCarouselIndex[kind] = (targetIndex + length) % length;
+  renderGiftChoices();
+  if (focusSelector) $(`#${kind}Choices ${focusSelector}`).focus({ preventScroll: true });
+}
+
 document.addEventListener("click", event => {
-  const add = event.target.closest("[data-add]"), remove = event.target.closest("[data-remove]"), favorite = event.target.closest("[data-favorite]"), gift = event.target.closest("[data-gift-kind]"), slide = event.target.closest("[data-slide]"), filter = event.target.closest("[data-menu-filter]"), combo = event.target.closest("[data-combo-filter]");
+  const add = event.target.closest("[data-add]"), remove = event.target.closest("[data-remove]"), favorite = event.target.closest("[data-favorite]"), gift = event.target.closest(".carousel-select[data-gift-kind]"), carouselMove = event.target.closest("[data-carousel-move]"), carouselDot = event.target.closest("[data-carousel-index]"), slide = event.target.closest("[data-slide]"), filter = event.target.closest("[data-menu-filter]"), combo = event.target.closest("[data-combo-filter]");
   if (add) addToCart(add.dataset.add);
   if (remove) { state.cart.splice(Number(remove.dataset.remove), 1); saveState(); renderCart(); }
   if (favorite) toggleFavorite(favorite.dataset.favorite);
   if (gift) selectGift(gift.dataset.giftKind, gift.dataset.giftId);
+  if (carouselMove) moveGiftCarousel(carouselMove.dataset.carouselKind, giftCarouselIndex[carouselMove.dataset.carouselKind] + Number(carouselMove.dataset.carouselMove), true);
+  if (carouselDot) moveGiftCarousel(carouselDot.dataset.carouselKind, Number(carouselDot.dataset.carouselIndex), true);
   if (slide) renderSlide(Number(slide.dataset.slide));
   if (filter) { applyFilter(filter.dataset.menuFilter); toggleMenu(false); $("#produtos").scrollIntoView({ behavior: "smooth" }); }
   if (combo) applyFilter(combo.dataset.comboFilter);
@@ -149,6 +177,25 @@ document.addEventListener("click", event => {
     window.location.hash = "produtos";
     $("#produtos").scrollIntoView({ behavior: "smooth", block: "start" });
   }
+});
+const carouselPointers = new Map();
+document.addEventListener("pointerdown", event => {
+  const stage = event.target.closest(".carousel-stage");
+  if (stage && !event.target.closest("button")) carouselPointers.set(event.pointerId, { x: event.clientX, y: event.clientY, kind: stage.dataset.carouselStage });
+});
+document.addEventListener("pointerup", event => {
+  const start = carouselPointers.get(event.pointerId);
+  carouselPointers.delete(event.pointerId);
+  if (!start) return;
+  const distanceX = event.clientX - start.x, distanceY = event.clientY - start.y;
+  if (Math.abs(distanceX) > 42 && Math.abs(distanceX) > Math.abs(distanceY)) moveGiftCarousel(start.kind, giftCarouselIndex[start.kind] + (distanceX < 0 ? 1 : -1));
+});
+document.addEventListener("pointercancel", event => carouselPointers.delete(event.pointerId));
+document.addEventListener("keydown", event => {
+  const stage = event.target.closest(".carousel-stage");
+  if (!stage || !["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+  event.preventDefault();
+  moveGiftCarousel(stage.dataset.carouselStage, giftCarouselIndex[stage.dataset.carouselStage] + (event.key === "ArrowRight" ? 1 : -1), true);
 });
 document.addEventListener("error", event => {
   const image = event.target;
