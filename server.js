@@ -50,5 +50,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`Prata Lumina rodando em http://localhost:${port}`);
+  console.log(`ICE GEN rodando em http://localhost:${port}`);
 });

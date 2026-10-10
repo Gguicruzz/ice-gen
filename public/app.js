@@ -1,29 +1,16 @@
-const silverSet = "925";
-const products = [
-  { id: "corrente-veneziana", name: "Corrente Veneziana 45 cm", category: "corrente", price: 189, images: ["https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946", "https://kapurjewels.com/cdn/shop/files/20250626144034046_295a2b7c.jpg?v=1752474300&width=1946"], description: "Uma corrente delicada que acompanha desde uma camisa aberta até um vestido de noite. Use sozinha ou com seu pingente favorito." },
-  { id: "corrente-cartier", name: "Corrente Elo Cartier 60 cm", category: "corrente", price: 249, images: ["https://jorgerevilla.com/2748-ultralarge_default/sterling-silver-chain-45-cm.jpg", "https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946"], description: "Elos marcantes que valorizam produções básicas e urbanas. Experimente em camadas com uma corrente mais curta." },
-  { id: "pingente-luz", name: "Pingente Ponto de Luz", category: "pingente", price: 119, images: ["https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946", "https://kapurjewels.com/cdn/shop/files/20250626144034046_295a2b7c.jpg?v=1752474300&width=1946"], description: "Um brilho sutil para iluminar o colo. Fica especialmente bonito em uma corrente fina, com decote em V ou camisa aberta." },
-  { id: "pingente-coracao", name: "Pingente Coração Polido", category: "pingente", price: 99, images: ["https://atraktivajoias.cdn.magazord.com.br/img/2024/09/produto/5246/pingente-coracao-prata-925.jpg?ims=fit-in%2F1200x1200%2Ffilters%3Afill%28white%29", "https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946"], description: "Um símbolo delicado que combina com correntes venezianas e looks de todos os dias. Também é uma escolha cheia de significado para presentear." },
-  { id: "brinco-argola", name: "Brinco Argola Fina", category: "brinco", price: 139, images: ["https://www.giva.co/cdn/shop/files/ER03488_5.jpg?v=1775055888&width=1946", "https://glitzjewellery.com/cdn/shop/files/E07653AD-3B67-41F8-AEA7-ACCEA2693571.jpg?v=1768339193"], description: "Uma argola clássica com brilho polido. Do jeans e camiseta a um visual mais elegante, ela entra em qualquer ocasião." },
-  { id: "brinco-gota", name: "Brinco Gota Cristal", category: "brinco", price: 159, images: ["https://stylo.pk/cdn/shop/files/J42965-16-01_ce7b303c-ff3b-45b6-be1b-36e2d6e75622.png?v=1767865858&width=600", "https://www.giva.co/cdn/shop/files/ER03488_5.jpg?v=1775055888&width=1946"], description: "A forma alongada destaca o rosto e combina com cabelo preso, decotes limpos e ocasiões especiais." },
-  { id: "pulseira-riviera", name: "Pulseira Riviera Prata", category: "pulseira", price: 219, images: ["https://www.giva.co/cdn/shop/files/BR01372_1_f45a0406-9e28-47be-81ce-ab358967ca93.jpg?v=1786452468&width=1946", "https://www.giva.co/cdn/shop/files/BR01372_1_f45a0406-9e28-47be-81ce-ab358967ca93.jpg?v=1786452468&width=1946"], description: "Brilho contínuo para usar sozinha ou junto do relógio. Uma pulseira que transforma produções simples com facilidade." },
-  { id: "pulseira-elo", name: "Pulseira Elo Português", category: "pulseira", price: 179, images: ["https://www.giva.co/cdn/shop/files/BR01372_4_6c28f439-98c6-4c29-820c-5fa2dea59e4d.jpg?v=1788765954&width=1946", "https://www.giva.co/cdn/shop/files/BR01372_1_f45a0406-9e28-47be-81ce-ab358967ca93.jpg?v=1786452468&width=1946"], description: "O desenho dos elos traz personalidade sem pesar. Combine com pingente de pulseira e outras peças prateadas." },
-  { id: "anel-liso", name: "Anel Liso Espelhado", category: "anel", price: 149, images: ["https://images.tcdn.com.br/img/img_prod/836789/anel_de_prata_aro_liso_39577127_1_8459c697a852831eba7975b25fb77124.png", "https://www.giva.co/cdn/shop/files/ER03488_5.jpg?v=1775055888&width=1946"], description: "Um anel de linhas limpas para usar sozinho ou misturar com outros. Fica bem em composições casuais e mais arrumadas." },
-  { id: "alianca-classica", name: "Aliança Clássica 4 mm", category: "alianca", price: 199, images: ["https://acdn-us.mitiendanube.com/stores/934/316/products/img_2239-3fecd62208704d28f617776459708345-1024-1024.webp", "https://images.tcdn.com.br/img/img_prod/836789/anel_de_prata_aro_liso_39577127_1_8459c697a852831eba7975b25fb77124.png"], description: "Clássica, confortável e fácil de combinar com outros anéis. Uma escolha simples para acompanhar momentos especiais." }
-];
-
-const complements = { corrente: ["pingente"], pingente: ["corrente", "pulseira"], brinco: ["brinco"], pulseira: ["pingente"], anel: ["alianca"], alianca: ["anel"] };
+const products = window.ICEGEN.products;
+const complements = window.ICEGEN.complements;
 const money = value => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(value);
-const imagePath = path => path.startsWith("http") ? path : `/assets/${path}`;
+const imagePath = path => path.startsWith("http") || path.startsWith("/") ? path : `/assets/${path}`;
 const fallbackByCategory = { corrente: "corrente-1.png", pingente: "pingente-1.png", brinco: "brinco-1.png", pulseira: "pulseira-1.png", anel: "anel-1.png", alianca: "alianca-1.png" };
 const state = { cart: JSON.parse(localStorage.getItem("icegen-cart") || "[]"), favorites: JSON.parse(localStorage.getItem("icegen-favorites") || "[]"), filter: "todos", gift: { chain: null, pendant: null, wrap: null }, activeSlide: 0, showFavorites: false };
 const $ = selector => document.querySelector(selector);
 const productGrid = $("#productGrid");
 const slides = [
-  { eyebrow: "Nova coleção", title: "Vista sua<br>identidade.", description: "Prata 925 em peças frias, limpas e marcantes para acompanhar o seu ritmo.", image: "https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946", alt: "Colar de prata e brincos delicados", position: "center 42%" },
-  { eyebrow: "Detalhes que fazem diferença", title: "Brilho preciso.<br>Presença leve.", description: "Joias essenciais com acabamento polido e leitura contemporânea.", image: "https://www.giva.co/cdn/shop/files/ER03488_5.jpg?v=1775055888&width=1946", alt: "Argolas de prata com acabamento polido", position: "center 46%" },
-  { eyebrow: "Escolha, combine, use", title: "Sua composição.<br>Suas regras.", description: "Misture correntes, pingentes e pulseiras para criar uma assinatura própria.", image: "https://www.giva.co/cdn/shop/files/BR01372_1_f45a0406-9e28-47be-81ce-ab358967ca93.jpg?v=1786452468&width=1946", alt: "Pulseira em prata delicada", position: "center 52%" },
-  { eyebrow: "Mais que uma joia", title: "Frio no tom.<br>Forte no gesto.", description: "A ICE GEN une luxo minimalista, cultura urbana e identidade.", image: "https://kapurjewels.com/cdn/shop/files/20250626144034046_295a2b7c.jpg?v=1752474300&width=1946", alt: "Pingente de prata sobre fundo claro", position: "center 48%" }
+  { eyebrow: "Joias em prata 925", title: "Frio no tom.<br>Forte no gesto.", description: "A prata tem seu jeito de aparecer. O seu estilo também.", image: "/assets/hero-prata.png", alt: "Ilustração provisória de joias em prata", position: "68% center" },
+  { eyebrow: "Para usar sempre", title: "Uma argola<br>no seu ritmo.", description: "Use sozinha ou combine com outras peças que você já tem.", image: "/assets/brinco-1.png", alt: "Ilustração provisória de brincos", position: "68% center" },
+  { eyebrow: "Correntes e pulseiras", title: "Uma peça de cada vez.<br>Ou várias juntas.", description: "Misture comprimentos e formatos até encontrar uma combinação que funcione para você.", image: "/assets/elo-1.png", alt: "Ilustração provisória de pulseira em prata", position: "68% center" },
+  { eyebrow: "Um detalhe seu", title: "Escolha o que<br>vai com você.", description: "Um pingente muda a leitura da corrente. Escolha um formato que tenha a ver com o seu jeito de usar joias.", image: "/assets/coracao-1.png", alt: "Ilustração provisória de pingente em prata", position: "68% center" }
 ];
 
 function renderProducts() {
@@ -31,19 +18,19 @@ function renderProducts() {
   if (state.showFavorites) visible = visible.filter(product => state.favorites.includes(product.id));
   productGrid.innerHTML = visible.length ? visible.map(product => `
     <article class="product-card">
-      <div class="product-media"><a href="/produto.html?id=${product.id}" target="_blank" rel="noopener" aria-label="Ver ${product.name}">${product.images.map((image, index) => `<img class="product-photo photo-${index + 1}" src="${image}" data-local-fallback="${fallbackByCategory[product.category]}" alt="${product.name}${index ? " em outro ângulo" : ""}" loading="lazy">`).join("")}</a><button class="heart-button ${state.favorites.includes(product.id) ? "is-favorite" : ""}" type="button" data-favorite="${product.id}" aria-label="${state.favorites.includes(product.id) ? "Remover dos" : "Adicionar aos"} favoritos" aria-pressed="${state.favorites.includes(product.id)}">${state.favorites.includes(product.id) ? "♥" : "♡"}</button><span class="silver-badge">Prata ${silverSet}</span></div>
-      <div class="product-body"><div class="product-meta"><div><span>${categoryName(product.category)}</span><h3>${product.name}</h3></div><strong class="price">${money(product.price)}</strong></div><p class="product-description">${product.description}</p><div class="product-actions"><a class="add-button" href="/produto.html?id=${product.id}" target="_blank" rel="noopener">Ver produto <span aria-hidden="true">↗</span></a><button class="add-button add-cart" type="button" data-add="${product.id}">Adicionar à sacola</button></div></div>
-    </article>`).join("") : `<div class="empty-favorites"><span>♡</span><h3>Sua seleção começa aqui.</h3><p>Toque no coração de uma joia para guardá-la nos favoritos.</p><button type="button" class="secondary-link" id="clearFavoritesFilter">Voltar ao catálogo</button></div>`;
+      <div class="product-media"><a href="/produto.html?id=${product.id}" aria-label="Ver ${product.name}"><img class="product-photo" src="${imagePath(product.image)}" data-local-fallback="${fallbackByCategory[product.category]}" alt="Ilustração provisória de ${product.name}" loading="lazy"></a><button class="heart-button ${state.favorites.includes(product.id) ? "is-favorite" : ""}" type="button" data-favorite="${product.id}" aria-label="${state.favorites.includes(product.id) ? "Remover dos" : "Adicionar aos"} favoritos" aria-pressed="${state.favorites.includes(product.id)}">${state.favorites.includes(product.id) ? "♥" : "♡"}</button><span class="silver-badge">Imagem ilustrativa</span></div>
+      <div class="product-body"><div class="product-meta"><div><span>${categoryName(product.category)}</span><h3>${product.name}</h3></div><strong class="price">${money(product.price)}</strong></div><p class="product-description">${product.description}</p><div class="product-actions"><a class="add-button" href="/produto.html?id=${product.id}">Ver produto <span aria-hidden="true">↗</span></a><button class="add-button add-cart" type="button" data-add="${product.id}">Adicionar à sacola</button></div></div>
+    </article>`).join("") : `<div class="empty-favorites"><span>♡</span><h3>Nenhuma joia salva.</h3><p>Toque no coração de uma peça para adicioná-la aos favoritos.</p><button type="button" class="secondary-link" id="clearFavoritesFilter">Voltar ao catálogo</button></div>`;
   const clear = $("#clearFavoritesFilter");
   if (clear) clear.addEventListener("click", () => { state.showFavorites = false; $("#favoritesButton").classList.remove("is-active"); renderProducts(); });
 }
 
-function categoryName(category) { return ({ corrente: "Colar", pingente: "Pingente", brinco: "Brinco", pulseira: "Pulseira", anel: "Anel", alianca: "Aliança" })[category] || category; }
+function categoryName(category) { return products.find(item => item.category === category)?.categoryLabel || category; }
 function saveState() { localStorage.setItem("icegen-cart", JSON.stringify(state.cart)); localStorage.setItem("icegen-favorites", JSON.stringify(state.favorites)); }
 function renderCart() {
   $("#cartCount").textContent = state.cart.length;
   $("#cartTotal").textContent = money(state.cart.reduce((sum, item) => sum + item.price, 0));
-  $("#cartItems").innerHTML = state.cart.length ? state.cart.map((item, index) => `<div class="cart-row"><img src="${imagePath(item.images?.[0] || "gift-box.png")}" alt="${item.name}"><div><strong>${item.name}</strong><span>${money(item.price)}</span></div><button class="remove" type="button" data-remove="${index}" aria-label="Remover ${item.name}">Remover</button></div>`).join("") : `<div class="cart-empty"><span>✧</span><h3>Sua sacola está esperando.</h3><p>Encontre uma joia para chamar de sua.</p><a href="#produtos" class="secondary-link" id="goCatalog">Explorar joias</a></div>`;
+  $("#cartItems").innerHTML = state.cart.length ? state.cart.map((item, index) => `<div class="cart-row"><img src="${imagePath(products.find(product => product.id === item.id)?.image || item.image || item.images?.[0] || "gift-box.png")}" alt="${item.name}"><div><strong>${item.name}</strong><span>${money(item.price)}</span></div><button class="remove" type="button" data-remove="${index}" aria-label="Remover ${item.name}">Remover</button></div>`).join("") : `<div class="cart-empty"><span>✧</span><h3>Sua sacola está esperando.</h3><p>Encontre uma joia para chamar de sua.</p><a href="#produtos" class="secondary-link" id="goCatalog">Explorar joias</a></div>`;
   renderSetSuggestions();
 }
 function renderSetSuggestions() {
@@ -51,7 +38,7 @@ function renderSetSuggestions() {
   const needed = [...new Set([...cats].flatMap(category => complements[category] || []))].filter(category => !cats.has(category) || category === "brinco");
   const suggestions = needed.flatMap(category => products.filter(product => product.category === category)).slice(0, 3);
   $("#setBuilder").classList.toggle("show", state.cart.length > 0 && suggestions.length > 0);
-  $("#setOptions").innerHTML = suggestions.map(product => `<button class="set-option" type="button" data-add="${product.id}"><img src="${product.images[0]}" alt=""><span>${product.name}<strong>${money(product.price)}</strong></span><b>+</b></button>`).join("");
+  $("#setOptions").innerHTML = suggestions.map(product => `<button class="set-option" type="button" data-add="${product.id}"><img src="${imagePath(product.image)}" alt=""><span>${product.name}<strong>${money(product.price)}</strong></span><b>+</b></button>`).join("");
 }
 function addToCart(id, open = true) {
   const product = products.find(item => item.id === id);
@@ -79,7 +66,7 @@ function renderSlide(index) {
 const giftChoices = {
   chain: products.filter(item => item.category === "corrente"),
   pendant: products.filter(item => item.category === "pingente"),
-  wrap: [{ id: "wrap-paper", name: "Caixa gelo", price: 39, image: "/assets/gift-box.png" }, { id: "wrap-velvet", name: "Estojo veludo", price: 59, image: "/assets/gift-box.png" }]
+  wrap: [{ id: "wrap-paper", name: "Embalagem 1", price: 39, image: "/assets/gift-box.png" }, { id: "wrap-velvet", name: "Embalagem 2", price: 59, image: "/assets/gift-box.png" }]
 };
 const giftCarouselIndex = { chain: 0, pendant: 0, wrap: 0 };
 const giftKindLabels = { chain: "corrente", pendant: "pingente", wrap: "embalagem" };
@@ -92,10 +79,10 @@ function renderGiftChoices() {
     giftCarouselIndex[kind] = index;
     const item = items[index];
     const selected = state.gift[kind] === item.id;
-    const image = kind === "wrap" ? item.image : item.images[0];
+    const image = item.image;
     const fallback = kind === "chain" ? "corrente-1.png" : kind === "pendant" ? "pingente-1.png" : "gift-box.png";
     container.innerHTML = `<div class="carousel-stage" data-carousel-stage="${kind}" tabindex="0" role="group" aria-label="${item.name}, ${index + 1} de ${items.length}">
-      <img class="carousel-image" src="${image}" data-local-fallback="${fallback}" alt="${item.name}" draggable="false">
+      <img class="carousel-image" src="${imagePath(image)}" data-local-fallback="${fallback}" alt="${item.name}" draggable="false">
       <button class="carousel-arrow carousel-prev" type="button" data-carousel-move="-1" data-carousel-kind="${kind}" aria-label="${kind === "wrap" ? "Embalagem" : kind === "chain" ? "Corrente" : "Pingente"} anterior" ${disabled ? "disabled" : ""}>←</button>
       <button class="carousel-arrow carousel-next" type="button" data-carousel-move="1" data-carousel-kind="${kind}" aria-label="Próxima opção de ${giftKindLabels[kind]}" ${disabled ? "disabled" : ""}>→</button>
       <span class="carousel-count">${String(index + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}</span>
@@ -223,7 +210,7 @@ $("#loginButton").addEventListener("click", () => { $("#loginModal").classList.a
 function closeLogin() { $("#loginModal").classList.remove("open"); $("#loginModal").setAttribute("aria-hidden", "true"); document.body.classList.remove("has-overlay"); }
 $("#closeLogin").addEventListener("click", closeLogin); $("#loginModal").addEventListener("click", event => { if (event.target === $("#loginModal")) closeLogin(); });
 $("#loginForm").addEventListener("submit", event => { event.preventDefault(); $("#loginStatus").textContent = "Área de conta demonstrativa. O acesso será ativado com a integração da loja."; });
-$("#addGift").addEventListener("click", () => { const chain = products.find(item => item.id === state.gift.chain), pendant = products.find(item => item.id === state.gift.pendant), wrap = giftChoices.wrap.find(item => item.id === state.gift.wrap); if (!chain || !pendant || !wrap) return; state.cart.push({ id: `gift-${Date.now()}`, name: `Presente: ${chain.name} + ${pendant.name} · ${wrap.name}`, category: "presente", price: chain.price + pendant.price + wrap.price, images: ["gift-box.png"] }); saveState(); renderCart(); showToast("Presente adicionado à sacola"); toggleDrawer("cartDrawer", true); });
+$("#addGift").addEventListener("click", () => { const chain = products.find(item => item.id === state.gift.chain), pendant = products.find(item => item.id === state.gift.pendant), wrap = giftChoices.wrap.find(item => item.id === state.gift.wrap); if (!chain || !pendant || !wrap) return; state.cart.push({ id: `gift-${Date.now()}`, name: `Presente: ${chain.name} + ${pendant.name} · ${wrap.name}`, category: "presente", price: chain.price + pendant.price + wrap.price, image: "/assets/gift-box.png" }); saveState(); renderCart(); showToast("Presente adicionado à sacola"); toggleDrawer("cartDrawer", true); });
 
 document.querySelectorAll(".filter").forEach(button => button.addEventListener("click", () => applyFilter(button.dataset.filter)));
 renderProducts(); renderCart(); renderGiftChoices(); renderSlide(0); updateFavoriteCount();

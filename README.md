@@ -1,50 +1,34 @@
-# ICE GEN ❄️
+# ICE GEN
 
-E-commerce de joias desenvolvido para a **ICE GEN**, uma marca de joias em prata 925 com identidade visual contemporânea e minimalista.
+Loja virtual de joias em prata 925 com frontend em HTML, CSS e JavaScript puro.
 
-##  Sobre o projeto
+## Frontend hoje
 
-O projeto busca criar uma experiência de compra moderna, responsiva e intuitiva, com destaque para a apresentação dos produtos e personalização de combinações de joias.
+- Homepage com carrossel, catálogo e filtros por categoria;
+- Favoritos e sacola demonstrativos no navegador (`localStorage`);
+- Página individual de produto;
+- Sugestões de combinações e montagem de presentes;
+- Servidor Node simples para servir os arquivos estáticos em `public/`.
 
-### Principais funcionalidades
+O catálogo e os preços atuais são dados provisórios centralizados em `public/catalog.js`, usados pela homepage e pela página individual do produto. Login e persistência de sacola são demonstrativos; o botão de finalização apenas prepara uma mensagem para o WhatsApp, sem processar pagamento ou consultar estoque.
 
-- Catálogo de produtos;
-- Hero/carrossel responsivo;
-- Seleção e combinação de produtos;
-- Interface adaptada para desktop e mobile;
-- Design focado em acessibilidade e experiência do usuário.
+## Imagens do catálogo
 
-##  Tecnologias
+Os ativos em `public/assets/` incluem ilustrações esquemáticas provisórias e a identidade visual da marca. As imagens de produtos aparecem identificadas como ilustrativas. O mapa de arquivos e as instruções de substituição ficam em [`public/assets/README.md`](public/assets/README.md).
 
-**Frontend**
-- React
-- JavaScript
-- HTML5
-- CSS / Tailwind CSS
+## Backend
 
-**Backend — em desenvolvimento**
-- Java
-- Spring Boot
-- PostgreSQL
-- Docker Desktop
+O backend Java está em desenvolvimento e ainda não possui integração com este frontend. Nenhum endpoint ou formato de API foi presumido. Quando o contrato da API estiver definido, a fonte de catálogo local poderá ser conectada a produtos e preços; login, usuários e pedidos continuam sem integração e dependem dos endpoints e regras do backend.
 
-**Ferramentas**
-- Git e GitHub
+## Executar o frontend
 
-##  Em desenvolvimento
+```sh
+npm run dev
+```
 
-O projeto continua em desenvolvimento, com foco na evolução do backend e integração com o frontend.
+Abra `http://localhost:3000` no navegador.
 
-Próximas etapas:
-- API REST com Spring Boot;
-- Integração com PostgreSQL;
-- Containerização do ambiente com Docker;
-- Página individual de produtos;
-- Carrinho e checkout;
-- Autenticação de usuários;
-- Integração com marketplaces.
-
-##  Desenvolvedor
+## Desenvolvedor
 
 **Guilherme Cruz Alves**
 

@@ -1,8 +1,8 @@
 {
-  "name": "prata-lumina",
+  "name": "ice-gen-storefront",
   "version": "1.0.0",
   "private": true,
-  "description": "Loja online de joias em prata com montagem de presentes e conjuntos.",
+  "description": "Frontend da loja ICE GEN de joias em prata 925.",
   "scripts": {
     "dev": "node server.js",
     "assets": "powershell -ExecutionPolicy Bypass -File scripts/generate-assets.ps1"

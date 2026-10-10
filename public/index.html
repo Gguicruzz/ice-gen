@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#10181D">
-    <meta name="description" content="Joias em prata 925 com personalidade. Descubra correntes, pingentes, pulseiras, brincos, anéis e alianças ICE GEN.">
+    <meta name="description" content="Joias ICE GEN em prata 925, com referências urbanas. Correntes, pingentes, pulseiras, brincos e anéis.">
     <title>ICE GEN | Joias em prata 925</title>
     <link rel="icon" href="/assets/ice-gen-logo-transparent.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
@@ -18,10 +18,10 @@
           <button class="nav-button" id="jewelryMenuButton" type="button" aria-expanded="false" aria-controls="jewelryMenu">Joias <span aria-hidden="true">⌄</span></button>
           <div class="mega-menu" id="jewelryMenu" aria-hidden="true">
             <div class="mega-inner">
-              <div class="mega-column"><p class="eyebrow">Explore</p><h2>Joias para<br>serem suas.</h2></div>
+              <div class="mega-column"><p class="eyebrow">ICE GEN</p><h2>Escolha o que<br>combina com você.</h2></div>
               <div class="mega-column"><h3>Encontre sua peça</h3><button type="button" data-menu-filter="corrente">Correntes</button><button type="button" data-menu-filter="pingente">Pingentes</button><button type="button" data-menu-filter="brinco">Brincos</button></div>
               <div class="mega-column"><h3>Mais categorias</h3><button type="button" data-menu-filter="pulseira">Pulseiras</button><button type="button" data-menu-filter="anel">Anéis</button><button type="button" data-menu-filter="alianca">Alianças</button></div>
-              <div class="mega-column"><h3>Descubra</h3><a href="#presentes">Monte seu presente</a><a href="#sobre">Sobre a ICE GEN</a><button type="button" id="megaContactButton">Fale com a gente</button></div>
+              <div class="mega-column"><h3>Atalhos</h3><a href="#presentes">Monte seu presente</a><a href="#sobre">Sobre a ICE GEN</a><button type="button" id="megaContactButton">Fale com a gente</button></div>
             </div>
           </div>
         </div>
@@ -39,28 +39,29 @@
     <main>
       <section class="hero" id="inicio" aria-roledescription="carrossel">
         <div class="hero-copy" aria-live="polite">
-          <p class="eyebrow" id="heroEyebrow">Prata 925 selecionada</p>
-          <h1 id="heroTitle">Joias que traduzem<br>o seu jeito de ser.</h1>
-          <p id="heroDescription">Prata, brilho e personalidade em peças para acompanhar você todos os dias.</p>
-          <div class="hero-actions"><a class="primary-link" href="#produtos">Descobrir joias</a><a class="secondary-link" href="#presentes">Montar um presente</a></div>
+          <p class="eyebrow" id="heroEyebrow">Joias em prata 925</p>
+          <h1 id="heroTitle">Frio no tom.<br>Forte no gesto.</h1>
+          <p id="heroDescription">A prata tem seu jeito de aparecer. O seu estilo também.</p>
+          <div class="hero-actions"><a class="primary-link" href="#produtos">Ver joias</a><a class="secondary-link" href="#presentes">Montar um presente</a></div>
           <div class="hero-controls"><button class="hero-arrow" id="heroPrev" type="button" aria-label="Slide anterior">←</button><div class="hero-dots" id="heroDots" aria-label="Escolher slide"></div><button class="hero-arrow" id="heroNext" type="button" aria-label="Próximo slide">→</button><span class="hero-index" id="heroIndex">01 / 04</span></div>
         </div>
-        <div class="hero-visual"><img id="heroImage" src="https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946" data-local-fallback="hero-prata.png" alt="Colar de prata e brincos delicados"></div>
+        <div class="hero-visual"><img id="heroImage" src="/assets/hero-prata.png" alt="Ilustração provisória de joias em prata"></div>
       </section>
 
       <section class="section-shell catalog" id="produtos">
-        <div class="section-heading"><div><p class="eyebrow">A seleção ICE GEN</p><h2>Uma peça para cada<br>versão de você.</h2></div><p class="section-intro">Design contemporâneo, brilho essencial<br>e prata para levar com você.</p></div>
+        <div class="section-heading"><div><p class="eyebrow">Joias em prata 925</p><h2>Escolha sua próxima peça.</h2></div><div class="section-intro"><p>Correntes, pingentes e outros detalhes para compor seu visual.</p><a class="catalog-link" href="#productGrid">Explorar coleção <span aria-hidden="true">↓</span></a></div></div>
+        <p class="catalog-note">As imagens do catálogo são ilustrativas e serão substituídas por fotografias próprias.</p>
         <div class="filter-bar" role="group" aria-label="Filtrar joias"><button class="filter active" type="button" data-filter="todos">Todas</button><button class="filter" type="button" data-filter="corrente">Colares</button><button class="filter" type="button" data-filter="pingente">Pingentes</button><button class="filter" type="button" data-filter="brinco">Brincos</button><button class="filter" type="button" data-filter="pulseira">Pulseiras</button><button class="filter" type="button" data-filter="anel">Anéis</button><button class="filter" type="button" data-filter="alianca">Alianças</button></div>
         <div class="product-grid" id="productGrid"></div>
       </section>
 
       <section class="gift-builder" id="presentes">
-        <div class="builder-copy"><p class="eyebrow">Configurador ICE GEN</p><h2>Monte seu conjunto</h2><p>Combine cada detalhe para criar uma peça única.</p><span class="builder-note">Escolha corrente, pingente e embalagem para compor seu presente.</span></div>
+        <div class="builder-copy"><p class="eyebrow">Montagem de presentes</p><h2>Você escolhe as peças.<br>A gente ajuda a montar.</h2><p>Escolha uma corrente, um pingente e a embalagem pensando em quem vai receber.</p><a class="primary-link builder-start" href="#chainStep">Montar meu presente</a></div>
         <div class="builder-workspace">
           <div class="builder-panel">
-            <div class="builder-step is-current" id="chainStep"><div class="builder-label"><div><span>01 — Corrente</span><h3>Escolha sua corrente</h3><p>Base do conjunto</p></div><span class="step-progress">ETAPA 01 / 03</span></div><div class="product-carousel" id="chainChoices" role="region" aria-roledescription="carrossel" aria-label="Carrossel de correntes"></div></div>
-            <div class="builder-step is-locked" id="pendantStep"><div class="builder-label"><div><span>02 — Pingente</span><h3>Escolha seu pingente</h3><p>Detalhe principal</p></div><span class="step-progress">ETAPA 02 / 03</span></div><div class="product-carousel" id="pendantChoices" role="region" aria-roledescription="carrossel" aria-label="Carrossel de pingentes"></div></div>
-            <div class="builder-step is-locked" id="wrapStep"><div class="builder-label"><div><span>03 — Embalagem</span><h3>Escolha sua embalagem</h3><p>Finalização do presente</p></div><span class="step-progress">ETAPA 03 / 03</span></div><div class="product-carousel" id="wrapChoices" role="region" aria-roledescription="carrossel" aria-label="Carrossel de embalagens"></div></div>
+            <div class="builder-step is-current" id="chainStep"><div class="builder-label"><div><span>01 — Corrente</span><h3>Escolha uma corrente</h3><p>Comece pela peça principal.</p></div><span class="step-progress">ETAPA 01 / 03</span></div><div class="product-carousel" id="chainChoices" role="region" aria-roledescription="carrossel" aria-label="Carrossel de correntes"></div></div>
+            <div class="builder-step is-locked" id="pendantStep"><div class="builder-label"><div><span>02 — Pingente</span><h3>Escolha um pingente</h3><p>Veja como fica com a corrente.</p></div><span class="step-progress">ETAPA 02 / 03</span></div><div class="product-carousel" id="pendantChoices" role="region" aria-roledescription="carrossel" aria-label="Carrossel de pingentes"></div></div>
+            <div class="builder-step is-locked" id="wrapStep"><div class="builder-label"><div><span>03 — Embalagem</span><h3>Escolha a embalagem</h3><p>Para entregar o presente.</p></div><span class="step-progress">ETAPA 03 / 03</span></div><div class="product-carousel" id="wrapChoices" role="region" aria-roledescription="carrossel" aria-label="Carrossel de embalagens"></div></div>
           </div>
           <aside class="gift-preview" aria-label="Resumo da combinação">
             <div class="gift-summary-head"><span>Sua combinação</span></div>
@@ -71,20 +72,21 @@
             </div>
             <div class="gift-total" aria-live="polite"><span>Total</span><strong id="giftTotal">A selecionar</strong></div>
             <p class="gift-status" id="giftStatus" role="status" aria-live="polite">Complete as 3 etapas para adicionar à sacola.</p>
-            <button class="primary-button" id="addGift" type="button" disabled>Adicionar à sacola</button>
+            <button class="primary-button" id="addGift" type="button" disabled>Adicionar presente à sacola</button>
           </aside>
         </div>
       </section>
 
-      <section class="section-shell collections" id="colecoes"><div class="section-heading"><div><p class="eyebrow">Use junto, do seu jeito</p><h2>Combinações que<br>ficam na memória.</h2></div><p class="section-intro">Encontre seu par favorito ou crie<br>uma composição só sua.</p></div><div class="combo-grid"><a class="combo-card" href="#produtos" data-combo-filter="corrente"><img src="https://www.giva.co/cdn/shop/files/ER0150_PD0179_5.jpg?v=1765272988&width=1946" data-local-fallback="combo-corrente.png" alt="Colar delicado de prata com pingente"><span>01 / O essencial</span><h3>Corrente + pingente</h3><p>Um detalhe que ilumina qualquer look.</p></a><a class="combo-card" href="#produtos" data-combo-filter="pulseira"><img src="https://www.giva.co/cdn/shop/files/BR01372_1_f45a0406-9e28-47be-81ce-ab358967ca93.jpg?v=1786452468&width=1946" data-local-fallback="combo-pulseira.png" alt="Pulseira de prata delicada"><span>02 / Em movimento</span><h3>Pulseira + pingente</h3><p>Leve, pessoal e fácil de combinar.</p></a><a class="combo-card" href="#produtos" data-combo-filter="anel"><img src="https://images.tcdn.com.br/img/img_prod/836789/anel_de_prata_aro_liso_39577127_1_8459c697a852831eba7975b25fb77124.png" data-local-fallback="combo-alianca.png" alt="Anel de prata polido"><span>03 / Para sempre</span><h3>Anel + aliança</h3><p>Linhas simples para marcar momentos.</p></a></div></section>
+      <section class="section-shell collections" id="colecoes"><div class="section-heading"><div><p class="eyebrow">Combinações</p><h2>Sozinha ou em conjunto.<br>Você escolhe.</h2></div><p class="section-intro">Combine correntes e pingentes. As peças também podem ser usadas separadas.</p></div><div class="combo-grid"><a class="combo-card" href="#produtos" data-combo-filter="corrente"><img src="/assets/combo-corrente.png" alt="Ilustração provisória de colar em prata"><span>01 / Camadas</span><h3>Corrente + pingente</h3><p>Escolha uma corrente e um pingente para usar juntos ou separados.</p></a><a class="combo-card" href="#produtos" data-combo-filter="pulseira"><img src="/assets/combo-pulseira.png" alt="Ilustração provisória de pulseira em prata"><span>02 / No pulso</span><h3>Pulseira + pingente</h3><p>Uma combinação para usar no pulso ou junto das peças que você já tem.</p></a><a class="combo-card" href="#produtos" data-combo-filter="anel"><img src="/assets/combo-alianca.png" alt="Ilustração provisória de anel em prata"><span>03 / Aros</span><h3>Anel + aliança</h3><p>Use os dois juntos ou deixe cada aro aparecer por conta própria.</p></a></div><a class="secondary-link combo-cta" href="#presentes">Montar combinação</a></section>
 
-      <section class="about" id="sobre"><div class="about-aside"><p class="eyebrow">Nossa essência</p><img class="about-logo" src="/assets/ice-gen-logo-transparent.png" alt="Monograma ICE GEN"><p>Vista sua identidade.</p></div><div class="about-copy"><p class="eyebrow">Sobre a ICE GEN</p><h2>Mais que uma joia.<br>Uma forma de expressão.</h2><p>A ICE GEN nasceu de uma ideia simples: <strong>joias podem ser muito mais do que acessórios</strong>. Elas podem representar personalidade, estilo, momentos e a forma como cada pessoa escolhe se expressar.</p><p>Nossa inspiração vem do encontro entre a <strong>sofisticação das joias</strong> e a <strong>energia da cultura urbana</strong>. Queremos construir uma marca que consiga transitar entre esses dois mundos, oferecendo peças com uma estética moderna, marcante e versátil.</p><p>A ICE GEN começa no digital, aproximando seus produtos de diferentes públicos através de plataformas de venda e, futuramente, de uma experiência própria. Nosso objetivo é crescer de forma consistente, construir uma identidade forte e conquistar espaço no mercado de joias.</p><p>No futuro, queremos transformar a ICE GEN em uma <strong>joalheria premium</strong>, com presença física e uma identidade que una o clássico ao contemporâneo.</p><p>Mais do que vender uma peça, queremos que cada cliente encontre algo que tenha significado para o seu próprio estilo.</p><p class="about-signature">ICE GEN — Vista sua identidade.</p></div></section>
+      <section class="about" id="sobre"><div class="about-aside"><p class="eyebrow">ICE GEN</p><img class="about-logo" src="/assets/ice-gen-logo-transparent.png" alt="Monograma ICE GEN"></div><div class="about-copy"><p class="eyebrow">Sobre a ICE GEN</p><h2>Prata 925 para o dia a dia.</h2><p>Na ICE GEN, a prata 925 encontra referências da cultura urbana. As peças têm linhas limpas, com formas que funcionam sozinhas ou em combinações.</p><p>Uma corrente pode ser usada sozinha ou com um pingente. Anéis e pulseiras também podem ser combinados entre si ou com peças que você já tem.</p></div></section>
     </main>
 
-    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Sacola de compras"><div class="drawer-panel"><div class="drawer-head"><div><p class="eyebrow">Sua seleção</p><h2>Sacola</h2></div><button class="icon-button" id="closeCart" type="button" aria-label="Fechar sacola">×</button></div><div class="cart-items" id="cartItems"></div><div class="set-builder" id="setBuilder"><h3>Complete seu conjunto</h3><p>Uma combinação escolhida para acompanhar esta peça.</p><div class="set-options" id="setOptions"></div></div><div class="drawer-foot"><div class="cart-total"><span>Total</span><strong id="cartTotal">R$ 0</strong></div><button class="primary-button" id="checkout" type="button">Finalizar pedido</button><button class="text-button" id="skipSet" type="button">Seguir sem montar conjunto</button></div></div></aside>
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Sacola de compras"><div class="drawer-panel"><div class="drawer-head"><div><p class="eyebrow">Sua seleção</p><h2>Sacola</h2></div><button class="icon-button" id="closeCart" type="button" aria-label="Fechar sacola">×</button></div><div class="cart-items" id="cartItems"></div><div class="set-builder" id="setBuilder"><h3>Combine com outra peça</h3><p>Veja sugestões para usar com a joia que você escolheu.</p><div class="set-options" id="setOptions"></div></div><div class="drawer-foot"><div class="cart-total"><span>Total</span><strong id="cartTotal">R$ 0</strong></div><button class="primary-button" id="checkout" type="button">Continuar pelo WhatsApp</button><button class="text-button" id="skipSet" type="button">Seguir sem montar conjunto</button></div></div></aside>
     <aside class="login-modal" id="loginModal" aria-hidden="true" aria-label="Acessar conta"><div class="login-panel"><div class="drawer-head"><div><p class="eyebrow">Bem-vindo à ICE GEN</p><h2>Acesse sua conta</h2></div><button class="icon-button" id="closeLogin" type="button" aria-label="Fechar">×</button></div><form class="login-form" id="loginForm"><label for="emailInput">E-mail</label><input id="emailInput" name="email" type="email" placeholder="voce@email.com" required><label for="passwordInput">Senha</label><input id="passwordInput" name="password" type="password" placeholder="Sua senha" required><button class="primary-button" type="submit">Entrar</button><p id="loginStatus" role="status"></p></form></div></aside>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <footer class="footer" id="atendimento"><div><a class="brand brand-footer" href="#inicio"><span class="brand-mark" aria-hidden="true"><img src="/assets/ice-gen-logo-transparent.png" alt=""></span><span class="brand-text"><span class="brand-name">ICE GEN</span><span class="brand-caption">PRATA 925</span></span></a><p>Joias para expressar quem você é.</p></div><div><span>Atendimento</span><a href="https://wa.me/5511948608322" target="_blank" rel="noreferrer">WhatsApp · 11 94860-8322</a></div><a href="#inicio">Voltar ao início ↑</a><small>© 2026 ICE GEN. Todos os direitos reservados.</small></footer>
+    <footer class="footer" id="atendimento"><div><a class="brand brand-footer" href="#inicio"><span class="brand-mark" aria-hidden="true"><img src="/assets/ice-gen-logo-transparent.png" alt=""></span><span class="brand-text"><span class="brand-name">ICE GEN</span><span class="brand-caption">PRATA 925</span></span></a><p>Joias ICE GEN em prata 925.</p></div><div><span>Atendimento</span><a href="https://wa.me/5511948608322" target="_blank" rel="noreferrer">WhatsApp · 11 94860-8322</a></div><a href="#inicio">Voltar ao início ↑</a><small>© 2026 ICE GEN. Todos os direitos reservados.</small></footer>
+    <script src="/catalog.js"></script>
     <script src="/app.js"></script>
   </body>
 </html>
