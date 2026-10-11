@@ -1,6 +1,6 @@
 # Ativos visuais
 
-Os arquivos abaixo são ilustrações esquemáticas provisórias geradas pelo script `scripts/generate-assets.ps1`; não são fotografias nem imagens oficiais de peças. Substitua os caminhos nas entradas de catálogo em `public/app.js` e `public/produto.js` quando as fotos próprias estiverem prontas. Mantenha imagens em proporção quadrada para os cards e prefira arquivos WebP ou JPEG otimizados para fotografia.
+Os arquivos abaixo são ilustrações esquemáticas provisórias geradas pelo script `scripts/generate-assets.ps1`; não são fotografias nem imagens oficiais de peças. Os caminhos usados pela homepage e pela página de produto ficam centralizados em `public/catalog.js`. Cada produto usa `image` como imagem principal; a página de produto também aceita, de forma opcional, uma lista `images` para exibir miniaturas quando houver fotografias diferentes e confirmadas. Ao cadastrar fotos próprias, marque `imageIsIllustration: false` para atualizar a legenda e o texto alternativo da página de produto. Mantenha proporções consistentes e prefira arquivos WebP ou JPEG otimizados para fotografia.
 
 | Uso atual | Arquivo(s) |
 | --- | --- |

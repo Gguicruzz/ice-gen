@@ -1,10 +1,12 @@
 const products = window.ICEGEN.products;
 const complements = window.ICEGEN.complements;
-const money = value => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(value);
+const money = value => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(value);
 const imagePath = path => path.startsWith("http") || path.startsWith("/") ? path : `/assets/${path}`;
 const fallbackByCategory = { corrente: "corrente-1.png", pingente: "pingente-1.png", brinco: "brinco-1.png", pulseira: "pulseira-1.png", anel: "anel-1.png", alianca: "alianca-1.png" };
 const state = { cart: JSON.parse(localStorage.getItem("icegen-cart") || "[]"), favorites: JSON.parse(localStorage.getItem("icegen-favorites") || "[]"), filter: "todos", gift: { chain: null, pendant: null, wrap: null }, activeSlide: 0, showFavorites: false };
 const $ = selector => document.querySelector(selector);
+const itemQuantity = item => Number.isSafeInteger(Number(item.quantity)) && Number(item.quantity) > 0 ? Number(item.quantity) : 1;
+const cartQuantity = () => state.cart.reduce((total, item) => total + itemQuantity(item), 0);
 const productGrid = $("#productGrid");
 const slides = [
   { eyebrow: "Joias em prata 925", title: "Frio no tom.<br>Forte no gesto.", description: "A prata tem seu jeito de aparecer. O seu estilo também.", image: "/assets/hero-prata.png", alt: "Ilustração provisória de joias em prata", position: "68% center" },
@@ -27,10 +29,24 @@ function renderProducts() {
 
 function categoryName(category) { return products.find(item => item.category === category)?.categoryLabel || category; }
 function saveState() { localStorage.setItem("icegen-cart", JSON.stringify(state.cart)); localStorage.setItem("icegen-favorites", JSON.stringify(state.favorites)); }
+function addCartItem(product, quantity = 1) {
+  const existingItem = product.category === "presente" ? null : state.cart.find(item => item.id === product.id && item.category !== "presente");
+  const nextQuantity = existingItem ? itemQuantity(existingItem) + quantity : quantity;
+  const unitPriceCents = Math.round(Number(product.price) * 100);
+  if (!Number.isSafeInteger(nextQuantity) || nextQuantity < 1 || !Number.isSafeInteger(unitPriceCents) || unitPriceCents < 0 || !Number.isSafeInteger(unitPriceCents * nextQuantity)) return false;
+  if (existingItem) existingItem.quantity = nextQuantity;
+  else state.cart.push({ ...product, quantity });
+  return true;
+}
 function renderCart() {
-  $("#cartCount").textContent = state.cart.length;
-  $("#cartTotal").textContent = money(state.cart.reduce((sum, item) => sum + item.price, 0));
-  $("#cartItems").innerHTML = state.cart.length ? state.cart.map((item, index) => `<div class="cart-row"><img src="${imagePath(products.find(product => product.id === item.id)?.image || item.image || item.images?.[0] || "gift-box.png")}" alt="${item.name}"><div><strong>${item.name}</strong><span>${money(item.price)}</span></div><button class="remove" type="button" data-remove="${index}" aria-label="Remover ${item.name}">Remover</button></div>`).join("") : `<div class="cart-empty"><span>✧</span><h3>Sua sacola está esperando.</h3><p>Encontre uma joia para chamar de sua.</p><a href="#produtos" class="secondary-link" id="goCatalog">Explorar joias</a></div>`;
+  $("#cartCount").textContent = cartQuantity();
+  $("#cartTotal").textContent = money(state.cart.reduce((sum, item) => sum + item.price * itemQuantity(item), 0));
+  $("#cartItems").innerHTML = state.cart.length ? state.cart.map((item, index) => {
+    const quantity = itemQuantity(item);
+    const linePrice = item.price * quantity;
+    const itemLabel = quantity > 1 ? `${quantity} un. × ${money(item.price)} = ${money(linePrice)}` : money(item.price);
+    return `<div class="cart-row"><img src="${imagePath(products.find(product => product.id === item.id)?.image || item.image || item.images?.[0] || "gift-box.png")}" alt="${item.name}"><div><strong>${item.name}</strong><span>${itemLabel}</span></div><button class="remove" type="button" data-remove="${index}" aria-label="Remover ${item.name}${quantity > 1 ? `, ${quantity} unidades` : ""}">Remover</button></div>`;
+  }).join("") : `<div class="cart-empty"><span>✧</span><h3>Sua sacola está esperando.</h3><p>Encontre uma joia para chamar de sua.</p><a href="#produtos" class="secondary-link" id="goCatalog">Explorar joias</a></div>`;
   renderSetSuggestions();
 }
 function renderSetSuggestions() {
@@ -43,7 +59,8 @@ function renderSetSuggestions() {
 function addToCart(id, open = true) {
   const product = products.find(item => item.id === id);
   if (!product) return;
-  state.cart.push(product); saveState(); renderCart(); showToast(`${product.name} adicionada à sacola`); if (open) toggleDrawer("cartDrawer", true);
+  if (!addCartItem(product)) { showToast("Não foi possível atualizar a sacola. Confira as quantidades."); return; }
+  saveState(); renderCart(); showToast(`${product.name} adicionada à sacola`); if (open) toggleDrawer("cartDrawer", true);
 }
 function toggleDrawer(id, open) {
   const drawer = $(`#${id}`); drawer.classList.toggle("open", open); drawer.setAttribute("aria-hidden", String(!open));
@@ -204,13 +221,20 @@ let carouselTimer = window.setInterval(() => renderSlide(state.activeSlide + 1),
 
 $("#cartButton").addEventListener("click", () => toggleDrawer("cartDrawer", true)); $("#closeCart").addEventListener("click", () => toggleDrawer("cartDrawer", false)); $("#cartDrawer").addEventListener("click", event => { if (event.target === $("#cartDrawer")) toggleDrawer("cartDrawer", false); });
 $("#skipSet").addEventListener("click", () => $("#setBuilder").classList.remove("show"));
-$("#checkout").addEventListener("click", () => { if (!state.cart.length) return showToast("Adicione uma joia à sacola para continuar"); const lines = state.cart.map(item => `• ${item.name} — ${money(item.price)}`).join("\n"); const message = encodeURIComponent(`Olá! Gostaria de finalizar este pedido ICE GEN:\n${lines}\nTotal: ${$("#cartTotal").textContent}`); window.open(`https://wa.me/5511948608322?text=${message}`, "_blank", "noopener"); });
+$("#checkout").addEventListener("click", () => { if (!state.cart.length) return showToast("Adicione uma joia à sacola para continuar"); const lines = state.cart.map(item => `• ${item.name}${itemQuantity(item) > 1 ? ` × ${itemQuantity(item)}` : ""} — ${money(item.price * itemQuantity(item))}`).join("\n"); const message = encodeURIComponent(`Olá! Gostaria de finalizar este pedido ICE GEN:\n${lines}\nTotal: ${$("#cartTotal").textContent}`); window.open(`https://wa.me/5511948608322?text=${message}`, "_blank", "noopener"); });
 
 $("#loginButton").addEventListener("click", () => { $("#loginModal").classList.add("open"); $("#loginModal").setAttribute("aria-hidden", "false"); document.body.classList.add("has-overlay"); $("#emailInput").focus(); });
 function closeLogin() { $("#loginModal").classList.remove("open"); $("#loginModal").setAttribute("aria-hidden", "true"); document.body.classList.remove("has-overlay"); }
 $("#closeLogin").addEventListener("click", closeLogin); $("#loginModal").addEventListener("click", event => { if (event.target === $("#loginModal")) closeLogin(); });
 $("#loginForm").addEventListener("submit", event => { event.preventDefault(); $("#loginStatus").textContent = "Área de conta demonstrativa. O acesso será ativado com a integração da loja."; });
-$("#addGift").addEventListener("click", () => { const chain = products.find(item => item.id === state.gift.chain), pendant = products.find(item => item.id === state.gift.pendant), wrap = giftChoices.wrap.find(item => item.id === state.gift.wrap); if (!chain || !pendant || !wrap) return; state.cart.push({ id: `gift-${Date.now()}`, name: `Presente: ${chain.name} + ${pendant.name} · ${wrap.name}`, category: "presente", price: chain.price + pendant.price + wrap.price, image: "/assets/gift-box.png" }); saveState(); renderCart(); showToast("Presente adicionado à sacola"); toggleDrawer("cartDrawer", true); });
+$("#addGift").addEventListener("click", () => { const chain = products.find(item => item.id === state.gift.chain), pendant = products.find(item => item.id === state.gift.pendant), wrap = giftChoices.wrap.find(item => item.id === state.gift.wrap); if (!chain || !pendant || !wrap) return; state.cart.push({ id: `gift-${Date.now()}`, name: `Presente: ${chain.name} + ${pendant.name} · ${wrap.name}`, category: "presente", price: chain.price + pendant.price + wrap.price, image: "/assets/gift-box.png", quantity: 1 }); saveState(); renderCart(); showToast("Presente adicionado à sacola"); toggleDrawer("cartDrawer", true); });
 
 document.querySelectorAll(".filter").forEach(button => button.addEventListener("click", () => applyFilter(button.dataset.filter)));
 renderProducts(); renderCart(); renderGiftChoices(); renderSlide(0); updateFavoriteCount();
+
+if (new URLSearchParams(window.location.search).get("sacola") === "1") {
+  toggleDrawer("cartDrawer", true);
+  const cleanUrl = new URL(window.location.href);
+  cleanUrl.searchParams.delete("sacola");
+  window.history.replaceState({}, "", cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+}

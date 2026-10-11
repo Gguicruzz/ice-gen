@@ -15,29 +15,67 @@
     <header class="topbar product-topbar">
         <a class="brand" href="/#inicio" aria-label="ICE GEN, início"><span class="brand-mark" aria-hidden="true"><img src="/assets/ice-gen-logo-transparent.png" alt=""></span><span class="brand-name">ICE GEN</span><span class="brand-caption">PRATA 925</span></a>
         <nav class="nav-links" aria-label="Navegação principal"><a href="/#produtos">Joias</a><a href="/#sobre">Sobre</a><a href="/#atendimento">Contato</a></nav>
-        <a class="secondary-link" href="/#produtos">← Voltar à loja</a>
+        <div class="product-topbar-actions"><a class="product-cart-link" href="/?sacola=1" aria-label="Abrir sacola, 0 itens">Sacola <span id="product-cart-count" aria-hidden="true">0</span></a><a class="secondary-link" href="/#produtos" aria-label="Voltar à loja"><span aria-hidden="true">←</span> <span class="product-back-label">Voltar à loja</span></a></div>
     </header>
 
     <main class="product-page" id="productPage">
-        <div class="product-image"><img id="product-image" src="" alt=""><span>Imagem ilustrativa · foto própria em breve</span></div>
+        <div class="product-gallery">
+            <div class="product-image">
+                <button class="product-image-trigger" id="product-image-trigger" type="button" aria-label="Ampliar imagem da peça" aria-haspopup="dialog">
+                    <img id="product-image" src="" alt="">
+                    <span class="product-image-zoom" aria-hidden="true">Ampliar imagem <span>↗</span></span>
+                </button>
+                <span class="product-image-caption" id="product-image-caption">Imagem ilustrativa · foto própria em breve</span>
+            </div>
+            <div class="product-gallery-thumbnails" id="product-gallery-thumbnails" role="group" aria-label="Outras imagens da peça" hidden></div>
+        </div>
         <div class="product-info">
             <span id="product-category"></span>
             <h1 id="product-name">Carregando produto...</h1>
             <strong id="product-price"></strong>
             <p id="product-description"></p>
-            <div class="product-specs"><h2>Detalhes da peça</h2><dl><div><dt>Material</dt><dd id="product-material">Prata 925</dd></div><div id="product-measurement-row" hidden><dt>Medida</dt><dd id="product-measurement"></dd></div></dl></div>
-            <div class="quantity"><label for="product-quantity">Quantidade</label><input id="product-quantity" type="number" value="1" min="1" max="10" inputmode="numeric" aria-describedby="quantity-help"><span id="quantity-help">De 1 a 10 unidades.</span></div>
+            <details class="product-specs" id="product-specs" open>
+                <summary>Detalhes da peça</summary>
+                <dl>
+                    <div id="product-material-row" hidden><dt>Material</dt><dd id="product-material"></dd></div>
+                    <div id="product-measurement-row" hidden><dt>Medida</dt><dd id="product-measurement"></dd></div>
+                    <div id="product-weight-row" hidden><dt>Peso</dt><dd id="product-weight"></dd></div>
+                    <div id="product-clasp-row" hidden><dt>Tipo de fecho</dt><dd id="product-clasp"></dd></div>
+                    <div id="product-finish-row" hidden><dt>Acabamento</dt><dd id="product-finish"></dd></div>
+                    <div id="product-included-row" hidden><dt>Itens incluídos</dt><dd id="product-included"></dd></div>
+                </dl>
+            </details>
+            <details class="product-care" id="product-care-details" hidden><summary>Cuidados</summary><p id="product-care"></p></details>
+            <div class="quantity">
+                <label for="product-quantity">Quantidade</label>
+                <div class="quantity-stepper" role="group" aria-label="Ajustar quantidade">
+                    <button type="button" data-quantity-adjust="-1" aria-label="Diminuir quantidade">−</button>
+                    <input id="product-quantity" type="number" value="1" min="1" step="1" inputmode="numeric" aria-describedby="quantity-help">
+                    <button type="button" data-quantity-adjust="1" aria-label="Aumentar quantidade">+</button>
+                </div>
+                <span id="quantity-help">Use os botões ou informe uma quantidade a partir de 1.</span>
+            </div>
             <button id="add-to-cart" type="button">Adicionar à sacola</button>
             <div class="product-tools"><button id="favorite-product" type="button" aria-pressed="false" aria-label="Salvar nos favoritos">♡ <span>Salvar nos favoritos</span></button><button id="share-product" type="button">Compartilhar peça ↗</button></div>
             <a class="product-contact" id="product-contact" href="https://wa.me/5511948608322" target="_blank" rel="noreferrer">Dúvidas sobre esta peça? Fale com a gente no WhatsApp.</a>
-            <p class="product-note">A prata 925 pode escurecer naturalmente com o tempo. Guarde sua peça seca e limpe com uma flanela macia.</p>
             <p id="product-status" role="status"></p>
         </div>
-    <section class="product-recommendations" id="productRecommendations" aria-labelledby="recommendationTitle" hidden>
-        <div class="recommendation-heading"><p class="eyebrow">Sugestões</p><h2 id="recommendationTitle">Você também pode combinar</h2></div>
-        <div class="recommendation-grid" id="recommendationGrid"></div>
-    </section>
+        <section class="product-recommendations" id="productRecommendations" aria-labelledby="recommendationTitle" hidden>
+            <div class="recommendation-heading"><p class="eyebrow">Combinações</p><h2 id="recommendationTitle">Complete a composição</h2><p>Marque as peças que quer acrescentar. A seleção pode ser ajustada antes de ir para a sacola.</p></div>
+            <div class="recommendation-grid" id="recommendationGrid"></div>
+            <div class="combination-footer"><p id="combination-subtotal" aria-live="polite">Subtotal da seleção: R$ 0</p><button id="add-selected-products" class="primary-button" type="button" disabled>Adicionar seleção à sacola</button></div>
+        </section>
     </main>
+
+    <dialog class="product-image-dialog" id="product-image-dialog" aria-label="Imagem ampliada da peça">
+        <div class="product-image-dialog-content">
+            <button class="product-image-dialog-close" id="close-product-image" type="button" aria-label="Fechar imagem ampliada">×</button>
+            <img id="product-image-large" src="" alt="">
+            <p id="product-image-dialog-caption">Imagem ilustrativa · foto própria em breve</p>
+        </div>
+    </dialog>
+
+    <noscript><p class="product-noscript">Ative o JavaScript para carregar os dados desta peça pelo catálogo local.</p></noscript>
 
     <script src="/catalog.js"></script>
     <script src="/produto.js"></script>
