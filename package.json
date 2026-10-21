@@ -1,0 +1,14 @@
+{
+  "name": "ice-gen-v2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Prévia responsiva da Home ICE GEN, reconstruída em uma estrutura independente.",
+  "scripts": {
+    "dev": "node server.js",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

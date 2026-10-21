@@ -1,0 +1,320 @@
+:root {
+  --ink: #10181d;
+  --paper: #f3f1ec;
+  --ice: #84a6be;
+  --silver: #c7cdd0;
+  --muted: #657078;
+  --line: #d6d8d6;
+  --serif: "Playfair Display",Georgia,"Times New Roman",serif;
+  --sans: "DM Sans",Arial,sans-serif;
+  --max-width: 1280px;
+  --gutter: 48px;
+  --ease: cubic-bezier(.2,.7,.2,1)
+}
+
+* {
+  box-sizing: border-box
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased
+}
+
+button,
+input {
+  font: inherit
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent
+}
+
+button {
+  color: inherit
+}
+
+button:not(:disabled),
+a {
+  cursor: pointer
+}
+
+a {
+  color: inherit;
+  text-decoration: none
+}
+
+button {
+  border: 0
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0
+}
+
+h1,
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.12
+}
+
+button {
+  background: none
+}
+
+button:disabled {
+  cursor: not-allowed
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--ice);
+  outline-offset: 6px
+}
+
+::selection {
+  color: var(--ink);
+  background: var(--ice)
+}
+
+[hidden] {
+  display: none!important
+}
+
+.wrap {
+  width: min(calc(100% - var(--gutter)*2),var(--max-width));
+  margin-inline: auto
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0
+}
+
+.icon.small {
+  width: 14px;
+  height: 14px
+}
+
+.icon-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.5;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: #506571
+}
+
+.eyebrow.light {
+  color: #b5ccd9
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  min-height: 50px;
+  padding: 13px 25px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: .2px;
+  transition: background .2s,color .2s,border-color .2s
+}
+
+.button .icon {
+  width: 19px;
+  height: 19px
+}
+
+.button-light {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper)
+}
+
+.button-light:hover {
+  background: #dce6ec;
+  border-color: #dce6ec
+}
+
+.button-outline {
+  color: var(--paper);
+  border-color: #89969b;
+  background: #0f171b33
+}
+
+.button-outline:hover {
+  background: #e9f3f31a;
+  border-color: var(--paper)
+}
+
+.button-dark {
+  background: var(--ink);
+  color: var(--paper)
+}
+
+.button-dark:hover {
+  background: #2d404c
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid currentColor;
+  white-space: nowrap
+}
+
+.text-link .icon {
+  width: 19px
+}
+
+.text-link:hover {
+  color: #567b95
+}
+
+.text-link.light {
+  color: var(--paper)
+}
+
+.section-space {
+  padding-block: 76px
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px
+}
+
+.section-heading h2 {
+  font-size: 48px;
+  letter-spacing: -1.7px;
+  margin-top: 13px
+}
+
+.skip-link {
+  position: fixed;
+  left: 20px;
+  top: -100px;
+  padding: 12px 24px;
+  z-index: 100;
+  background: var(--paper);
+  color: var(--ink)
+}
+
+.skip-link:focus {
+  top: 20px
+}
+
+.noscript {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: #fff;
+  color: var(--ink);
+  z-index: 20
+}
+
+@media (max-width:1000px) {
+  :root {
+    --gutter: 32px
+  }
+}
+
+@media (max-width:600px) {
+  :root {
+    --gutter: 22px
+  }
+
+  html {
+    scroll-padding-top: 82px
+  }
+
+  .section-space {
+    padding-block: 49px
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px
+  }
+
+  .section-heading h2 {
+    font-size: 35px;
+    letter-spacing: -1px
+  }
+
+  .button {
+    min-height: 48px
+  }
+
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 2.1px
+  }
+}
+
+.text-link {
+  min-height: 44px
+}
+
+@media (prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior: auto
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none!important;
+    transition: none!important
+  }
+}
