@@ -81,7 +81,7 @@ export function createStaticServer({ root = defaultRoot } = {}) {
         info = await stat(filename);
       }
       if (!info.isFile()) {
-        reply(request, response, 404, 'Arquivo não encontrado. Esta prévia contém a Home. Volte para /.\n');
+        reply(request, response, 404, 'Arquivo não encontrado. Volte para / ou explore /catalogo.html.\n');
         return;
       }
 
@@ -115,7 +115,7 @@ export function createStaticServer({ root = defaultRoot } = {}) {
       stream.pipe(response);
     } catch (error) {
       if (error.code === 'ENOENT' || error.code === 'ENOTDIR') {
-        reply(request, response, 404, 'Página ou arquivo não encontrado. Esta prévia contém apenas a Home. Volte para /.\n');
+        reply(request, response, 404, 'Página ou arquivo não encontrado. Volte para / ou explore /catalogo.html.\n');
       } else if (error.code === 'EACCES' || error.code === 'EPERM') {
         reply(request, response, 403, 'Acesso não permitido.\n');
       } else {
@@ -138,7 +138,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     });
     server.listen(port, '127.0.0.1', () => {
       console.log(`ICE GEN V2: http://127.0.0.1:${port}`);
-      console.log('Prévia local da Home. Pressione Ctrl+C para encerrar.');
+      console.log('Prévia local da ICE GEN. Pressione Ctrl+C para encerrar.');
     });
   }
 }

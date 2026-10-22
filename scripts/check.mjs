@@ -123,7 +123,7 @@ try {
     process.exitCode = 1;
   } else {
     console.log(`Verificação concluída: ${scripts.length} arquivos JS com sintaxe válida, ${referenceCount} referências locais existentes e catálogo importável com 10 IDs únicos.`);
-    console.log('Esta verificação é estrutural. A revisão visual e os fluxos da Home precisam ser conferidos no navegador.');
+    console.log('Esta verificação é estrutural. A revisão visual e os fluxos da Home e do catálogo precisam ser conferidos no navegador.');
   }
 } catch (error) {
   console.error(`Não foi possível concluir a verificação: ${error.message}`);

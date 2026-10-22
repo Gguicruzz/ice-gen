@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Prévia responsiva da Home ICE GEN, reconstruída em uma estrutura independente.",
+  "description": "Home e catálogo responsivos ICE GEN, reconstruídos em uma estrutura independente.",
   "scripts": {
     "dev": "node server.js",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=20"

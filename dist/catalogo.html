@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10181D">
+  <meta name="description" content="Explore as joias ICE GEN em prata 925. Correntes, pingentes, pulseiras, anéis, brincos e alianças.">
+  <title>Nossas joias — ICE GEN</title>
+  <link rel="icon" href="/assets/ice-gen-logo-transparent.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/home.css">
+  <link rel="stylesheet" href="/styles/shop.css">
+  <link rel="stylesheet" href="/styles/catalog.css">
+  <script type="module" src="/js/catalog-page.js"></script>
+</head>
+<body class="catalog-page">
+  <a class="skip-link" href="#catalog-results">Ir para os produtos</a>
+  <div data-site-header></div>
+  <main id="conteudo" tabindex="-1">
+    <section class="catalog-hero" aria-labelledby="catalog-title">
+      <div class="catalog-hero-photo" role="img" aria-label="Imagem editorial ilustrativa de prata sobre rocha escura"></div>
+      <div class="wrap catalog-hero-inner">
+        <nav class="breadcrumb" aria-label="Você está aqui"><a href="/">Início</a><span aria-hidden="true">/</span><span aria-current="page">Joias</span></nav>
+        <p class="eyebrow">Nossas joias</p>
+        <h1 id="catalog-title">Escolhas que marcam.</h1>
+        <p>Prata 925, presença e liberdade para combinar.<br>Encontre os detalhes que têm a ver com você.</p>
+      </div>
+      <span class="catalog-hero-credit">Imagem de campanha ilustrativa</span>
+    </section>
+    <div class="demo-strip"><div class="wrap"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg><p>Uma coleção em construção. <span>Preços e ilustrações demonstrativos, sujeitos à confirmação.</span></p></div></div>
+    <section class="catalog-area wrap" aria-label="Explorar o catálogo">
+      <aside class="catalog-sidebar" aria-label="Filtros do catálogo">
+        <div id="filters-desktop-host">
+          <form id="catalog-filter-form">
+            <fieldset><legend>Categoria</legend><div id="category-options"></div></fieldset>
+            <fieldset><legend>Suas escolhas</legend><label class="filter-option"><input type="checkbox" name="favorites" id="favorites-only"><span>Somente favoritos</span><span class="filter-count" id="favorites-filter-count">0</span></label></fieldset>
+            <div class="material-info"><p class="eyebrow">Material</p><p>Prata 925 <svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></p></div>
+            <button type="button" id="clear-filters" class="filter-clear">Limpar filtros</button>
+          </form>
+        </div>
+      </aside>
+      <div class="catalog-content">
+        <form class="catalog-search" role="search" id="catalog-search" action="/catalogo.html" method="get">
+          <label for="catalog-query" class="sr-only">Buscar no catálogo</label>
+          <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <input type="search" name="busca" id="catalog-query" placeholder="Buscar joias" maxlength="100" autocomplete="off">
+          <button type="submit">Buscar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </form>
+        <div class="catalog-toolbar">
+          <div class="catalog-result-heading"><h2 id="results-title" tabindex="-1">Todas as peças</h2><p id="result-count" role="status" aria-live="polite"></p></div>
+          <div class="catalog-toolbar-actions">
+            <button class="filter-toggle" type="button" id="open-filters" aria-haspopup="dialog" aria-controls="filters-dialog"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg>Filtros <span id="active-filter-count" hidden></span></button>
+            <div class="sort-control"><label for="catalog-sort">Ordenar por</label><select id="catalog-sort"><option value="featured">Destaques</option><option value="price-asc">Menor preço</option><option value="price-desc">Maior preço</option><option value="name">Nome, A–Z</option></select></div>
+          </div>
+        </div>
+        <div class="active-filters" id="active-filters" aria-label="Seleção atual" hidden></div>
+        <div class="product-grid" id="catalog-results" tabindex="-1" aria-labelledby="results-title"></div>
+        <div class="catalog-empty" id="catalog-empty" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><h2 id="empty-title">Ainda não encontramos essa peça.</h2><p id="empty-copy">Experimente outro termo ou ajuste os filtros para descobrir outras possibilidades.</p><button class="button button-dark" id="reset-catalog" type="button">Ver todas as peças <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+        <p class="catalog-data-note">Ilustrações provisórias do catálogo. Fotografias oficiais e disponibilidade aguardam confirmação. Esta prévia não recebe pedidos.</p>
+      </div>
+    </section>
+    <section class="catalog-editorial wrap" aria-labelledby="editorial-title"><div><p class="eyebrow light">Do seu jeito</p><h2 id="editorial-title">Mais que uma joia.<br>Uma história.</h2><p>Explore correntes, pingentes e a liberdade de combinar.</p><a class="button button-light" href="/#combinacoes">Descobrir combinações <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div><span class="catalog-editorial-credit">Imagem de campanha ilustrativa</span></section>
+  </main>
+  <div data-site-footer></div>
+  <dialog class="filters-dialog" id="filters-dialog" aria-labelledby="filters-title"><div class="filters-dialog-heading"><h2 id="filters-title">Encontre a sua peça.</h2><button type="button" class="icon-button" id="close-filters" aria-label="Fechar filtros"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div><div id="filters-mobile-host"></div><button class="button button-dark" type="button" id="apply-filters">Ver peças</button></dialog>
+  <noscript><nav class="noscript"><a href="/">Voltar à Home</a> · Ative o JavaScript para buscar, filtrar e visualizar os produtos do catálogo.</nav></noscript>
+</body>
+</html>

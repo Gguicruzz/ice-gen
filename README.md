@@ -1,10 +1,10 @@
 # ICE GEN V2
 
-Reconstrução independente da interface da ICE GEN. Esta primeira entrega contém a Home responsiva para revisão. Catálogo completo, produto, montagem de presentes, sacola, favoritos e conta estão registrados para próximas etapas; não são fluxos completos desta prévia.
+Reconstrução independente da interface da ICE GEN. A Home revisada e o catálogo responsivo estão implementados. O catálogo inclui busca, categorias, ordenação, estado na URL e favoritos locais nos cards. Páginas individuais de produto, montagem de presentes, sacola, tela própria de favoritos e conta continuam para as próximas partes.
 
 ## Executar localmente
 
-É necessário Node.js 20 ou superior. O projeto não usa dependências externas e não exige `npm install`.
+É necessário Node.js 20 ou superior. O código e o servidor não exigem pacotes npm nem `npm install`. As fontes Google são externas, com alternativas locais.
 
 ```powershell
 cd 'C:\Users\Nestu\OneDrive\Documentos\ChatGPT\ice gen V2\ice-gen-v2'
@@ -13,23 +13,33 @@ npm run dev
 
 Abra [http://127.0.0.1:4173](http://127.0.0.1:4173). Encerre com `Ctrl+C`. O servidor escuta apenas no endereço local `127.0.0.1`; `PORT` pode substituir a porta padrão. Apenas a pasta `dist/` é servida. Caminhos externos, travessia de diretórios, arquivos ocultos e métodos diferentes de GET/HEAD são bloqueados. Arquivos usam tipo de conteúdo explícito e revalidação de cache.
 
+O catálogo está em [http://127.0.0.1:4173/catalogo.html](http://127.0.0.1:4173/catalogo.html). Home e catálogo usam JavaScript para o cabeçalho/rodapé compartilhados e as interações; a Home mantém seu conteúdo principal em HTML, e o catálogo apresenta um aviso quando o JavaScript está desativado.
+
 ## Verificar a estrutura
 
 ```powershell
 npm run check
+npm test
 ```
 
 O comando verifica a sintaxe dos arquivos JavaScript, referências locais de HTML/CSS/JS, existência de assets e importação do catálogo com dez IDs únicos. Âncoras, fragmentos de sprites e destinos externos não são acessados. Não substitui a inspeção no navegador em desktop, celular, teclado e preferências de movimento reduzido.
+
+`npm test` executa os testes de regras de catálogo e favoritos com o runner nativo do Node. Funcionalidades, parâmetros da URL, testes e limitações da parte 2 estão em [docs/CATALOGO.md](docs/CATALOGO.md).
 
 ## Estrutura
 
 | Caminho | Finalidade |
 | --- | --- |
-| `dist/` | Arquivos públicos da Home e seus assets |
+| `dist/` | Home, catálogo e seus assets |
 | `dist/data/` | Dados e configuração preservados, com metadados demonstrativos |
+| `dist/js/site-shell.js` / `site-ui.js` | Cabeçalho, rodapé, menus, diálogos e feedback compartilhados |
+| `dist/js/catalog-model.js` / `catalog-page.js` | Regras de busca/filtros/URL e apresentação do catálogo |
+| `dist/js/favorites-store.js` | Favoritos locais com compatibilidade da chave legada |
+| `tests/` | Regressões do catálogo e armazenamento de favoritos |
 | `docs/INVENTARIO.md` | Inventário funcional, dados e regras do legado a preservar |
 | `docs/REFERENCIAS.md` | Análise visual, fontes, assets e limites dos anexos |
 | `docs/VALIDACAO-HOME.md` | Verificações da primeira Home e limites da revisão |
+| `docs/CATALOGO.md` | Parte 2: funcionalidades, rotas, testes e limites |
 | `docs/PROMPT-IMAGEM.md` | Procedência, arquivo e prompt da campanha ilustrativa |
 | `docs/inventario-sacola-favoritos.json` | Índice das entradas recuperáveis do ZIP de referências |
 | `server.js` | Servidor estático local sem dependências |
