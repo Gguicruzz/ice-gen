@@ -83,9 +83,9 @@ function catalogPreview(category = 'all') {
   const selection = category === 'all' ? products : products.filter(product => product.category === category);
   show(() => {
     title(category === 'all' ? 'Um primeiro olhar nas peças.' : categories.find(item => item.id === category)?.label || 'Nossas joias');
-    content.append(node('p', 'Prévia dos dados preservados do projeto anterior.', 'dialog-lead'));
+    content.append(node('p', category === 'all' ? 'Conheça a seleção de peças da ICE GEN.' : 'Explore as peças desta categoria.', 'dialog-lead'));
     productList(selection);
-    note('Catálogo demonstrativo: preços e desenhos provisórios, sem estoque ou venda nesta prévia. A página completa do catálogo e os detalhes das peças serão reconstruídos após a revisão da Home. As fotografias de campanha são ilustrativas.');
+    note('Catálogo demonstrativo. Preços e ilustrações provisórios, sujeitos à confirmação. Compras indisponíveis nesta prévia.');
     returnToJewels('Voltar à Home');
   });
 }
@@ -108,7 +108,7 @@ function emptyPreview(name, heading, description) {
   h.id = 'dialog-title';
   box.append(h, node('p', description));
   returnToJewels();
-  note('Primeira etapa: Home para revisão. Este recurso será disponibilizado nas próximas etapas do projeto.');
+  note('Prévia da Home. Este recurso ainda não está disponível.');
 }
 
 function searchPreview() {
@@ -166,13 +166,13 @@ function searchPreview() {
 function openDialog(type) {
   show(() => {
     if (type === 'search') { searchPreview(); return; }
-    if (type === 'bag') { emptyPreview('bag', 'O começo de uma escolha.', 'A sacola ainda não está disponível nesta prévia. Explore as peças enquanto preparamos os próximos passos.'); return; }
-    if (type === 'favorites') { emptyPreview('heart', 'Suas escolhas, por perto.', 'Em breve, você poderá salvar suas peças favoritas para voltar a elas quando quiser.'); return; }
+    if (type === 'bag') { emptyPreview('bag', 'O começo de uma escolha.', 'Conheça as peças e encontre a combinação que faz sentido para você.'); return; }
+    if (type === 'favorites') { emptyPreview('heart', 'Suas escolhas, por perto.', 'Um espaço para reunir suas peças preferidas e voltar a elas quando quiser.'); return; }
     if (type === 'account') { emptyPreview('person', 'Seu espaço na ICE GEN.', 'O acesso à conta ainda não está disponível nesta prévia.'); return; }
     if (type === 'gift') {
       title('Um presente com a sua escolha.');
-      content.append(node('p', 'O fluxo do projeto anterior será preservado: escolher uma corrente, um pingente e uma embalagem, revisar a combinação e acompanhar o total.', 'dialog-lead'));
-      note('A montagem será reconstruída na etapa de presentes, após a revisão desta Home. As opções de embalagem e os valores ainda são demonstrativos.');
+      content.append(node('p', 'Uma corrente, um pingente e uma embalagem. Escolha cada detalhe para criar um presente com significado.', 'dialog-lead'));
+      note('Montagem indisponível nesta prévia. Peças, embalagens e valores aguardam confirmação.');
       returnToJewels('Conhecer as peças');
       return;
     }
@@ -184,8 +184,8 @@ function openDialog(type) {
       return;
     }
     title('Fale com a ICE GEN.');
-    content.append(node('p', 'O canal oficial de atendimento será confirmado antes da abertura da loja. Esta prévia não recebe pedidos.', 'dialog-lead'));
-    note('O contato encontrado no projeto anterior permanece registrado no inventário, aguardando validação. Nenhum número demonstrativo foi publicado como contato oficial.');
+    content.append(node('p', 'O canal oficial de atendimento será disponibilizado após confirmação.', 'dialog-lead'));
+    note('Contato pendente de confirmação. Esta prévia não recebe pedidos.');
     returnToJewels('Continuar explorando');
   });
 }
@@ -194,7 +194,12 @@ document.querySelectorAll('[data-dialog]').forEach(button => button.addEventList
 document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => catalogPreview(button.dataset.category)));
 document.querySelectorAll('[data-combination]').forEach(button => button.addEventListener('click', () => combinationPreview(button.dataset.combination)));
 menuToggle.addEventListener('click', () => setMenu(menu.hidden));
-menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+  setMenu(false);
+  const target = document.getElementById(link.hash.slice(1));
+  target?.setAttribute('tabindex', '-1');
+  target?.focus({ preventScroll: true });
+}));
 document.addEventListener('click', event => { if (!menu.hidden && !event.target.closest('.site-header')) setMenu(false); });
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !menu.hidden) setMenu(false, true);
@@ -211,3 +216,30 @@ dialog.addEventListener('close', () => {
   else if (menuToggle.getClientRects().length) menuToggle.focus({ preventScroll: true });
 });
 document.querySelector('#year').textContent = String(new Date().getFullYear());
+
+// The same Home uses location markers for its in-page navigation.
+const sectionLinks = [...document.querySelectorAll('.desktop-nav a, .mobile-menu a[href^="#"]')];
+const homeSections = [...document.querySelectorAll('#inicio, main section[id], #contato')];
+let navigationFrame = 0;
+function syncSectionNavigation() {
+  navigationFrame = 0;
+  const readingLine = Math.min(innerHeight * .25, 180);
+  const visibleSection = homeSections.filter(section => section.getBoundingClientRect().top <= readingLine).at(-1);
+  const atPageEnd = innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
+  const id = atPageEnd ? 'contato' : visibleSection?.id || 'inicio';
+  for (const link of sectionLinks) {
+    const target = link.hash.slice(1);
+    const currentTarget = id === 'combinacoes' || (link.closest('.desktop-nav') && id === 'presentes') ? 'joias' : id;
+    const active = target === currentTarget;
+    link.classList.toggle('nav-active', active);
+    if (active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  }
+}
+function scheduleNavigationSync() {
+  if (!navigationFrame) navigationFrame = requestAnimationFrame(syncSectionNavigation);
+}
+addEventListener('scroll', scheduleNavigationSync, { passive: true });
+addEventListener('resize', scheduleNavigationSync, { passive: true });
+addEventListener('hashchange', scheduleNavigationSync);
+syncSectionNavigation();

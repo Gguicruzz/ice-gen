@@ -186,7 +186,7 @@
 .hero-image {
   position: absolute;
   inset: 0;
-  background-image: url('/assets/campaign-hero.png');
+  background-image: url('/assets/campaign-hero.webp');
   background-size: cover;
   background-position: center 48%;
   z-index: -3
@@ -260,7 +260,8 @@
   display: flex;
   align-items: center;
   gap: 13px;
-  font-size: 9px;
+  min-height: 44px;
+  font-size: 11px;
   letter-spacing: 1.2px;
   text-transform: uppercase;
   color: #d2dcdf
@@ -296,7 +297,7 @@
   position: absolute;
   right: 48px;
   bottom: 12px;
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: .2px;
   color: #d0d8da
 }
@@ -373,6 +374,7 @@
   position: relative;
   isolation: isolate;
   aspect-ratio: 1.08;
+  min-width: 0;
   overflow: hidden;
   text-align: left;
   color: var(--paper);
@@ -384,15 +386,15 @@
   position: absolute;
   inset: 0;
   content: "";
-  background: linear-gradient(0deg,#071015f0 0%,#0b141948 35%,transparent 64%);
+  background: linear-gradient(0deg,#071015f5 0%,#071015cc 45%,#07101530 78%,transparent 100%);
   z-index: -1
 }
 
 .editorial-photo {
   position: absolute;
   inset: 0;
-  background-image: url('/assets/joias-editorial.png');
-  background-size: 300% 100%;
+  background-image: url('/assets/joias-editorial.webp');
+  background-size: 300% auto;
   background-repeat: no-repeat;
   z-index: -2;
   transition: transform .65s var(--ease)
@@ -425,10 +427,21 @@
   gap: 8px
 }
 
+.editorial-caption>span:first-child,
+.combinations-inner>div,
+.gift-section>div,
+.footer-grid>div,
+.preview-product>div,
+.search-result>span {
+  min-width: 0;
+  overflow-wrap: break-word
+}
+
 .editorial-caption small {
   display: block;
-  font-size: 8px;
-  letter-spacing: 1.7px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  line-height: 1.5;
   text-transform: uppercase;
   color: #c8d5da;
   margin-bottom: 9px
@@ -459,7 +472,7 @@
 .editorial-note {
   text-align: right;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 13px;
   line-height: 1.5
 }
@@ -548,7 +561,8 @@
 
 .gift-visual {
   position: relative;
-  min-height: 440px;
+  min-height: 0;
+  aspect-ratio: 1.2;
   background: #10181d;
   overflow: hidden
 }
@@ -556,7 +570,7 @@
 .gift-visual>span {
   position: absolute;
   inset: 0;
-  background: url('/assets/joias-editorial.png') 100% 50%/300% 100% no-repeat
+  background: url('/assets/joias-editorial.webp') 100% 50%/300% auto no-repeat
 }
 
 .gift-visual:after {
@@ -618,7 +632,7 @@
 
 .gift-note {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 17px
 }
@@ -682,7 +696,7 @@
 }
 
 .footer-brand p {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 1.6px;
   text-transform: uppercase;
   color: #bbc5ca;
@@ -701,7 +715,7 @@
 .footer-grid>div>button,
 .footer-contact p {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
   padding: 0;
   color: #aebbc3;
@@ -722,7 +736,7 @@
   border-bottom: 1px solid #84959e;
   padding-block: 5px;
   margin-top: 15px;
-  font-size: 11px
+  font-size: 12px
 }
 
 .footer-contact-link .icon {
@@ -736,7 +750,7 @@
   align-items: center;
   gap: 20px;
   padding-block: 20px;
-  font-size: 8px;
+  font-size: 11px;
   color: #9faeb6
 }
 
@@ -746,7 +760,8 @@
 }
 
 .footer-bottom .preview-label {
-  color: #99afb9
+  color: #99afb9;
+  font-size: 11px
 }
 
 .site-dialog {
@@ -1094,7 +1109,7 @@
   }
 
   .editorial-card {
-    aspect-ratio: .78
+    aspect-ratio: 1
   }
 
   .editorial-caption {
@@ -1104,12 +1119,12 @@
   }
 
   .editorial-caption small {
-    font-size: 7px;
-    letter-spacing: 1px
+    font-size: 11px;
+    letter-spacing: .6px
   }
 
   .editorial-caption strong {
-    font-size: 25px
+    font-size: clamp(21px,2.8vw,25px)
   }
 
   .circle-arrow {
@@ -1142,7 +1157,8 @@
   }
 
   .gift-visual {
-    min-height: 380px
+    min-height: 0;
+    aspect-ratio: 1.2
   }
 
   .gift-content h2 {
@@ -1277,7 +1293,7 @@
 
   .hero-content {
     padding-top: 290px;
-    padding-bottom: 95px;
+    padding-bottom: 112px;
     position: relative
   }
 
@@ -1292,7 +1308,7 @@
   }
 
   .hero h1 {
-    font-size: 52px;
+    font-size: clamp(44px,13.4vw,52px);
     line-height: 1.08;
     letter-spacing: -1.9px;
     margin-top: 15px
@@ -1308,20 +1324,21 @@
   .hero-ctas {
     gap: 9px;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     margin-top: 22px
   }
 
   .hero-ctas .button {
-    min-height: 46px;
-    font-size: 10px;
-    gap: 13px;
-    padding: 12px 16px
+    min-height: 48px;
+    font-size: 12px;
+    gap: 10px;
+    padding: 12px 14px;
+    white-space: nowrap
   }
 
   .hero-ctas .button-outline {
-    padding: 12px 11px;
-    font-size: 9px
+    padding: 12px 13px;
+    font-size: 12px
   }
 
   .hero-ctas .icon {
@@ -1329,13 +1346,14 @@
   }
 
   .hero-bottom {
-    bottom: 29px
+    bottom: 35px;
+    gap: 12px
   }
 
   .hero-discover {
-    font-size: 7px;
-    letter-spacing: 1px;
-    gap: 10px
+    font-size: 10px;
+    letter-spacing: .5px;
+    gap: 8px
   }
 
   .scroll-mark {
@@ -1350,14 +1368,14 @@
   }
 
   .hero-signature {
-    font-size: 7px;
-    letter-spacing: 1.2px
+    font-size: 9px;
+    letter-spacing: .7px
   }
 
   .image-credit {
     right: 22px;
-    bottom: 7px;
-    font-size: 6px;
+    bottom: 8px;
+    font-size: 10px;
     color: #9dabb3
   }
 
@@ -1397,7 +1415,9 @@
   }
 
   .category-links {
-    gap: 8px 15px;
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 6px 12px;
     margin-top: 21px;
     margin-bottom: 21px
   }
@@ -1407,8 +1427,9 @@
   }
 
   .category-link {
-    font-size: 11px;
-    min-height: 31px;
+    font-size: 12px;
+    min-height: 44px;
+    min-width: 0;
     border-bottom: 1px solid #bdc6c9;
     padding: 4px 0
   }
@@ -1419,7 +1440,7 @@
   }
 
   .editorial-card {
-    aspect-ratio: .73
+    aspect-ratio: 1
   }
 
   .editorial-card:nth-child(3) {
@@ -1434,18 +1455,19 @@
 
   .editorial-caption {
     bottom: 18px;
-    left: 14px;
-    right: 13px
+    left: 12px;
+    right: 10px;
+    gap: 6px
   }
 
   .editorial-caption small {
-    font-size: 6px;
-    letter-spacing: .7px;
+    font-size: 11px;
+    letter-spacing: .6px;
     margin-bottom: 7px
   }
 
   .editorial-caption strong {
-    font-size: 25px;
+    font-size: clamp(20px,6vw,25px);
     letter-spacing: -.5px
   }
 
@@ -1455,7 +1477,7 @@
   }
 
   .editorial-note {
-    font-size: 8px;
+    font-size: 11px;
     text-align: left;
     line-height: 1.7;
     max-width: 300px
@@ -1502,11 +1524,12 @@
   }
 
   .gift-visual {
-    min-height: 310px
+    min-height: 0;
+    aspect-ratio: 1
   }
 
   .gift-visual>span {
-    background-size: 300% 100%;
+    background-size: 300% auto;
     background-position: 100% 50%
   }
 
@@ -1543,7 +1566,7 @@
   }
 
   .gift-note {
-    font-size: 8px;
+    font-size: 11px;
     margin-top: 13px
   }
 
@@ -1601,15 +1624,15 @@
 
   .footer-brand p {
     margin: 0;
-    font-size: 6px;
-    letter-spacing: 1px;
-    max-width: 80px;
+    font-size: 11px;
+    letter-spacing: .6px;
+    max-width: 130px;
     text-align: right;
     line-height: 1.8
   }
 
   .footer-grid h3 {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 1.2px;
     margin-bottom: 14px
   }
@@ -1617,7 +1640,7 @@
   .footer-grid>div>a:not(.brand),
   .footer-grid>div>button,
   .footer-contact p {
-    font-size: 10px;
+    font-size: 12px;
     min-height: 30px;
     margin-block: 4px
   }
@@ -1634,7 +1657,7 @@
 
   .footer-contact .footer-contact-link {
     margin-top: 12px;
-    font-size: 10px;
+    font-size: 12px;
     display: inline-flex;
     gap: 22px
   }
@@ -1642,13 +1665,13 @@
   .footer-bottom {
     padding-block: 19px;
     gap: 11px;
-    font-size: 7px;
+    font-size: 11px;
     align-items: flex-start;
     flex-direction: column
   }
 
   .footer-bottom .preview-label {
-    font-size: 7px
+    font-size: 11px
   }
 
   .site-dialog {
@@ -1733,5 +1756,33 @@
 
   .text-link {
     min-height: 44px
+  }
+}
+
+@media (max-width:360px) {
+  .header-inner {
+    gap: 8px
+  }
+
+  .site-header .brand {
+    gap: 7px
+  }
+
+  .site-header .brand-type {
+    font-size: 21px
+  }
+
+  .editorial-caption .circle-arrow {
+    display: none
+  }
+}
+
+@media (max-width:340px) {
+  .hero h1 {
+    font-size: 42px
+  }
+
+  .hero-ctas .button {
+    width: 100%
   }
 }

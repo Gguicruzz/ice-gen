@@ -5,6 +5,8 @@
 - Origem gerada preservada: `C:\Users\Nestu\.codex\generated_images\01a160c2-7f4b-7140-a262-2d371c9df59f\exec-3b3ff377-6ec2-4ff8-afcf-f7dc1401ba74.png`.
 - Uso: campanha editorial ilustrativa, sem vínculo com um SKU, estoque ou fotografia oficial. Não é uma reprodução do arquivo Figma, cujo conteúdo não foi acessado.
 - A imagem foi copiada para a nova pasta. Nenhum asset do projeto original foi substituído.
+- A Home entrega `dist/assets/campaign-hero.webp`, uma versão comprimida com Sharp (WebP, qualidade 87), nas mesmas dimensões de 1536 × 1024. O PNG original permanece preservado.
+- A composição recebida `joias-editorial.png` também tem uma versão `dist/assets/joias-editorial.webp`, nas mesmas dimensões de 2172 × 724. A conversão altera somente a codificação para entrega web; não é uma nova geração de imagem nem substitui os originais.
 
 ## Prompt final
 

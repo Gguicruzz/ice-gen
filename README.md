@@ -31,7 +31,6 @@ O comando verifica a sintaxe dos arquivos JavaScript, referências locais de HTM
 | `docs/REFERENCIAS.md` | Análise visual, fontes, assets e limites dos anexos |
 | `docs/VALIDACAO-HOME.md` | Verificações da primeira Home e limites da revisão |
 | `docs/PROMPT-IMAGEM.md` | Procedência, arquivo e prompt da campanha ilustrativa |
-| `docs/PROMPT-IMAGEM.md` | Procedência e prompt da imagem de campanha do hero |
 | `docs/inventario-sacola-favoritos.json` | Índice das entradas recuperáveis do ZIP de referências |
 | `server.js` | Servidor estático local sem dependências |
 | `scripts/check.mjs` | Verificações de estrutura e sintaxe |
@@ -49,6 +48,8 @@ O ZIP `ICE_GEN_Sacola_Favoritos.zip` está truncado. Onze entradas completas for
 O monograma de identidade foi reaproveitado do legado. As ilustrações legadas de produtos são provisórias; há arquivos duplicados entre peças e variantes, e eles não representam fotografias oficiais. `joias-editorial.png`, recuperada do pacote de referências, é uma imagem ilustrativa gerada por IA.
 
 A imagem de campanha do hero foi gerada com a ferramenta ImageGen integrada ao Codex e está em `dist/assets/campaign-hero.png`. Trata-se de direção editorial para revisão visual; sua imagem não confirma o desenho, acabamento, disponibilidade ou composição de um produto real. A procedência e o prompt de geração estão registrados em [docs/PROMPT-IMAGEM.md](docs/PROMPT-IMAGEM.md).
+
+A Home usa versões WebP de hero e editorial para reduzir o carregamento, preservando as dimensões e os PNGs originais. A revisão da primeira tela e seus testes de navegação estão em [docs/VALIDACAO-HOME.md](docs/VALIDACAO-HOME.md).
 
 IDs, descrições e preços do catálogo foram preservados como dados demonstrativos do código legado. Não foram comercialmente validados. Os nomes e valores dos mockups não os substituem. Avaliações, estoque, frete, prazo de envio e outras promessas desenhadas nas imagens não são dados oficiais desta implementação.
 
