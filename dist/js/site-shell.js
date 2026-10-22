@@ -55,26 +55,29 @@ export function mountSiteShell({ page = 'home' } = {}) {
   headerHost.innerHTML = sprite + header;
   footerHost.innerHTML = footer + dialog + '<div class="site-feedback" id="site-feedback" role="status" aria-live="polite"></div>';
   headerHost.querySelector('defs').insertAdjacentHTML('beforeend', '<symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M7 3v6M16 9v6M9 15v6"/></symbol>');
-  const catalog = page === 'catalog';
+  const catalog = page === 'catalog' || page === 'product';
+  const away = page !== 'home';
   headerHost.querySelectorAll('a').forEach(link => {
     const href = link.getAttribute('href');
     if (href === '#joias') link.href = '/catalogo.html';
-    else if (catalog && href?.startsWith('#')) link.href = href === '#inicio' ? '/' : '/' + href;
+    else if (href === '#presentes') link.href = '/presentes.html';
+    else if (away && href?.startsWith('#')) link.href = href === '#inicio' ? '/' : '/' + href;
   });
-  if (catalog) {
+  if (away) {
     headerHost.querySelectorAll('.nav-active, [aria-current]').forEach(link => {
       link.classList.remove('nav-active');
       link.removeAttribute('aria-current');
     });
-    headerHost.querySelectorAll('a[href="/catalogo.html"]').forEach(link => {
+    if (catalog) headerHost.querySelectorAll('a[href="/catalogo.html"]').forEach(link => {
       link.classList.add('nav-active');
-      link.setAttribute('aria-current', 'page');
+      link.setAttribute('aria-current', page === 'catalog' ? 'page' : 'location');
     });
   }
   footerHost.querySelectorAll('a').forEach(link => {
     const href = link.getAttribute('href');
     if (href === '#joias') link.href = '/catalogo.html';
-    else if (catalog && href?.startsWith('#')) link.href = href === '#inicio' ? '/' : '/' + href;
+    else if (href === '#presentes') link.href = '/presentes.html';
+    else if (away && href?.startsWith('#')) link.href = href === '#inicio' ? '/' : '/' + href;
   });
   const favoriteButton = headerHost.querySelector('.favorites-toggle');
   favoriteButton.setAttribute('aria-label', 'Favoritos');

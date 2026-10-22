@@ -1,5 +1,6 @@
 import { products, combinations } from '../data/catalog.js';
-import { createSiteUI, node, icon, money, catalogUrl } from './site-ui.js';
+import { createSiteUI, node, icon, money } from './site-ui.js';
+import { productUrl } from './cart-store.js';
 
 const ui = createSiteUI({ page: 'home' });
 document.querySelectorAll('[data-combination]').forEach(button => button.addEventListener('click', () => {
@@ -13,7 +14,7 @@ document.querySelectorAll('[data-combination]').forEach(button => button.addEven
       const product = products.find(item => item.id === id);
       if (!product) continue;
       const row = node('a', '', 'preview-product');
-      row.href = catalogUrl({ query: product.name });
+      row.href = productUrl(product.id);
       const image = node('img');
       Object.assign(image, { src: product.image, alt: `Ilustração provisória de ${product.name}`, width: 68, height: 68 });
       const details = node('div');

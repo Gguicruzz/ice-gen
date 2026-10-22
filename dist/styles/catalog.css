@@ -398,14 +398,14 @@
   margin-top: 5px;
 }
 
-.product-name button {
+.product-name :is(button, a) {
   padding: 0;
   text-align: left;
   font: inherit;
   min-height: 40px;
 }
 
-.product-name button:hover {
+.product-name :is(button, a):hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -849,7 +849,7 @@
     min-height: 42px;
   }
 
-  .product-name button {
+  .product-name :is(button, a) {
     min-height: 42px;
   }
 

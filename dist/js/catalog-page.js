@@ -1,6 +1,7 @@
 import { products } from '../data/catalog.js';
 import { categories, readCatalogState, catalogSearchParams, selectProducts } from './catalog-model.js';
 import { createSiteUI, node, icon, money } from './site-ui.js';
+import { productUrl } from './cart-store.js';
 
 const ui = createSiteUI({ page: 'catalog', onAction(type) {
   if (type !== 'search') return false;
@@ -58,48 +59,17 @@ function toggleFavorite(product) {
   const saved = result.ids.includes(product.id);
   ui.notify(result.saved ? `${product.name} ${saved ? 'salva nos' : 'removida dos'} favoritos.` : 'A seleção mudou nesta página, mas o navegador não permitiu salvá-la.');
 }
-function openProduct(product) {
-  ui.show(() => {
-    ui.title(product.name);
-    const image = node('img', '', 'quick-product-image');
-    image.src = product.image;
-    image.alt = `Ilustração provisória de ${product.name}`;
-    image.width = 1000;
-    image.height = 1000;
-    const price = node('p', money.format(product.price), 'quick-product-price');
-    const meta = node('p', `${product.material}${product.measurement ? ` · ${product.measurement}` : ''} · Valor demonstrativo`, 'quick-product-meta');
-    const description = node('p', product.description, 'quick-product-description');
-    ui.content.append(image, price, meta, description);
-    ui.note('Dados e ilustração demonstrativos, sujeitos à confirmação. A página individual e a compra ainda não estão disponíveis nesta prévia.');
-    const actions = node('div', '', 'quick-product-actions');
-    const save = node('button', '', 'button button-dark');
-    save.type = 'button';
-    function sync() {
-      const saved = ui.favorites.getIds().includes(product.id);
-      save.replaceChildren(icon('heart'), node('span', saved ? 'Remover dos favoritos' : 'Salvar nos favoritos'));
-      save.setAttribute('aria-pressed', String(saved));
-    }
-    save.addEventListener('click', () => { toggleFavorite(product); sync(); });
-    sync();
-    const close = node('button', 'Continuar explorando', 'button button-secondary');
-    close.type = 'button';
-    close.addEventListener('click', () => ui.dialog.close());
-    actions.append(save, close);
-    ui.content.append(actions);
-  });
-}
 function productCard(product) {
   const card = node('article', '', 'product-card');
   card.dataset.productId = product.id;
   const media = node('div', '', 'product-media');
-  const open = node('button', '', 'product-image-button');
-  open.type = 'button';
+  const open = node('a', '', 'product-image-button');
+  open.href = productUrl(product.id);
   open.dataset.focusKey = `image-${product.id}`;
   open.setAttribute('aria-label', `Conhecer ${product.name}`);
   const image = node('img');
   Object.assign(image, { src: product.image, alt: `Ilustração provisória de ${product.name}`, width: 1000, height: 1000, loading: 'lazy', decoding: 'async' });
   open.append(image);
-  open.addEventListener('click', () => openProduct(product));
   const save = node('button', '', 'product-save');
   save.type = 'button';
   save.dataset.focusKey = `save-${product.id}`;
@@ -109,18 +79,16 @@ function productCard(product) {
   media.append(open, save, node('span', 'Ilustração', 'illustration-label'));
   const category = node('p', `${product.categoryLabel} · ${product.material}`, 'product-category');
   const title = node('h3', '', 'product-name');
-  const titleButton = node('button', product.name);
-  titleButton.type = 'button';
+  const titleButton = node('a', product.name);
+  titleButton.href = productUrl(product.id);
   titleButton.dataset.focusKey = `title-${product.id}`;
-  titleButton.addEventListener('click', () => openProduct(product));
   title.append(titleButton);
   const price = node('p', money.format(product.price), 'product-price');
   price.append(node('small', 'Valor demonstrativo'));
-  const details = node('button', 'Conhecer a peça', 'product-details');
-  details.type = 'button';
+  const details = node('a', 'Conhecer a peça', 'product-details');
+  details.href = productUrl(product.id);
   details.dataset.focusKey = `details-${product.id}`;
   details.append(icon('arrow'));
-  details.addEventListener('click', () => openProduct(product));
   card.append(media, category, title, price, details);
   return card;
 }

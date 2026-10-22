@@ -2,6 +2,8 @@ import { mountSiteShell } from './site-shell.js';
 import { createFavoritesStore } from './favorites-store.js';
 import { products } from '../data/catalog.js';
 import { categories, normalizeSearch } from './catalog-model.js';
+import { createCartStore, itemCount, totalCents, itemTotalCents, productUrl } from './cart-store.js';
+import { wraps as giftWraps } from '../data/gifts.js';
 
 export const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 export function node(tag, text, className) {
@@ -27,7 +29,7 @@ export function catalogUrl({ query = '', category = '', favorites = false } = {}
   return `/catalogo.html${params.size ? `?${params}` : ''}`;
 }
 
-export function createSiteUI({ page = 'home', onAction } = {}) {
+export function createSiteUI({ page = 'home', onAction, wraps = giftWraps } = {}) {
   mountSiteShell({ page });
   const dialog = document.querySelector('#site-dialog');
   const content = document.querySelector('#dialog-content');
@@ -40,6 +42,7 @@ export function createSiteUI({ page = 'home', onAction } = {}) {
   let storage;
   try { storage = window.localStorage; } catch { storage = undefined; }
   const favorites = createFavoritesStore({ storage, validIds: products.map(product => product.id) });
+  const cart = createCartStore({ storage, products, wraps });
 
   function notify(message) {
     clearTimeout(feedbackTimer);
@@ -136,6 +139,8 @@ export function createSiteUI({ page = 'home', onAction } = {}) {
   function commonAction(type) {
     if (type === 'search') { search(); return; }
     if (type === 'favorites') { location.assign(catalogUrl({ favorites: true })); return; }
+    if (type === 'bag') { openBag(); return; }
+    if (type === 'gift') { location.assign('/presentes.html'); return; }
     show(() => {
       if (type === 'care') {
         title('Cuide dos seus detalhes.');
@@ -144,11 +149,7 @@ export function createSiteUI({ page = 'home', onAction } = {}) {
         content.append(list);
         return;
       }
-      if (type === 'gift') {
-        title('Um presente com a sua escolha.');
-        content.append(node('p', 'Uma corrente, um pingente e uma embalagem. Escolha cada detalhe para criar um presente com significado.', 'dialog-lead'));
-        note('Montagem indisponível nesta prévia. Peças, embalagens e valores aguardam confirmação.');
-      } else if (type === 'contact') {
+      if (type === 'contact') {
         title('Fale com a ICE GEN.');
         content.append(node('p', 'O canal oficial de atendimento será disponibilizado após confirmação.', 'dialog-lead'));
         note('Contato pendente de confirmação. Esta prévia não recebe pedidos.');
@@ -159,6 +160,83 @@ export function createSiteUI({ page = 'home', onAction } = {}) {
       }
       catalogLink();
     });
+  }
+  function openBag({ focusKey } = {}) {
+    cart.refresh();
+    show(() => {
+      title('Sua sacola. Suas escolhas.');
+      const items = cart.getItems();
+      const list = node('div', '', 'bag-preview-list');
+      list.dataset.bagList = '';
+      if (!items.length) list.append(node('p', 'Sua sacola está vazia. Encontre a peça que combina com você.', 'dialog-lead'));
+      function mutate(action) {
+        const result = action();
+        if (!result.ok) notify(result.reason === 'quantity' || result.reason === 'limit' ? 'Escolha uma quantidade inteira entre 1 e 99.' : 'Não foi possível atualizar a sacola. Tente novamente com o armazenamento do navegador permitido.');
+      }
+      for (const item of items) {
+        const row = node('article', '', 'bag-preview-item');
+        row.dataset.lineId = item.id;
+        const body = node('div', '', 'bag-preview-body');
+        const name = node('h3', item.name);
+        if (item.category !== 'presente') {
+          const product = products.find(product => product.id === (item.productId || item.id));
+          if (product) { const anchor = node('a', item.name); anchor.href = productUrl(product.id); name.replaceChildren(anchor); }
+        }
+        body.append(name);
+        if (item.variantLabel) body.append(node('p', item.variantLabel, 'bag-preview-meta'));
+        if (Array.isArray(item.giftComponents) && item.giftComponents.length) {
+          const parts = node('ul', '', 'bag-preview-components');
+          item.giftComponents.filter(part => part && typeof part.name === 'string').forEach(part => parts.append(node('li', `${part.name}${part.variantLabel ? ` · ${part.variantLabel}` : ''}${part.quantity > 1 ? ` × ${part.quantity}` : ''}`)));
+          body.append(parts);
+        }
+        body.append(node('p', `${money.format(item.price)} / ${item.category === 'presente' ? 'presente' : 'unidade'}`, 'bag-preview-meta'));
+        const actions = node('div', '', 'bag-preview-actions');
+        const label = node('label', 'Qtd.');
+        const quantity = node('input');
+        Object.assign(quantity, { type: 'number', min: '1', max: '99', step: '1', value: String(item.quantity), inputMode: 'numeric' });
+        quantity.setAttribute('aria-label', `Quantidade de ${item.name}`);
+        quantity.dataset.focusKey = `bag-quantity-${item.id}`;
+        const quantityForm = node('form', '', 'bag-quantity-form');
+        quantityForm.noValidate = true;
+        const update = node('button', 'Atualizar'); update.type = 'submit'; update.setAttribute('aria-label', `Atualizar quantidade de ${item.name}`);
+        update.dataset.focusKey = `bag-update-${item.id}`;
+        quantityForm.addEventListener('submit', event => {
+          event.preventDefault();
+          const result = cart.setQuantity(item.id, Number(quantity.value));
+          if (!result.ok) { quantity.value = String(item.quantity); notify('Não foi possível alterar a quantidade. Use um inteiro de 1 a 99 e permita o armazenamento do navegador.'); }
+        });
+        label.append(quantity); quantityForm.append(label, update); actions.append(quantityForm);
+        if (item.category === 'presente' && cart.editableGift(item)) {
+          const edit = node('a', 'Editar presente'); edit.href = `/presentes.html?editar=${encodeURIComponent(item.id)}`; actions.append(edit);
+        }
+        const remove = node('button', 'Remover'); remove.type = 'button'; remove.setAttribute('aria-label', `Remover ${item.name} da sacola`);
+        remove.addEventListener('click', () => mutate(() => cart.remove(item.id)));
+        actions.append(remove);
+        body.append(actions);
+        row.append(body, node('strong', money.format(itemTotalCents(item) / 100), 'bag-preview-line-total'));
+        list.append(row);
+      }
+      content.append(list);
+      if (items.length) {
+        const total = node('p', '', 'bag-preview-total');
+        const cents = totalCents(items);
+        total.append(node('span', 'Subtotal demonstrativo'), node('strong', cents === null ? 'A conferir' : money.format(cents / 100))); content.append(total);
+        if (cents === null) note('O total não pôde ser calculado. Confira as quantidades e remova itens inválidos antes de continuar.');
+      }
+      note('Escolhas salvas neste navegador. Valores demonstrativos. Frete e finalização de pedido ainda não estão disponíveis.');
+      catalogLink(items.length ? 'Continuar explorando' : 'Explorar joias');
+    });
+    if (focusKey) content.querySelector(`[data-focus-key="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
+  }
+  function updateCart() {
+    const count = itemCount(cart.getItems());
+    document.querySelectorAll('.bag-count').forEach(counter => { counter.textContent = count; counter.setAttribute('aria-label', `${count} ${count === 1 ? 'item' : 'itens'}`); });
+    document.querySelectorAll('[data-dialog="bag"]').forEach(button => button.setAttribute('aria-label', `Abrir sacola, ${count} ${count === 1 ? 'item' : 'itens'}`));
+    if (dialog.open && content.querySelector('[data-bag-list]')) {
+      const focusKey = document.activeElement?.dataset.focusKey;
+      // Reuse the modal so the next change keeps its focus and scroll context.
+      openBag({ focusKey });
+    }
   }
   function updateFavoritesCount() {
     const count = favorites.getIds().length;
@@ -195,10 +273,15 @@ export function createSiteUI({ page = 'home', onAction } = {}) {
     else if (replacement) replacement.focus({ preventScroll: true });
     else if (document.querySelector('#results-title')) document.querySelector('#results-title').focus({ preventScroll: true });
     else if (menuToggle.getClientRects().length) menuToggle.focus({ preventScroll: true });
+    else document.querySelector('main')?.focus({ preventScroll: true });
   });
   favorites.subscribe(updateFavoritesCount);
+  cart.subscribe(updateCart);
   addEventListener('storage', event => { if (event.key === 'icegen-favorites' || event.key === null) favorites.refresh(); });
+  addEventListener('storage', event => { if (event.key === 'icegen-cart' || event.key === null) cart.refresh(); });
+  addEventListener('pageshow', () => { favorites.refresh(); cart.refresh(); });
   updateFavoritesCount();
+  updateCart();
   document.querySelector('#year').textContent = new Date().getFullYear();
-  return { dialog, content, show, title, note, catalogLink, favorites, notify, setMenu };
+  return { dialog, content, show, title, note, catalogLink, favorites, cart, openBag, notify, setMenu };
 }

@@ -2,6 +2,8 @@
 
 Auditoria realizada em 21/10/2026, antes da reconstrução da interface. Esta etapa entrega somente a Home responsiva para revisão; catálogo completo, ficha de produto, presentes, sacola e conta ficam registrados para as próximas etapas.
 
+Atualização em 22/10/2026: catálogo e, depois, fichas de produto e presentes foram implementados conforme os pedidos seguintes. O inventário abaixo mantém o registro da auditoria original; o estado atual e as diferenças de implementação estão em `CATALOGO.md` e `PRODUTOS-PRESENTES.md`.
+
 ## Fontes e preservação do original
 
 - Projeto principal: `C:\Users\Nestu\OneDrive\Documentos\ice gen (5).zip`, raiz interna `ice gen/`.

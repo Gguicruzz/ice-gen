@@ -112,6 +112,20 @@
   line-height: 1.7;
 }
 
+.bag-preview-list { margin-top: 24px; }
+.bag-preview-item { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--line); padding: 18px 0; }
+.bag-preview-body { min-width: 0; }
+.bag-preview-body h3 { font-size: 13px; font-weight: 550; line-height: 1.6; }
+.bag-preview-body h3 a { text-decoration: underline; text-underline-offset: 4px; }
+.bag-preview-meta { color: var(--muted); font-size: 11px; margin-top: 5px; }
+.bag-preview-line-total { font-size: 12px; white-space: nowrap; padding-top: 3px; }
+.bag-preview-components { font-size: 11px; padding-left: 15px; color: #546974; margin-block: 9px; }
+.bag-preview-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 12px; font-size: 11px; }
+.bag-preview-actions input { width: 50px; min-height: 40px; margin-left: 8px; border: 1px solid #adb9c0; background: transparent; text-align: center; }
+.bag-quantity-form { display: flex; align-items: center; gap: 12px; }
+.bag-preview-actions button, .bag-preview-actions a { min-height: 40px; display: inline-flex; align-items: center; text-decoration: underline; text-underline-offset: 4px; padding: 0; }
+.bag-preview-total { display: flex; justify-content: space-between; gap: 16px; font-size: 13px; margin-block: 22px; }
+
 @media (max-width: 600px) {
   .site-feedback {
     bottom: 16px;

@@ -1,6 +1,6 @@
 # Parte 2 — catálogo
 
-Implementação em 22/10/2026. Esta entrega adiciona o catálogo completo à Home revisada. Produto individual, sacola, montagem e conta continuam nas próximas partes.
+Implementação em 22/10/2026. Esta entrega adicionou o catálogo completo à Home revisada. As partes 3 e 4 foram implementadas em seguida e estão registradas em [PRODUTOS-PRESENTES.md](PRODUTOS-PRESENTES.md).
 
 ## Rotas e navegação
 
@@ -18,9 +18,9 @@ Implementação em 22/10/2026. Esta entrega adiciona o catálogo completo à Hom
 - Remoção individual da seleção por chips e limpeza dos filtros; estado vazio com retorno às peças.
 - Busca explícita por botão/Enter. Um rascunho ainda não enviado permanece no campo ao alterar filtros, ordenação ou favoritos.
 - Em celular/tablet, o mesmo formulário de filtros passa para um diálogo nativo. A seleção atualiza os resultados e “Ver peças” fecha o diálogo. Escape mantém a seleção atual e devolve o foco ao botão Filtros.
-- Cards permitem abrir uma prévia da peça com nome, preço, descrição e medida cadastrada. Isso não substitui uma URL própria de produto; nenhuma ficha individual é declarada pronta.
+- Cards agora abrem a página individual `/produto.html?id=<id>` pela imagem, nome ou ação “Conhecer a peça”. A prévia modal da parte 2 foi substituída na parte 3.
 - Corações alternam favoritos; a seleção usa a chave legada `icegen-favorites`, com IDs válidos, deduplicação, leitura segura e atualização entre abas. Nenhuma chave da sacola é alterada.
-- Se o navegador bloquear gravações, a seleção continua em memória e um aviso informa que ela não foi salva. Avisos dentro da prévia de uma peça ficam no próprio diálogo modal.
+- Se o navegador bloquear gravações de favoritos, a seleção continua em memória e um aviso informa que ela não foi salva. Isso é diferente da sacola, que só confirma mudanças após gravação bem-sucedida.
 - Remover filtros e favoritos reposiciona o foco quando o controle acionado deixa de existir. Diálogos restauram o foco no card equivalente ou no título dos resultados.
 
 ## Dados e limites

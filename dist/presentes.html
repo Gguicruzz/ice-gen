@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10181D">
+  <meta name="description" content="Monte um presente ICE GEN com corrente, pingente e embalagem. Escolha cada detalhe da sua combinação.">
+  <title>Monte um presente — ICE GEN</title>
+  <link rel="icon" href="/assets/ice-gen-logo-transparent.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/home.css">
+  <link rel="stylesheet" href="/styles/shop.css">
+  <link rel="stylesheet" href="/styles/product.css">
+  <link rel="stylesheet" href="/styles/gifts.css">
+  <script type="module" src="/js/gift-page.js"></script>
+</head>
+<body class="gifts-page">
+  <a class="skip-link" href="#gift-builder">Ir para a montagem</a>
+  <div data-site-header></div>
+  <main id="conteudo" tabindex="-1">
+    <div class="gift-stage">
+      <div class="wrap">
+        <nav class="gift-breadcrumb" aria-label="Você está aqui"><a href="/">Início</a><span aria-hidden="true">/</span><span aria-current="page">Montagem de presentes</span></nav>
+        <section class="gift-intro" aria-labelledby="gift-title">
+          <div><p class="eyebrow light">Montagem de presentes <span class="gift-intro-line"></span></p><h1 id="gift-title">Você escolhe as peças.<br>A gente ajuda a montar.</h1></div>
+          <div class="gift-intro-copy"><p>Uma corrente, um pingente e uma embalagem. Escolha cada detalhe de um presente com a sua intenção.</p><p class="gift-intro-note">Peças e valores demonstrativos.<br>Fotografias oficiais em preparação.</p></div>
+        </section>
+        <div class="gift-edit-banner" id="gift-edit-banner" hidden><p id="gift-edit-copy"></p><button type="button" id="cancel-edit">Cancelar edição</button></div>
+        <div class="gift-workspace" id="gift-builder">
+          <section class="gift-options-area" aria-label="Escolher os componentes">
+            <nav id="gift-steps" class="gift-steps" aria-label="Etapas da montagem"></nav>
+            <div class="gift-step-heading"><p class="eyebrow light" id="gift-step-number"></p><h2 id="gift-step-title" tabindex="-1"></h2><p id="gift-step-copy"></p></div>
+            <div class="gift-options" id="gift-options"></div>
+            <p class="gift-data-note">Ilustrações provisórias. As embalagens ainda não têm fotografia oficial. Não há confirmação de estoque ou prazo de envio nesta prévia.</p>
+          </section>
+          <aside class="gift-summary" aria-labelledby="gift-summary-title">
+            <div class="gift-summary-heading"><h2 id="gift-summary-title">Sua combinação</h2><span id="gift-progress">Etapa 01 / 03</span></div>
+            <details id="gift-summary-details" open><summary>Ver peças escolhidas <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div id="gift-summary-items"></div></details>
+            <div class="gift-total"><span id="gift-total-label">Total parcial</span><strong id="gift-total" aria-live="polite">A selecionar</strong></div>
+            <p id="gift-missing" class="gift-missing"></p>
+            <button type="button" class="button gift-submit" id="save-gift" disabled><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span>Adicionar presente à sacola</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <p id="gift-feedback" class="gift-feedback" role="status" aria-live="polite"></p>
+            <button type="button" id="gift-see-bag" class="gift-see-bag" hidden>Ver sacola →</button>
+            <p class="gift-summary-note">As três escolhas formam um único presente na sacola. Valores demonstrativos, sem frete ou finalização de pedido.</p>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <section class="gift-bottom wrap"><p class="eyebrow">Prata 925 · ICE GEN</p><h2>Mais que uma peça.<br>Um gesto seu.</h2><a class="text-link" href="/catalogo.html">Explorar todas as joias <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></section>
+  </main>
+  <div data-site-footer></div>
+  <noscript><nav class="noscript"><a href="/catalogo.html">Voltar ao catálogo</a> · Ative o JavaScript para montar um presente.</nav></noscript>
+</body>
+</html>
