@@ -202,6 +202,11 @@ saveButton.addEventListener('click', () => {
     previousDraft = {};
     try { draftStorage?.removeItem(draftKey); } catch { /* O presente já está salvo na sacola. */ }
   }
+  if (wasEditing) {
+    saving = false; renderSummary();
+    location.assign(`/sacola.html?presente=${encodeURIComponent(result.itemId)}&atualizado=1`);
+    return;
+  }
   message(wasEditing ? 'Presente atualizado na sacola. A quantidade e os outros itens foram preservados.' : 'Presente adicionado à sacola com as três escolhas juntas.');
   seeBag.hidden = false; newGift.hidden = false; seeBag.focus({ preventScroll: true }); renderSummary();
   setTimeout(() => { saving = false; renderSummary(); }, 700);

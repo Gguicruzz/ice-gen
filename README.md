@@ -1,6 +1,6 @@
 # ICE GEN V2
 
-Reconstrução independente da interface da ICE GEN. Estão implementados Home, catálogo, páginas individuais dos dez produtos e montagem de presentes. Há busca, filtros, favoritos locais e uma sacola em diálogo para revisar produtos e presentes. As telas completas de sacola/favoritos, atendimento por WhatsApp e conta continuam pendentes.
+Reconstrução independente da interface da ICE GEN. Estão implementados Home, catálogo, fichas dos dez produtos, montagem de presentes, páginas completas de sacola e favoritos e consulta pelo WhatsApp confirmado pelo proprietário. As escolhas persistem neste navegador; a consulta abre um rascunho revisável e não confirma compra. Conta de cliente, pagamento, frete e pedidos em servidor não fazem parte desta prévia.
 
 ## Executar localmente
 
@@ -13,7 +13,7 @@ npm run dev
 
 Abra [http://127.0.0.1:4173](http://127.0.0.1:4173). Encerre com `Ctrl+C`. O servidor escuta apenas no endereço local `127.0.0.1`; `PORT` pode substituir a porta padrão. Apenas a pasta `dist/` é servida. Caminhos externos, travessia de diretórios, arquivos ocultos e métodos diferentes de GET/HEAD são bloqueados. Arquivos usam tipo de conteúdo explícito e revalidação de cache.
 
-O catálogo está em [http://127.0.0.1:4173/catalogo.html](http://127.0.0.1:4173/catalogo.html), os produtos em `/produto.html?id=<id>` e a montagem em `/presentes.html`. As páginas usam JavaScript para a navegação compartilhada e as interações; há aviso e retorno ao catálogo quando desativado.
+O catálogo está em [http://127.0.0.1:4173/catalogo.html](http://127.0.0.1:4173/catalogo.html), os produtos em `/produto.html?id=<id>`, a montagem em `/presentes.html`, a sacola em `/sacola.html` e os favoritos em `/favoritos.html`. As páginas usam JavaScript para a navegação compartilhada e as interações; há aviso e retorno ao catálogo quando desativado.
 
 ## Verificar a estrutura
 
@@ -24,13 +24,13 @@ npm test
 
 O comando verifica a sintaxe dos arquivos JavaScript, referências locais de HTML/CSS/JS, existência de assets e importação do catálogo com dez IDs únicos. Âncoras, fragmentos de sprites e destinos externos não são acessados. Não substitui a inspeção no navegador em desktop, celular, teclado e preferências de movimento reduzido.
 
-`npm test` executa 37 testes de catálogo, favoritos, sacola e presentes com o runner nativo do Node. Funcionalidades e limites estão em [docs/CATALOGO.md](docs/CATALOGO.md) e [docs/PRODUTOS-PRESENTES.md](docs/PRODUTOS-PRESENTES.md).
+`npm test` executa 56 testes de catálogo, favoritos, sacola, presentes, complementos e rascunho de WhatsApp com o runner nativo do Node. O estado atual e a revisão estão em [docs/SACOLA-FAVORITOS-WHATSAPP.md](docs/SACOLA-FAVORITOS-WHATSAPP.md); as etapas anteriores estão em [docs/CATALOGO.md](docs/CATALOGO.md) e [docs/PRODUTOS-PRESENTES.md](docs/PRODUTOS-PRESENTES.md).
 
 ## Estrutura
 
 | Caminho | Finalidade |
 | --- | --- |
-| `dist/` | Home, catálogo, produtos, presentes e seus assets |
+| `dist/` | Home, catálogo, produtos, presentes, sacola, favoritos e assets |
 | `dist/data/` | Dados e configuração preservados, com metadados demonstrativos |
 | `dist/js/site-shell.js` / `site-ui.js` | Cabeçalho, rodapé, menus, diálogos e feedback compartilhados |
 | `dist/js/catalog-model.js` / `catalog-page.js` | Regras de busca/filtros/URL e apresentação do catálogo |
@@ -38,12 +38,16 @@ O comando verifica a sintaxe dos arquivos JavaScript, referências locais de HTM
 | `dist/js/cart-store.js` | Sacola transacional, quantidades, centavos, variantes e grupos de presente |
 | `dist/js/product-page.js` | Ficha individual, ampliação, quantidade, favoritos e complementos |
 | `dist/js/gift-model.js` / `gift-page.js` | Etapas, rascunho, composição e edição de presentes |
-| `tests/` | Regressões de catálogo, favoritos, sacola e presentes |
+| `dist/js/bag-model.js` / `bag-page.js` | Complementos e página completa da sacola |
+| `dist/js/favorites-page.js` | Página própria de favoritos |
+| `dist/js/whatsapp-model.js` | Mensagem de consulta, validação dos snapshots e URL codificada |
+| `tests/` | Regressões das regras e persistência, sem envio de mensagens |
 | `docs/INVENTARIO.md` | Inventário funcional, dados e regras do legado a preservar |
 | `docs/REFERENCIAS.md` | Análise visual, fontes, assets e limites dos anexos |
 | `docs/VALIDACAO-HOME.md` | Verificações da primeira Home e limites da revisão |
 | `docs/CATALOGO.md` | Parte 2: funcionalidades, rotas, testes e limites |
 | `docs/PRODUTOS-PRESENTES.md` | Partes 3 e 4: regras preservadas, rotas, testes e limites |
+| `docs/SACOLA-FAVORITOS-WHATSAPP.md` | Partes 5, 6 e 7: sacola, favoritos, WhatsApp e revisão final |
 | `docs/PROMPT-IMAGEM.md` | Procedência, arquivo e prompt da campanha ilustrativa |
 | `docs/inventario-sacola-favoritos.json` | Índice das entradas recuperáveis do ZIP de referências |
 | `server.js` | Servidor estático local sem dependências |
@@ -67,4 +71,4 @@ A Home usa versões WebP de hero e editorial para reduzir o carregamento, preser
 
 IDs, descrições e preços do catálogo foram preservados como dados demonstrativos do código legado. Não foram comercialmente validados. Os nomes e valores dos mockups não os substituem. Avaliações, estoque, frete, prazo de envio e outras promessas desenhadas nas imagens não são dados oficiais desta implementação.
 
-O contato WhatsApp vem do legado e ainda requer validação comercial. A prévia não processa pagamento, pedidos, entrega ou conta de cliente. Persistência local não equivale a conta ou sincronização entre aparelhos. O acesso privado do Sites permanece restrito ao proprietário.
+O WhatsApp (11) 94860-8322 veio do legado e foi confirmado explicitamente pelo proprietário em 23/10/2026. A prévia não processa pagamento, pedidos, entrega ou conta de cliente. Persistência local não equivale a conta ou sincronização entre aparelhos. O acesso privado do Sites permanece restrito ao proprietário.

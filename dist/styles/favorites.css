@@ -1,0 +1,88 @@
+.favorites-intro { padding-block: 27px 52px; }
+.favorites-breadcrumb { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 11px; margin-bottom: 39px; }
+.favorites-breadcrumb a { padding-block: 5px; }
+.favorites-breadcrumb a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.favorites-breadcrumb [aria-current] { color: var(--ink); }
+.favorites-intro-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
+.favorites-intro h1 { font-size: clamp(42px, 4.5vw, 66px); letter-spacing: -2px; margin-top: 14px; }
+.favorites-lead { color: var(--muted); font-size: 15px; line-height: 1.7; margin-top: 20px; }
+.favorites-intro-row > .text-link { margin-bottom: 5px; }
+.favorites-content { padding-bottom: 64px; }
+.favorites-toolbar { display: flex; justify-content: space-between; gap: 20px; align-items: center; border-top: 1px solid var(--line); padding-block: 24px; }
+.favorites-toolbar h2 { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: .2px; line-height: 1.7; }
+.favorites-toolbar p { font-size: 12px; color: var(--muted); }
+.favorites-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; }
+.favorites-card { min-width: 0; }
+.favorites-card-media { position: relative; display: block; overflow: hidden; background: #e8edef; aspect-ratio: 1.16; }
+.favorites-card-media img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: transform .35s var(--ease); }
+.favorites-card-media:hover img { transform: scale(1.04); }
+.favorites-image-label { position: absolute; bottom: 12px; left: 13px; padding: 3px 8px; background: #f3f1ece6; color: #506571; font-size: 9px; letter-spacing: .6px; }
+.favorites-card-body { padding-top: 15px; }
+.favorites-card-meta { font-size: 11px; color: var(--muted); line-height: 1.65; }
+.favorites-card h3 { font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.5; margin-top: 7px; overflow-wrap: anywhere; }
+.favorites-card h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.favorites-card-price { margin-top: 11px; font-weight: 600; font-size: 17px; line-height: 1.5; }
+.favorites-card-price span { display: block; color: var(--muted); font-size: 10px; font-weight: 400; margin-top: 1px; }
+.favorites-detail-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 11px; text-decoration: underline; text-underline-offset: 5px; }
+.favorites-detail-link .icon { width: 16px; height: 16px; }
+.favorites-detail-link:hover { color: #486b82; }
+.favorites-card-actions { margin-top: 3px; }
+.favorites-add { width: 100%; gap: 12px; min-height: 48px; padding-inline: 12px; }
+.favorites-add[aria-disabled="true"] { opacity: .65; cursor: wait; }
+.favorites-card-feedback { font-size: 11px; color: #31566c; line-height: 1.7; }
+.favorites-card-feedback:not(:empty) { padding: 11px 12px; margin-top: 10px; background: #e0e8eb; }
+.favorites-remove { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44px; padding: 10px 4px; margin-top: 2px; font-size: 10px; color: #58646c; }
+.favorites-remove .icon { width: 16px; height: 16px; fill: #84a6be36; }
+.favorites-remove:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.favorites-empty { padding: 43px 24px 62px; border-bottom: 1px solid var(--line); text-align: center; }
+.favorites-empty-icon { display: flex; justify-content: center; align-items: center; width: 58px; height: 58px; border: 1px solid #c3ced3; border-radius: 50%; margin: 0 auto 22px; }
+.favorites-empty-icon .icon { width: 23px; height: 23px; }
+.favorites-empty h3 { font-family: var(--serif); font-size: clamp(30px, 3.4vw, 42px); font-weight: 400; line-height: 1.2; letter-spacing: -1px; margin-top: 12px; }
+.favorites-empty > p:not(.eyebrow) { max-width: 370px; margin: 17px auto 24px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+.favorites-notes { display: flex; align-items: flex-start; gap: 11px; border-top: 1px solid var(--line); padding-top: 20px; margin-top: 27px; color: var(--muted); font-size: 11px; }
+.favorites-notes .icon { width: 17px; height: 17px; margin-top: 1px; }
+.favorites-notes span { margin-left: 6px; }
+.favorites-editorial { position: relative; min-height: 328px; margin-bottom: 68px; display: flex; align-items: center; padding: 48px; color: var(--paper); background: linear-gradient(90deg, #0d171cf5 0%, #0d171ceb 33%, #0d171c73 66%, #0d171c20 100%), url('/assets/joias-editorial.webp') center 37% / cover no-repeat; }
+.favorites-editorial-copy { max-width: 580px; position: relative; }
+.favorites-editorial h2 { font-size: 47px; letter-spacing: -1.7px; margin-top: 13px; }
+.favorites-editorial-copy > p:not(.eyebrow) { max-width: 330px; margin-top: 15px; font-size: 13px; color: #c7d0d4; }
+.favorites-editorial-links { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 24px; margin-top: 25px; }
+.favorites-editorial-links .text-link { font-size: 10px; letter-spacing: .6px; }
+.favorites-editorial-credit { position: absolute; bottom: 13px; right: 18px; color: #c5d0d5; font-size: 8px; }
+
+@media (max-width: 1000px) {
+  .favorites-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
+  .favorites-intro-row { align-items: flex-start; }
+  .favorites-intro-row > .text-link { margin-top: 27px; font-size: 10px; gap: 10px; }
+  .favorites-editorial { padding: 36px; background-position: 58% center; }
+}
+
+@media (max-width: 600px) {
+  .favorites-intro { padding-block: 20px 32px; }
+  .favorites-breadcrumb { margin-bottom: 26px; font-size: 10px; }
+  .favorites-intro-row { flex-direction: column; gap: 15px; }
+  .favorites-intro h1 { font-size: 42px; letter-spacing: -1.3px; margin-top: 12px; }
+  .favorites-lead { font-size: 13px; margin-top: 15px; max-width: 310px; }
+  .favorites-desktop-break { display: none; }
+  .favorites-intro-row > .text-link { margin: 0; font-size: 10px; }
+  .favorites-toolbar { padding-block: 19px; }
+  .favorites-toolbar h2 { font-size: 12px; }
+  .favorites-toolbar p { font-size: 11px; }
+  .favorites-grid { grid-template-columns: minmax(0, 1fr); gap: 27px; }
+  .favorites-card-media { aspect-ratio: 1.18; }
+  .favorites-card-body { padding-top: 13px; }
+  .favorites-card h3 { font-size: 17px; }
+  .favorites-card-meta { font-size: 11px; }
+  .favorites-card-price { font-size: 18px; }
+  .favorites-content { padding-bottom: 37px; }
+  .favorites-notes { margin-top: 23px; font-size: 10px; gap: 9px; }
+  .favorites-notes span { display: block; margin-left: 0; margin-top: 4px; }
+  .favorites-empty { padding: 31px 0 42px; }
+  .favorites-empty h3 { font-size: 30px; }
+  .favorites-editorial { min-height: 367px; padding: 30px 24px 44px; margin-bottom: 40px; background: linear-gradient(90deg, #0d171cf0, #0d171cbe), url('/assets/joias-editorial.webp') 55% center / cover no-repeat; }
+  .favorites-editorial h2 { font-size: 36px; letter-spacing: -1px; }
+  .favorites-editorial-copy > p:not(.eyebrow) { font-size: 12px; }
+  .favorites-editorial-links { align-items: flex-start; flex-direction: column; gap: 12px; margin-top: 22px; }
+  .favorites-editorial-links .button { width: 100%; gap: 16px; padding-inline: 17px; }
+  .favorites-editorial-credit { bottom: 11px; left: 24px; right: auto; font-size: 8px; }
+}

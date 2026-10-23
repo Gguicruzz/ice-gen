@@ -46,3 +46,27 @@ test('refresh comunica mudança externa e unsubscribe encerra notificações', (
   store.toggle('a');
   assert.equal(changes.length, 1);
 });
+
+test('duas instâncias preservam favoritos mesmo antes de receber evento storage', () => {
+  const storage = memory();
+  const first = createFavoritesStore({ storage, validIds });
+  const second = createFavoritesStore({ storage, validIds });
+  first.toggle('a'); second.toggle('b');
+  assert.deepEqual(JSON.parse(storage.getItem(FAVORITES_KEY)), ['a', 'b']);
+  second.remove('a'); first.remove('a');
+  assert.deepEqual(JSON.parse(storage.getItem(FAVORITES_KEY)), ['b']);
+  assert.deepEqual(first.getIds(), ['b']);
+});
+
+test('refresh mantém seleção não gravada e recuperação incorpora mudanças externas', () => {
+  const storage = memory();
+  const write = storage.setItem;
+  storage.setItem = () => { throw Error('quota'); };
+  const store = createFavoritesStore({ storage, validIds });
+  assert.equal(store.toggle('a').saved, false);
+  write(FAVORITES_KEY, '["b"]');
+  assert.deepEqual(store.refresh(), ['b', 'a']);
+  storage.setItem = write;
+  assert.equal(store.remove('b').saved, true);
+  assert.equal(storage.getItem(FAVORITES_KEY), '["a"]');
+});

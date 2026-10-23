@@ -25,9 +25,9 @@ const header = `<header class="site-header" id="inicio">
       </nav>
       <div class="header-actions">
         <button class="icon-button search-toggle" type="button" data-dialog="search" aria-label="Buscar joias"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-        <button class="icon-button favorites-toggle" type="button" data-dialog="favorites" aria-label="Favoritos — disponível na próxima etapa"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></button>
+        <button class="icon-button favorites-toggle" type="button" data-dialog="favorites" aria-label="Favoritos"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></button>
         <button class="account-button" type="button" data-dialog="account" aria-label="Entrar na conta"><svg class="icon" aria-hidden="true"><use href="#i-person"/></svg><span>Entrar</span></button>
-        <button class="bag-button" type="button" data-dialog="bag" aria-label="Abrir sacola, 0 itens — disponível na próxima etapa"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span>Sacola</span><span class="bag-count" aria-label="0 itens">0</span></button>
+        <button class="bag-button" type="button" data-dialog="bag" aria-label="Abrir sacola, 0 itens"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span>Sacola</span><span class="bag-count" aria-label="0 itens">0</span></button>
         <button class="icon-button menu-toggle" type="button" aria-label="Abrir menu" aria-controls="mobile-menu" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
       </div>
     </div>
@@ -40,7 +40,7 @@ const header = `<header class="site-header" id="inicio">
 const footer = `<footer class="site-footer" id="contato">
     <div class="wrap footer-grid">
       <div class="footer-brand"><a class="brand" href="#inicio"><img src="/assets/ice-gen-logo-transparent.png" alt="" width="31" height="50"><span class="brand-type">ICE GEN<small>PRATA 925</small></span></a><p>Atitude em cada detalhe.</p></div>
-      <div><h3>Explore</h3><a href="#joias">Nossas joias</a><a href="#combinacoes">Combinações</a><a href="#presentes">Montagem de presentes</a></div>
+      <div><h3>Explore</h3><a href="#joias">Nossas joias</a><a href="#combinacoes">Combinações</a><a href="#presentes">Montagem de presentes</a><a href="/favoritos.html">Meus favoritos</a><a href="/sacola.html">Minha sacola</a></div>
       <div><h3>ICE GEN</h3><a href="#essencia">Nossa essência</a><button type="button" data-dialog="care">Cuidados com a prata</button><button type="button" data-dialog="contact">Fale com a ICE GEN</button></div>
       <div class="footer-contact"><h3>Vamos conversar</h3><p>Uma dúvida sobre as peças?<br>Confira as informações de atendimento.</p><button class="footer-contact-link" type="button" data-dialog="contact">Informações de contato <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
     </div>
@@ -86,5 +86,7 @@ export function mountSiteShell({ page = 'home' } = {}) {
   counter.dataset.favoritesCount = '';
   counter.hidden = true;
   favoriteButton.append(counter);
+  if (page === 'favorites') favoriteButton.setAttribute('aria-current', 'page');
+  if (page === 'bag') headerHost.querySelector('.bag-button').setAttribute('aria-current', 'page');
   footerHost.querySelector('.preview-label').textContent = 'Prévia da coleção · Imagens e preços demonstrativos';
 }

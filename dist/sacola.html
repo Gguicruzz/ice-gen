@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10181D">
+  <meta name="description" content="Reúna suas escolhas ICE GEN. Confira peças, presentes e quantidades na sua sacola.">
+  <title>Sua sacola — ICE GEN</title>
+  <link rel="icon" href="/assets/ice-gen-logo-transparent.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/home.css">
+  <link rel="stylesheet" href="/styles/shop.css">
+  <link rel="stylesheet" href="/styles/bag.css">
+  <script type="module" src="/js/bag-page.js"></script>
+</head>
+<body class="bag-page">
+  <a class="skip-link" href="#conteudo">Ir para a sacola</a>
+  <div data-site-header></div>
+  <main id="conteudo" class="wrap bag-main" tabindex="-1">
+    <nav class="bag-breadcrumb" aria-label="Você está aqui"><a href="/">Início</a><span aria-hidden="true">/</span><span aria-current="page">Sacola</span></nav>
+    <div class="bag-page-heading"><div><p class="eyebrow">Suas escolhas</p><h1 id="bag-title" tabindex="-1">Sua sacola.</h1><p>Os detalhes que você escolheu, reunidos aqui.</p></div><a class="text-link" href="/catalogo.html">Continuar escolhendo <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    <p class="bag-count-copy" id="bag-count-copy" role="status" aria-live="polite"></p>
+    <div class="bag-workspace" id="bag-workspace" hidden>
+      <section class="bag-items-area" aria-label="Itens da sacola"><div class="bag-list-heading"><span>Peça / presente</span><span>Subtotal</span></div><div id="bag-items"></div><p class="bag-storage-note"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg>Suas escolhas ficam salvas neste navegador.</p></section>
+      <aside class="bag-summary" aria-labelledby="bag-summary-title"><p class="eyebrow light">Cada detalhe conta</p><h2 id="bag-summary-title">Resumo da sacola</h2><dl><div><dt>Subtotal</dt><dd id="bag-subtotal"></dd></div><div><dt>Entrega</dt><dd>A confirmar</dd></div><div class="bag-summary-total"><dt>Total parcial</dt><dd id="bag-total" aria-live="polite"></dd></div></dl><p class="bag-summary-error" id="bag-summary-error" hidden>O total não pôde ser calculado. Confira os itens antes de continuar.</p><p class="bag-summary-demo">Valores demonstrativos.<br>Entrega e disponibilidade aguardam confirmação.</p><button class="button button-light" type="button" id="bag-whatsapp">Consultar pelo WhatsApp <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><a class="bag-summary-gift" href="/presentes.html">Montar um presente <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><p class="bag-checkout-note">Confira a mensagem e consulte a ICE GEN. Abrir o WhatsApp não envia a mensagem, não confirma um pedido e mantém sua sacola.</p></aside>
+    </div>
+    <section class="bag-empty" id="bag-empty" aria-labelledby="bag-empty-title" hidden><div class="bag-empty-symbol"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span>ICE GEN</span></div><p class="eyebrow">Toda escolha começa com um detalhe</p><h2 id="bag-empty-title">Sua próxima peça<br>ainda está por vir.</h2><p>Encontre uma joia para você ou monte um presente com significado.</p><div class="bag-empty-actions"><a class="button button-dark" href="/catalogo.html">Explorar joias <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="button button-secondary" href="/presentes.html">Montar um presente</a></div></section>
+    <section class="bag-suggestions" id="bag-suggestions" aria-labelledby="bag-suggestions-title" hidden><div class="bag-suggestions-heading"><div><p class="eyebrow">Peças que se complementam</p><h2 id="bag-suggestions-title" tabindex="-1">Mais um detalhe seu.</h2></div><button type="button" id="bag-suggestions-toggle" aria-expanded="true" aria-controls="bag-suggestions-grid">Ocultar sugestões</button></div><div class="bag-suggestions-grid" id="bag-suggestions-grid"></div></section>
+    <p class="bag-data-note">Catálogo e ilustrações demonstrativos. Preços, fotografias oficiais, medidas e disponibilidade aguardam confirmação.</p>
+  </main>
+  <div data-site-footer></div>
+  <noscript><nav class="noscript"><a href="/catalogo.html">Voltar ao catálogo</a> · Ative o JavaScript para visualizar sua sacola salva neste navegador.</nav></noscript>
+</body>
+</html>

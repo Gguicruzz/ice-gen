@@ -2,6 +2,8 @@
 
 Implementação em 22/10/2026. A parte 3 foi implementada e validada antes da interface da parte 4, conforme a sequência solicitada. Toda a alteração está em `ice-gen-v2`; os arquivos de origem permaneceram somente para leitura.
 
+Atualização em 23/10/2026: o diálogo temporário de sacola descrito nesta entrega foi substituído por `/sacola.html`. Editar e salvar/cancelar um presente agora retorna à página completa da sacola. Favoritos e WhatsApp também foram integrados; ver `SACOLA-FAVORITOS-WHATSAPP.md`. As verificações abaixo registram a entrega original das partes 3 e 4.
+
 ## Parte 3: fichas individuais
 
 - Cada um dos dez produtos tem URL própria em `/produto.html?id=<id>`, inclusive por acesso direto e recarga. Exemplo: `/produto.html?id=corrente-veneziana`. ID ausente/inválido apresenta estado vazio com retorno ao catálogo.
