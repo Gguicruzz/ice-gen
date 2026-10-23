@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 30px
+  gap: 16px
 }
 
 .brand {
@@ -46,8 +46,8 @@
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 35px;
-  margin-left: 92px;
+  gap: 24px;
+  margin-left: 24px;
   height: 100%
 }
 
@@ -57,7 +57,7 @@
   align-items: center;
   gap: 6px;
   position: relative;
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: .5px;
   text-transform: uppercase
 }
@@ -86,7 +86,7 @@
 }
 
 .icon-button {
-  width: 40px;
+  width: 44px;
   height: 44px;
   display: inline-flex;
   align-items: center;
@@ -115,13 +115,13 @@
 }
 
 .bag-button {
-  height: 42px;
+  height: 44px;
   padding: 0 14px;
   display: flex;
   align-items: center;
   gap: 9px;
   border: 1px solid #b4c0c5;
-  font-size: 9px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: .5px;
   margin-left: 8px
@@ -230,7 +230,7 @@
 .hero-copy {
   color: #e1e3e1;
   line-height: 1.65;
-  font-size: 15px;
+  font-size: 16px;
   margin-top: 25px
 }
 
@@ -600,7 +600,7 @@
 }
 
 .gift-content>p:not(.eyebrow) {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.9;
   color: var(--muted);
   margin-top: 22px
@@ -632,7 +632,7 @@
 
 .gift-note {
   display: block;
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 17px
 }
@@ -666,7 +666,7 @@
 }
 
 .essence-inner>p:not(.eyebrow) {
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.8;
   color: #b6c1c5;
   margin-top: 22px
@@ -704,7 +704,7 @@
 }
 
 .footer-grid h3 {
-  font-size: 9px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1.4px;
   font-weight: 600;
@@ -715,7 +715,7 @@
 .footer-grid>div>button,
 .footer-contact p {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   padding: 0;
   color: #aebbc3;
@@ -736,7 +736,7 @@
   border-bottom: 1px solid #84959e;
   padding-block: 5px;
   margin-top: 15px;
-  font-size: 12px
+  font-size: 14px
 }
 
 .footer-contact-link .icon {
@@ -797,7 +797,7 @@
 }
 
 .dialog-lead {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--muted);
   margin-bottom: 22px
 }
@@ -805,7 +805,7 @@
 .dialog-note {
   background: #e6e8e6;
   padding: 13px 16px;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.7;
   color: #4f616b;
   margin-top: 19px
@@ -830,7 +830,7 @@
 .dialog-empty p {
   max-width: 410px;
   margin: 0 auto 22px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted)
 }
 
@@ -1002,7 +1002,7 @@
   }
 
   .hero-copy {
-    font-size: 14px
+    font-size: 16px
   }
 
   .combinations-inner {
@@ -1166,7 +1166,7 @@
   }
 
   .gift-content>p:not(.eyebrow) {
-    font-size: 12px
+    font-size: 16px
   }
 
   .gift-steps {
@@ -1245,7 +1245,7 @@
   }
 
   .icon-button {
-    width: 35px
+    width: 44px
   }
 
   .favorites-toggle {
@@ -1315,7 +1315,7 @@
   }
 
   .hero-copy {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 1.75;
     margin-top: 16px;
     color: #d7dfe2
@@ -1545,7 +1545,7 @@
   }
 
   .gift-content>p:not(.eyebrow) {
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 17px
   }
 
@@ -1566,7 +1566,7 @@
   }
 
   .gift-note {
-    font-size: 11px;
+    font-size: 14px;
     margin-top: 13px
   }
 
@@ -1588,7 +1588,7 @@
   }
 
   .essence-inner>p:not(.eyebrow) {
-    font-size: 11px;
+    font-size: 16px;
     margin-top: 19px
   }
 
@@ -1632,7 +1632,7 @@
   }
 
   .footer-grid h3 {
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 1.2px;
     margin-bottom: 14px
   }
@@ -1640,7 +1640,7 @@
   .footer-grid>div>a:not(.brand),
   .footer-grid>div>button,
   .footer-contact p {
-    font-size: 12px;
+    font-size: 14px;
     min-height: 30px;
     margin-block: 4px
   }
@@ -1657,7 +1657,7 @@
 
   .footer-contact .footer-contact-link {
     margin-top: 12px;
-    font-size: 12px;
+    font-size: 14px;
     display: inline-flex;
     gap: 22px
   }
@@ -1685,7 +1685,7 @@
   }
 
   .dialog-lead {
-    font-size: 12px
+    font-size: 16px
   }
 
   .dialog-empty h2 {
@@ -1693,7 +1693,7 @@
   }
 
   .dialog-empty p {
-    font-size: 12px
+    font-size: 14px
   }
 
   .preview-product {
@@ -1707,7 +1707,7 @@
   }
 
   .dialog-note {
-    font-size: 10px;
+    font-size: 14px;
     padding: 12px
   }
 

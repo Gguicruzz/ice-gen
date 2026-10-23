@@ -20,13 +20,13 @@ const header = `<header class="site-header" id="inicio">
       <nav class="desktop-nav" aria-label="Navegação principal">
         <a class="nav-active" href="#inicio" aria-current="location">Início</a>
         <a href="#joias">Joias</a>
+        <a href="#presentes">Presentes</a>
         <a href="#essencia">Sobre</a>
         <a href="#contato">Contato</a>
       </nav>
       <div class="header-actions">
         <button class="icon-button search-toggle" type="button" data-dialog="search" aria-label="Buscar joias"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
         <button class="icon-button favorites-toggle" type="button" data-dialog="favorites" aria-label="Favoritos"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></button>
-        <button class="account-button" type="button" data-dialog="account" aria-label="Entrar na conta"><svg class="icon" aria-hidden="true"><use href="#i-person"/></svg><span>Entrar</span></button>
         <button class="bag-button" type="button" data-dialog="bag" aria-label="Abrir sacola, 0 itens"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span>Sacola</span><span class="bag-count" aria-label="0 itens">0</span></button>
         <button class="icon-button menu-toggle" type="button" aria-label="Abrir menu" aria-controls="mobile-menu" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
       </div>
@@ -34,7 +34,6 @@ const header = `<header class="site-header" id="inicio">
     <nav class="mobile-menu" id="mobile-menu" aria-label="Navegação no celular" hidden>
       <a href="#inicio">Início <span>01</span></a><a href="#joias">Explorar joias <span>02</span></a><a href="#presentes">Presentes <span>03</span></a><a href="#essencia">Sobre a ICE GEN <span>04</span></a><a href="#contato">Contato <span>05</span></a>
       <button type="button" data-dialog="favorites">Meus favoritos <svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></button>
-      <button type="button" data-dialog="account">Entrar na minha conta <svg class="icon" aria-hidden="true"><use href="#i-person"/></svg></button>
     </nav>
   </header>`;
 const footer = `<footer class="site-footer" id="contato">
@@ -68,9 +67,10 @@ export function mountSiteShell({ page = 'home' } = {}) {
       link.classList.remove('nav-active');
       link.removeAttribute('aria-current');
     });
-    if (catalog) headerHost.querySelectorAll('a[href="/catalogo.html"]').forEach(link => {
+    const activeHref = catalog ? '/catalogo.html' : page === 'gift' ? '/presentes.html' : null;
+    if (activeHref) headerHost.querySelectorAll(`a[href="${activeHref}"]`).forEach(link => {
       link.classList.add('nav-active');
-      link.setAttribute('aria-current', page === 'catalog' ? 'page' : 'location');
+      link.setAttribute('aria-current', page === 'product' ? 'location' : 'page');
     });
   }
   footerHost.querySelectorAll('a').forEach(link => {

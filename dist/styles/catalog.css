@@ -29,7 +29,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  font-size: 11px;
+  font-size: 13px;
   color: #596971;
   margin-bottom: 32px;
 }
@@ -48,7 +48,7 @@
 
 .catalog-hero-inner > p:last-child {
   max-width: 510px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.8;
   color: #4d5961;
   margin-top: 19px;
@@ -84,7 +84,7 @@
 }
 
 .demo-strip p {
-  font-size: 11px;
+  font-size: 13px;
   color: #405763;
 }
 
@@ -113,7 +113,7 @@
 }
 
 .catalog-sidebar legend, .filters-dialog legend {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -126,7 +126,7 @@
   gap: 10px;
   min-height: 44px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .filter-option input {
@@ -140,7 +140,7 @@
 .filter-count {
   margin-left: auto;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .material-info {
@@ -151,7 +151,7 @@
 
 .material-info .eyebrow {
   color: var(--ink);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 1.5px;
 }
 
@@ -159,7 +159,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 16px;
 }
@@ -171,7 +171,7 @@
 }
 
 .filter-clear {
-  font-size: 11px;
+  font-size: 13px;
   color: #4c6371;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -205,7 +205,7 @@
   border: 0;
   border-radius: 0;
   color: var(--ink);
-  font-size: 13px;
+  font-size: 16px;
   padding: 0;
 }
 
@@ -220,7 +220,7 @@
   gap: 15px;
   min-height: 44px;
   padding: 0 0 0 13px;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -243,27 +243,27 @@
 
 .catalog-result-heading p {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 7px;
 }
 
 .catalog-toolbar-actions {
   display: flex;
   gap: 20px;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .sort-control {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 11px;
+  font-size: 13px;
   color: #59656c;
 }
 
 .sort-control select {
   font: inherit;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--ink);
   border: 1px solid #bdc6ca;
   border-radius: 0;
@@ -281,6 +281,7 @@
 
 .filter-toggle {
   display: none;
+  font-size: 14px;
 }
 
 .active-filters {
@@ -296,8 +297,8 @@
   gap: 12px;
   padding: 7px 11px;
   background: #e3e7e7;
-  font-size: 11px;
-  min-height: 38px;
+  font-size: 14px;
+  min-height: 44px;
   max-width: 100%;
   overflow-wrap: anywhere;
   text-align: left;
@@ -380,29 +381,30 @@
   bottom: 9px;
   left: 9px;
   padding: 3px 6px;
-  font-size: 10px;
+  font-size: 12px;
   color: #52626c;
   background: #f3f1eced;
   pointer-events: none;
 }
 
 .product-category {
-  font-size: 11px;
+  font-size: 12px;
   color: #657078;
   margin-top: 13px;
 }
 
 .product-name {
-  font: 500 14px/1.5 var(--sans);
-  min-height: 40px;
+  font: 500 17px/1.5 var(--sans);
+  min-height: 51px;
   margin-top: 5px;
+  font-size: 17px;
 }
 
 .product-name :is(button, a) {
   padding: 0;
   text-align: left;
   font: inherit;
-  min-height: 40px;
+  min-height: 44px;
 }
 
 .product-name :is(button, a):hover {
@@ -411,7 +413,7 @@
 }
 
 .product-price {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   margin-top: 4px;
   line-height: 1.5;
@@ -419,7 +421,7 @@
 
 .product-price small {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   color: #657078;
   margin-top: 2px;
@@ -435,7 +437,7 @@
   padding: 9px 0;
   border-bottom: 1px solid #abb9bf;
   margin-top: 8px;
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: .6px;
   text-transform: uppercase;
   text-align: left;
@@ -451,7 +453,7 @@
 }
 
 .catalog-data-note {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.8;
   color: #657078;
   margin-top: 32px;
@@ -477,7 +479,7 @@
 }
 
 .catalog-empty p {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.8;
   max-width: 450px;
   margin: 18px auto 25px;
@@ -510,14 +512,14 @@
 }
 
 .catalog-editorial p:not(.eyebrow) {
-  font-size: 12px;
+  font-size: 14px;
   color: #d0d9dc;
   margin-top: 17px;
 }
 
 .catalog-editorial .button {
   margin-top: 23px;
-  font-size: 11px;
+  font-size: 14px;
   min-height: 45px;
 }
 
@@ -583,7 +585,7 @@
   }
 
   .catalog-hero-inner > p:last-child {
-    font-size: 13px;
+    font-size: 16px;
     max-width: 430px;
   }
 
@@ -603,6 +605,7 @@
   .sort-control > label {
     max-width: 48px;
     line-height: 1.5;
+    font-size: 13px;
   }
 
   .product-grid {
@@ -628,7 +631,7 @@
     min-height: 44px;
     border: 1px solid #bdc6ca;
     padding: 0 14px;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .filter-toggle .icon {
@@ -668,7 +671,7 @@
   }
 
   .breadcrumb {
-    font-size: 10px;
+    font-size: 13px;
     margin-bottom: 27px;
   }
 
@@ -683,7 +686,7 @@
   }
 
   .catalog-hero-inner > p:last-child {
-    font-size: 12px;
+    font-size: 16px;
     max-width: 285px;
     line-height: 1.8;
     margin-top: 17px;
@@ -719,7 +722,7 @@
   }
 
   .demo-strip p {
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.7;
   }
 
@@ -742,7 +745,7 @@
 
   .catalog-search button {
     gap: 7px;
-    font-size: 11px;
+    font-size: 14px;
     padding-left: 0;
   }
 
@@ -770,7 +773,7 @@
   }
 
   .catalog-result-heading p {
-    font-size: 11px;
+    font-size: 13px;
     margin: 0;
     text-align: right;
   }
@@ -778,7 +781,7 @@
   .catalog-toolbar-actions {
     justify-content: space-between;
     gap: 16px;
-    align-items: flex-end;
+    align-items: center;
   }
 
   .filter-toggle {
@@ -795,14 +798,14 @@
 
   .sort-control > label {
     max-width: none;
-    font-size: 10px;
+    font-size: 13px;
   }
 
   .sort-control select {
     width: 158px;
     min-width: 0;
     padding-right: 15px;
-    font-size: 11px;
+    font-size: 16px;
   }
 
   .active-filters {
@@ -834,36 +837,36 @@
   .illustration-label {
     left: 7px;
     bottom: 7px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .product-category {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.6;
     margin-top: 12px;
   }
 
   .product-name {
-    font-size: 14px;
+    font-size: 17px;
     line-height: 1.55;
-    min-height: 42px;
+    min-height: 51px;
   }
 
   .product-name :is(button, a) {
-    min-height: 42px;
+    min-height: 44px;
   }
 
   .product-price {
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .product-price small {
-    font-size: 11px;
+    font-size: 12px;
     margin-top: 3px;
   }
 
   .product-details {
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: .1px;
     gap: 6px;
     margin-top: 8px;
@@ -882,7 +885,7 @@
   }
 
   .catalog-empty p {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .catalog-empty .button {
@@ -891,7 +894,7 @@
   }
 
   .catalog-data-note {
-    font-size: 11px;
+    font-size: 13px;
     margin-top: 27px;
   }
 
@@ -912,12 +915,12 @@
   }
 
   .catalog-editorial p:not(.eyebrow) {
-    font-size: 12px;
+    font-size: 14px;
     max-width: 210px;
   }
 
   .catalog-editorial .button {
-    font-size: 11px;
+    font-size: 14px;
     gap: 17px;
     padding-inline: 17px;
   }
@@ -932,7 +935,7 @@
   }
 
   .filter-option {
-    font-size: 13px;
+    font-size: 14px;
   }
 
 }
@@ -959,11 +962,11 @@
   }
 
   .product-name {
-    font-size: 13px;
+    font-size: 17px;
   }
 
   .product-details {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .product-save {

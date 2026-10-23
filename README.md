@@ -11,7 +11,7 @@ cd 'C:\Users\Nestu\OneDrive\Documentos\ChatGPT\ice gen V2\ice-gen-v2'
 npm run dev
 ```
 
-Abra [http://127.0.0.1:4173](http://127.0.0.1:4173). Encerre com `Ctrl+C`. O servidor escuta apenas no endereço local `127.0.0.1`; `PORT` pode substituir a porta padrão. Apenas a pasta `dist/` é servida. Caminhos externos, travessia de diretórios, arquivos ocultos e métodos diferentes de GET/HEAD são bloqueados. Arquivos usam tipo de conteúdo explícito e revalidação de cache.
+Abra [http://127.0.0.1:4173](http://127.0.0.1:4173). Encerre com `Ctrl+C`. O servidor usa `127.0.0.1` localmente; `PORT` pode substituir a porta padrão e `HOST` pode definir a interface. Na prévia gerenciada (`SITES_MANAGED_LINUX_CONTAINER=1`), usa `0.0.0.0` para permitir acesso pelo navegador de revisão. Apenas a pasta `dist/` é servida. Caminhos externos, travessia de diretórios, arquivos ocultos e métodos diferentes de GET/HEAD são bloqueados. Arquivos usam tipo de conteúdo explícito e revalidação de cache.
 
 O catálogo está em [http://127.0.0.1:4173/catalogo.html](http://127.0.0.1:4173/catalogo.html), os produtos em `/produto.html?id=<id>`, a montagem em `/presentes.html`, a sacola em `/sacola.html` e os favoritos em `/favoritos.html`. As páginas usam JavaScript para a navegação compartilhada e as interações; há aviso e retorno ao catálogo quando desativado.
 
@@ -25,6 +25,8 @@ npm test
 O comando verifica a sintaxe dos arquivos JavaScript, referências locais de HTML/CSS/JS, existência de assets e importação do catálogo com dez IDs únicos. Âncoras, fragmentos de sprites e destinos externos não são acessados. Não substitui a inspeção no navegador em desktop, celular, teclado e preferências de movimento reduzido.
 
 `npm test` executa 56 testes de catálogo, favoritos, sacola, presentes, complementos e rascunho de WhatsApp com o runner nativo do Node. O estado atual e a revisão estão em [docs/SACOLA-FAVORITOS-WHATSAPP.md](docs/SACOLA-FAVORITOS-WHATSAPP.md); as etapas anteriores estão em [docs/CATALOGO.md](docs/CATALOGO.md) e [docs/PRODUTOS-PRESENTES.md](docs/PRODUTOS-PRESENTES.md).
+
+A primeira rodada de acabamento visual está documentada em [docs/REFINAMENTO-VISUAL.md](docs/REFINAMENTO-VISUAL.md).
 
 ## Estrutura
 

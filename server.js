@@ -136,8 +136,9 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       console.error(`Não foi possível iniciar o servidor: ${error.message}`);
       process.exitCode = 1;
     });
-    server.listen(port, '127.0.0.1', () => {
-      console.log(`ICE GEN V2: http://127.0.0.1:${port}`);
+    const host = process.env.HOST ?? (process.env.SITES_MANAGED_LINUX_CONTAINER === '1' ? '0.0.0.0' : '127.0.0.1');
+    server.listen(port, host, () => {
+      console.log(`ICE GEN V2: http://${host}:${port}`);
       console.log('Prévia local da ICE GEN. Pressione Ctrl+C para encerrar.');
     });
   }

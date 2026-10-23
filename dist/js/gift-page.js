@@ -123,8 +123,9 @@ function renderChoices() {
     }
     body.append(node('p', kind === 'wrap' ? 'Detalhes e fotografia aguardam confirmação.' : `${choice.material}${choice.measurement ? ` · ${choice.measurement}` : ''}`, 'gift-choice-meta'));
     const select = node('button', '', 'button button-light gift-choice-select'); select.type = 'button';
-    select.append(node('span', selected ? 'Peça selecionada' : kind === 'wrap' ? 'Escolher embalagem' : 'Escolher peça'), icon('arrow'));
-    select.setAttribute('aria-label', `Escolher ${choice.name}`); select.setAttribute('aria-pressed', String(selected));
+    const selectionLabel = selected ? (kind === 'wrap' ? 'Embalagem selecionada' : 'Peça selecionada') : (kind === 'wrap' ? 'Escolher embalagem' : 'Escolher peça');
+    select.append(node('span', selectionLabel), icon('arrow'));
+    select.setAttribute('aria-label', `${selected ? selectionLabel : 'Escolher'}: ${choice.name}`); select.setAttribute('aria-pressed', String(selected));
     select.addEventListener('click', () => {
       if (choice.variants?.length && !variantSelect.value) { variantSelect.focus(); message('Escolha uma opção para continuar.', true); return; }
       choose(kind, choice, variantSelect?.value);
