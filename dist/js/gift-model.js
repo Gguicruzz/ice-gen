@@ -53,3 +53,16 @@ export function giftDraftTotal(draft, catalog) {
   }
   return cents;
 }
+
+// O avanço e a revisão usam a mesma validação das peças e variantes.
+export function giftProgress(draft, catalog) {
+  const valid = giftSteps.map(({ kind }) => Boolean(selectGiftChoice({}, kind, draft?.[kind], catalog)));
+  const firstMissing = valid.indexOf(false);
+  return {
+    valid,
+    selectedCount: valid.filter(Boolean).length,
+    firstMissing: firstMissing < 0 ? 0 : firstMissing,
+    ready: valid.every(Boolean) && giftDraftTotal(draft, catalog) !== null,
+    openable: valid.map((_, index) => valid.slice(0, index).every(Boolean))
+  };
+}

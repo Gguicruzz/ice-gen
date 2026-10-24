@@ -184,24 +184,28 @@
 }
 
 .catalog-search {
-  display: flex;
+  display: grid;
   align-items: center;
-  gap: 13px;
-  border-bottom: 1px solid #7e8f99;
-  padding: 0 0 10px;
+  gap: 12px;
+  border-bottom: 1px solid #84a6be;
+  padding: 18px;
   margin-bottom: 29px;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  border: 1px solid #84a6be;
+  background: #e4edf1;
+  box-shadow: 0 3px 14px #10181d08;
 }
 
 .catalog-search > .icon {
   width: 19px;
-  color: #5d7480;
+  color: #426f8c;
 }
 
 .catalog-search input {
   background: transparent;
   width: 100%;
   min-width: 0;
-  height: 44px;
+  height: 48px;
   border: 0;
   border-radius: 0;
   color: var(--ink);
@@ -217,11 +221,13 @@
 .catalog-search button {
   display: flex;
   align-items: center;
-  gap: 15px;
-  min-height: 44px;
-  padding: 0 0 0 13px;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px;
   font-size: 14px;
   font-weight: 600;
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .catalog-search button .icon {
@@ -735,19 +741,31 @@
   }
 
   .catalog-search {
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 24px;
-  }
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  border: 1px solid #84a6be;
+  border-bottom: 1px solid #84a6be;
+  padding: 18px;
+  background: #e4edf1;
+  box-shadow: 0 3px 14px #10181d08;
+}
 
   .catalog-search input {
     font-size: 16px;
-  }
+  height: 48px;
+}
 
   .catalog-search button {
-    gap: 7px;
+    gap: 10px;
     font-size: 14px;
     padding-left: 0;
-  }
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0 20px;
+  min-height: 48px;
+}
 
   .catalog-search button .icon {
     width: 16px;
@@ -947,7 +965,8 @@
 
   .catalog-search input {
     font-size: 16px;
-  }
+  height: 48px;
+}
 
   .catalog-search button .icon {
     display: none;
@@ -974,4 +993,13 @@
     height: 44px;
   }
 
+}
+
+.catalog-search-label { grid-column: 1 / -1; font-size: 12px; font-weight: 650; letter-spacing: 1px; text-transform: uppercase; color: #35546a; }
+.catalog-search:focus-within { outline: 2px solid #527f9e; outline-offset: 3px; background: #eaf2f6; }
+.catalog-search button:hover { background: #284a60; }
+@media (max-width: 600px) {
+  .catalog-search { padding: 15px; grid-template-columns: 20px minmax(0,1fr) auto; gap: 10px; }
+  .catalog-search button { padding-inline: 12px; }
+  .catalog-search button .icon { display: none; }
 }

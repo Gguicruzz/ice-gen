@@ -81,7 +81,7 @@ export function selectProducts(products, state = {}, { favoriteIds = [] } = {}) 
     if (safe.favorites && !favorites.has(product.id)) return false;
     if (!terms.length) return true;
     const aliases = categories.find(category => category.id === product.category)?.aliases || [];
-    const searchable = normalizeSearch([product.name, product.category, product.categoryLabel, ...aliases].join(' '));
+    const searchable = normalizeSearch([product.name, product.category, product.categoryLabel, product.material, product.measurement, ...aliases].join(' '));
     return terms.every(term => searchable.includes(term));
   });
 

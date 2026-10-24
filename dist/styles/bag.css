@@ -128,3 +128,7 @@
   .bag-suggestion-image img { aspect-ratio: 1.5; }
   .bag-data-note { margin-top: 30px; }
 }
+
+.bag-empty-symbol { background: #101a1f; border-color: #547a93; color: var(--paper); gap: 10px; }
+.bag-empty-symbol img { width: 40px; height: 65px; object-fit: contain; }
+.bag-empty-symbol > span { white-space: nowrap; font-size: 11px; letter-spacing: 2px; }

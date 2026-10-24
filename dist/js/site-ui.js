@@ -1,8 +1,8 @@
 import { mountSiteShell } from './site-shell.js';
 import { createFavoritesStore } from './favorites-store.js';
 import { products } from '../data/catalog.js';
-import { categories, normalizeSearch } from './catalog-model.js';
-import { createCartStore, itemCount } from './cart-store.js';
+import { categories, normalizeSearch, selectProducts } from './catalog-model.js';
+import { createCartStore, itemCount, productUrl } from './cart-store.js';
 import { wraps as giftWraps } from '../data/gifts.js';
 import { whatsapp } from '../data/config.js';
 import { createWhatsAppDraft } from './whatsapp-model.js';
@@ -72,13 +72,14 @@ export function createSiteUI({ page = 'home', onAction, wraps = giftWraps } = {}
     menuToggle.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
     if (restoreFocus) menuToggle.focus();
   }
-  function show(render) {
+  function show(render, { wide = false } = {}) {
     const alreadyOpen = dialog.open;
     if (!alreadyOpen) {
       trigger = menu.contains(document.activeElement) ? menuToggle : document.activeElement;
       triggerKey = trigger?.dataset.focusKey || null;
     }
     setMenu(false);
+    dialog.classList.toggle('dialog-wide', wide);
     content.replaceChildren();
     render();
     const modalFeedback = node('p', '', 'dialog-feedback');
@@ -107,32 +108,58 @@ export function createSiteUI({ page = 'home', onAction, wraps = giftWraps } = {}
       const form = node('form', '', 'dialog-search-form');
       form.action = '/catalogo.html';
       form.method = 'get';
-      const label = node('label', 'Busque por peça ou categoria', 'search-label');
+      form.setAttribute('role', 'search');
+      const label = node('label', 'Nome, categoria, material ou medida', 'search-label');
       label.htmlFor = 'jewel-search';
       const input = node('input', '', 'search-field');
-      Object.assign(input, { id: 'jewel-search', name: 'busca', type: 'search', placeholder: 'Corrente, pingente, anel…', autocomplete: 'off', maxLength: 100 });
+      Object.assign(input, { id: 'jewel-search', name: 'busca', type: 'search', placeholder: 'Ex.: argola, prata 925, corrente 45 cm', autocomplete: 'off', maxLength: 100 });
+      const field = node('div', '', 'search-input-wrap');
+      const clear = node('button', '', 'search-clear');
+      clear.type = 'button'; clear.setAttribute('aria-label', 'Limpar busca'); clear.append(icon('close')); clear.hidden = true;
+      field.append(icon('search'), input, clear);
+      const suggestionsHost = node('div', '', 'search-categories');
+      suggestionsHost.setAttribute('aria-label', 'Explorar por categoria');
       const results = node('div', '', 'search-results');
       results.id = 'search-results';
       input.setAttribute('aria-controls', results.id);
       const status = node('p', '', 'search-status');
+      status.id = 'search-feedback';
+      input.setAttribute('aria-describedby', status.id);
       status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite'); status.setAttribute('aria-atomic', 'true');
       const submit = node('button', 'Buscar no catálogo', 'button button-dark dialog-action');
       submit.type = 'submit';
       function suggestions() {
         results.replaceChildren();
+        suggestionsHost.replaceChildren();
         const query = normalizeSearch(input.value);
-        const found = categories.filter(category => !query || normalizeSearch(`${category.label} ${category.aliases.join(' ')}`).includes(query));
-        for (const category of found) {
-          const link = node('a', category.label, 'search-result');
+        clear.hidden = !input.value;
+        const found = selectProducts(products, { query });
+        const matchingCategories = categories.filter(category => !query || normalizeSearch(`${category.label} ${category.aliases.join(' ')}`).includes(query));
+        for (const category of matchingCategories) {
+          const link = node('a', category.label, 'search-category');
           link.href = catalogUrl({ category: category.id });
-          link.append(icon('arrow'));
-          results.append(link);
+          suggestionsHost.append(link);
         }
-        if (query && !found.length) results.append(node('p', 'Pressione Enter para buscar todas as peças no catálogo.', 'empty-search'));
-        status.textContent = query ? `${found.length} ${found.length === 1 ? 'categoria sugerida' : 'categorias sugeridas'}.` : '';
+        for (const product of found.slice(0, 4)) {
+          const link = node('a', '', 'search-product'); link.href = productUrl(product.id);
+          const image = node('img'); Object.assign(image, { src: product.image, alt: '', width: 64, height: 64 });
+          const details = node('span', '', 'search-product-details');
+          details.append(node('strong', product.name), node('span', `${product.material} · ilustração`, 'search-product-meta'), node('span', money.format(product.price), 'search-product-price'));
+          link.append(image, details, icon('arrow')); results.append(link);
+        }
+        if (query && !found.length) {
+          const empty = node('div', '', 'search-empty');
+          empty.append(node('strong', 'Nenhuma peça encontrada.'), node('p', 'Tente um termo mais curto, como “argola”, “corrente” ou “prata”.'));
+          results.append(empty);
+        }
+        status.textContent = query ? `${found.length} ${found.length === 1 ? 'peça encontrada' : 'peças encontradas'}${found.length > 4 ? '. Mostrando as primeiras 4' : ''}.` : 'Algumas peças para começar a explorar.';
+        submit.textContent = query ? (found.length ? `Ver ${found.length === 1 ? 'a peça no' : `as ${found.length} peças no`} catálogo` : 'Buscar no catálogo') : 'Explorar todo o catálogo';
       }
       input.addEventListener('input', suggestions);
-      form.append(label, input, results, status, submit);
+      clear.addEventListener('click', () => { input.value = ''; suggestions(); input.focus(); });
+      form.append(label, field, suggestionsHost, status, results, submit);
+      form.append(node('p', 'Imagens e valores demonstrativos.', 'search-demo-note'));
       content.append(form);
       suggestions();
       requestAnimationFrame(() => input.focus());

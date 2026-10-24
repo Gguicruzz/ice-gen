@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { products } from '../dist/data/catalog.js';
 import { wraps } from '../dist/data/gifts.js';
-import { selectGiftChoice, readGiftDraft, canOpenGiftStep, giftComponents, giftDraftTotal } from '../dist/js/gift-model.js';
+import { selectGiftChoice, readGiftDraft, canOpenGiftStep, giftComponents, giftDraftTotal, giftProgress } from '../dist/js/gift-model.js';
 
 const catalog = { products, wraps };
 const complete = () => readGiftDraft(JSON.stringify({ chain: { id: 'corrente-veneziana' }, pendant: { id: 'pingente-luz' }, wrap: { id: 'wrap-paper' } }), catalog);
@@ -46,4 +46,38 @@ test('variante cadastrada é obrigatória e é preservada no rascunho e no total
   assert.deepEqual(giftComponents(draft), [{ kind: 'chain', id: 'chain', quantity: 2, variantId: 'v1' }]);
   assert.equal(giftDraftTotal(draft, variantCatalog), 2470);
   assert.deepEqual(readGiftDraft(JSON.stringify(draft), variantCatalog), draft);
+});
+
+
+test('progresso libera a próxima etapa somente após uma escolha válida', () => {
+  const empty = {};
+  assert.deepEqual(giftProgress(empty, catalog), { valid: [false, false, false], selectedCount: 0, firstMissing: 0, ready: false, openable: [true, false, false] });
+  const draft = selectGiftChoice(empty, 'chain', { id: 'corrente-veneziana' }, catalog);
+  const progress = giftProgress(draft, catalog);
+  assert.equal(progress.selectedCount, 1);
+  assert.equal(progress.firstMissing, 1);
+  assert.equal(progress.ready, false);
+  assert.deepEqual(progress.openable, [true, true, false]);
+  assert.deepEqual(empty, {});
+});
+
+test('revisão exige as três escolhas válidas e preserva o rascunho', () => {
+  const draft = complete(); const before = structuredClone(draft);
+  assert.equal(giftProgress(draft, catalog).ready, true);
+  assert.equal(giftProgress(draft, catalog).selectedCount, 3);
+  assert.deepEqual(giftProgress(draft, catalog).openable, [true, true, true]);
+  assert.deepEqual(draft, before);
+  const invalid = { ...draft, chain: { id: 'apagada', quantity: 1 } };
+  assert.equal(giftProgress(invalid, catalog).ready, false);
+  assert.deepEqual(giftProgress(invalid, catalog).openable, [true, false, false]);
+  assert.equal(giftProgress({ ...draft, wrap: { id: 'wrap-paper', quantity: 0 } }, catalog).ready, false);
+});
+
+test('uma variante não confirmada mantém o avanço e a revisão bloqueados', () => {
+  const options = { products: [{ id: 'chain', name: 'Corrente de exemplo', category: 'corrente', price: 10, variants: [{ id: 'v1', label: '50 cm', price: 12 }] }, ...products.filter(item => item.category === 'pingente')], wraps };
+  const pending = { chain: { id: 'chain', quantity: 1 }, pendant: { id: 'pingente-luz', quantity: 1 }, wrap: { id: 'wrap-paper', quantity: 1 } };
+  assert.equal(giftProgress(pending, options).ready, false);
+  assert.deepEqual(giftProgress(pending, options).openable, [true, false, false]);
+  const confirmed = selectGiftChoice(pending, 'chain', { id: 'chain', quantity: 1, variantId: 'v1' }, options);
+  assert.equal(giftProgress(confirmed, options).ready, true);
 });

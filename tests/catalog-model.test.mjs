@@ -94,3 +94,18 @@ test('filtrar e serializar não modificam produtos nem o estado recebido', () =>
   assert.deepEqual(state.categories, ['pulseiras', 'corrente', 'pulseiras']);
   assert.equal(JSON.stringify(products), before);
 });
+
+
+test('busca combina material, medida e categoria dos produtos reais do catálogo', () => {
+  assert.deepEqual(ids(selectProducts(products, { query: 'prata 925 45 cm' })), ['corrente-veneziana']);
+  assert.deepEqual(ids(selectProducts(products, { query: 'colares 60 cm prata' })), ['corrente-cartier']);
+  assert.deepEqual(ids(selectProducts(products, { query: 'brincos prata 925' })), ['brinco-argola', 'brinco-gota']);
+  assert.equal(selectProducts(products, { query: 'prata 925' }).length, 10);
+});
+
+test('termos ausentes não geram sugestões e a medida respeita filtros e favoritos', () => {
+  assert.deepEqual(selectProducts(products, { query: 'ouro 18k' }), []);
+  assert.deepEqual(selectProducts(products, { query: '45 cm', categories: ['pingente'] }), []);
+  assert.deepEqual(ids(selectProducts(products, { query: '45 cm', favorites: true }, { favoriteIds: ['corrente-veneziana'] })), ['corrente-veneziana']);
+  assert.deepEqual(selectProducts(products, { query: '45 cm', favorites: true }, { favoriteIds: ['corrente-cartier'] }), []);
+});

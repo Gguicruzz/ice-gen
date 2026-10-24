@@ -253,36 +253,7 @@
   right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between
-}
-
-.hero-discover {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  min-height: 44px;
-  font-size: 11px;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: #d2dcdf
-}
-
-.scroll-mark {
-  width: 20px;
-  height: 31px;
-  border: 1px solid #8f9fa7;
-  border-radius: 15px;
-  position: relative
-}
-
-.scroll-mark:after {
-  content: "";
-  position: absolute;
-  width: 1px;
-  height: 7px;
-  background: var(--ice);
-  top: 7px;
-  left: 9px
+  justify-content: flex-end
 }
 
 .hero-signature {
@@ -300,29 +271,6 @@
   font-size: 10px;
   letter-spacing: .2px;
   color: #d0d8da
-}
-
-.brand-strip {
-  height: 48px;
-  background: #e9e7e1;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 57px;
-  padding-inline: 22px;
-  color: #52616a;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 2px
-}
-
-.brand-strip .icon {
-  width: 13px;
-  height: 13px;
-  stroke: #7895a5
 }
 
 .jewels-section {
@@ -483,73 +431,11 @@
   padding-block: 58px
 }
 
-.combinations-inner {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 100px;
-  align-items: center
-}
-
 .combinations h2 {
   font-size: 41px;
   letter-spacing: -1.3px;
   line-height: 1.15;
   margin-top: 17px
-}
-
-.combinations-intro>p:last-child {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.8;
-  margin-top: 19px
-}
-
-.combination-list {
-  border-top: 1px solid #c9cfce
-}
-
-.combination-list button {
-  display: flex;
-  align-items: center;
-  gap: 23px;
-  width: 100%;
-  padding: 20px 0;
-  border-bottom: 1px solid #c9cfce;
-  text-align: left;
-  min-height: 85px
-}
-
-.combination-list .list-number {
-  font-size: 10px;
-  color: #5a717e;
-  align-self: flex-start;
-  padding-top: 4px
-}
-
-.combination-list strong {
-  display: block;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 23px;
-  letter-spacing: -.4px;
-  line-height: 1.2
-}
-
-.combination-list small {
-  display: block;
-  font-size: 10px;
-  color: var(--muted);
-  margin-top: 7px
-}
-
-.combination-list .icon {
-  margin-left: auto;
-  width: 20px;
-  transition: transform .2s
-}
-
-.combination-list button:hover .icon {
-  transform: translateX(5px)
 }
 
 .gift-section {
@@ -838,44 +724,6 @@
   margin-top: 22px
 }
 
-.preview-products {
-  display: grid;
-  gap: 0
-}
-
-.preview-product {
-  display: grid;
-  grid-template-columns: 68px 1fr;
-  gap: 17px;
-  align-items: center;
-  border-top: 1px solid var(--line);
-  padding-block: 14px
-}
-
-.preview-product img {
-  width: 68px;
-  height: 68px;
-  object-fit: cover
-}
-
-.preview-product h3 {
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 1.5
-}
-
-.preview-product p {
-  font-size: 11px;
-  color: var(--muted)
-}
-
-.preview-product .demo-price {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-top: 3px
-}
-
 .search-field {
   width: 100%;
   height: 52px;
@@ -985,10 +833,6 @@
     display: none
   }
 
-  .brand-strip {
-    gap: 39px
-  }
-
   .hero {
     min-height: 570px
   }
@@ -1003,10 +847,6 @@
 
   .hero-copy {
     font-size: 16px
-  }
-
-  .combinations-inner {
-    gap: 60px
   }
 
   .gift-section {
@@ -1085,12 +925,6 @@
     padding-top: 70px
   }
 
-  .brand-strip {
-    gap: 27px;
-    font-size: 8px;
-    letter-spacing: 1.5px
-  }
-
   .section-heading h2 {
     font-size: 40px
   }
@@ -1136,20 +970,8 @@
     width: 14px
   }
 
-  .combinations-inner {
-    gap: 35px
-  }
-
   .combinations h2 {
     font-size: 34px
-  }
-
-  .combination-list button {
-    gap: 15px
-  }
-
-  .combination-list strong {
-    font-size: 21px
   }
 
   .gift-section {
@@ -1350,23 +1172,6 @@
     gap: 12px
   }
 
-  .hero-discover {
-    font-size: 10px;
-    letter-spacing: .5px;
-    gap: 8px
-  }
-
-  .scroll-mark {
-    width: 16px;
-    height: 24px
-  }
-
-  .scroll-mark:after {
-    left: 7px;
-    top: 5px;
-    height: 5px
-  }
-
   .hero-signature {
     font-size: 9px;
     letter-spacing: .7px
@@ -1377,24 +1182,6 @@
     bottom: 8px;
     font-size: 10px;
     color: #9dabb3
-  }
-
-  .brand-strip {
-    height: 42px;
-    justify-content: space-around;
-    gap: 15px;
-    font-size: 7px;
-    letter-spacing: 1.2px
-  }
-
-  .brand-strip>span:last-child,
-  .brand-strip>.icon:last-of-type {
-    display: none
-  }
-
-  .brand-strip .icon {
-    width: 10px;
-    height: 10px
   }
 
   .jewels-section {
@@ -1487,34 +1274,10 @@
     padding-block: 42px
   }
 
-  .combinations-inner {
-    grid-template-columns: 1fr;
-    gap: 27px
-  }
-
   .combinations h2 {
     font-size: 33px;
     margin-top: 13px;
     letter-spacing: -1px
-  }
-
-  .combinations-intro>p:last-child {
-    font-size: 11px;
-    margin-top: 15px
-  }
-
-  .combination-list button {
-    min-height: 80px;
-    padding-block: 18px;
-    gap: 20px
-  }
-
-  .combination-list strong {
-    font-size: 23px
-  }
-
-  .combination-list small {
-    font-size: 10px
   }
 
   .gift-section {
@@ -1696,16 +1459,6 @@
     font-size: 14px
   }
 
-  .preview-product {
-    grid-template-columns: 55px 1fr;
-    gap: 13px
-  }
-
-  .preview-product img {
-    width: 55px;
-    height: 55px
-  }
-
   .dialog-note {
     font-size: 14px;
     padding: 12px
@@ -1785,4 +1538,62 @@
   .hero-ctas .button {
     width: 100%
   }
+}
+
+/* Collection invitation, brand band and editorial combinations. */
+.brand-strip {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 4vw, 64px);
+  padding: 20px var(--gutter);
+  background: #e9e7e1;
+  border-bottom: 1px solid var(--line);
+}
+.brand-promise {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #394f5b;
+}
+.brand-strip .icon {
+  width: 19px;
+  height: 19px;
+  color: #5088b1;
+  stroke: currentColor;
+  fill: #84a6be26;
+  stroke-width: 1.5;
+}
+.combinations-heading { margin-bottom: 32px; }
+.combinations-heading > p { max-width: 330px; font-size: 16px; color: var(--muted); line-height: 1.8; }
+.combination-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
+.combination-card { display: flex; flex-direction: column; min-width: 0; width: 100%; padding: 18px; border: 1px solid #cbd2d3; background: var(--paper); text-align: left; transition: border-color .2s, box-shadow .2s; }
+.combination-card:hover { border-color: #7098b3; box-shadow: 0 6px 20px #10181d0b; }
+.combination-card-visual { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; width: 100%; margin-bottom: 22px; }
+.combination-card-visual img { width: 100%; aspect-ratio: 1.25; object-fit: contain; background: #e5ecef; }
+.combination-card-title { display: block; font: 400 27px/1.25 var(--serif); margin-top: 10px; }
+.combination-card-description { font-size: 14px; line-height: 1.75; color: var(--muted); margin-block: 12px 24px; }
+.combination-card-action { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 15px; border-top: 1px solid var(--line); width: 100%; margin-top: auto; font-size: 14px; font-weight: 600; }
+.combination-card-action .icon { width: 19px; }
+@media (max-width: 900px) {
+  .brand-strip { gap: 20px; }
+  .brand-promise { font-size: 12px; letter-spacing: .8px; gap: 10px; }
+  .combination-grid { gap: 14px; }
+  .combination-card { padding: 14px; }
+  .combination-card-title { font-size: 23px; }
+}
+@media (max-width: 600px) {
+  .brand-strip { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px 18px; padding: 18px 22px; }
+  .brand-promise { font-size: 12px; letter-spacing: .6px; line-height: 1.5; }
+  .brand-strip .icon { width: 16px; height: 16px; }
+  .combination-grid { grid-template-columns: minmax(0,1fr); gap: 20px; }
+  .combination-card { padding: 18px; }
+  .combination-card-visual img { aspect-ratio: 1.5; }
+  .combination-card-title { font-size: 27px; }
+  .combinations-heading > p { font-size: 15px; }
 }

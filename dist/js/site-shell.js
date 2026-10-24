@@ -21,7 +21,6 @@ const header = `<header class="site-header" id="inicio">
         <a class="nav-active" href="#inicio" aria-current="location">Início</a>
         <a href="#joias">Joias</a>
         <a href="#presentes">Presentes</a>
-        <a href="#essencia">Sobre</a>
         <a href="#contato">Contato</a>
       </nav>
       <div class="header-actions">
@@ -32,7 +31,7 @@ const header = `<header class="site-header" id="inicio">
       </div>
     </div>
     <nav class="mobile-menu" id="mobile-menu" aria-label="Navegação no celular" hidden>
-      <a href="#inicio">Início <span>01</span></a><a href="#joias">Explorar joias <span>02</span></a><a href="#presentes">Presentes <span>03</span></a><a href="#essencia">Sobre a ICE GEN <span>04</span></a><a href="#contato">Contato <span>05</span></a>
+      <a href="#inicio">Início <span>01</span></a><a href="#joias">Explorar joias <span>02</span></a><a href="#presentes">Presentes <span>03</span></a><a href="#contato">Contato <span>04</span></a>
       <button type="button" data-dialog="favorites">Meus favoritos <svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></button>
     </nav>
   </header>`;
