@@ -32,3 +32,12 @@ As fotos oficiais e as informações comerciais continuam pendentes de material 
 A seção final da Home passou a usar duas colunas: título editorial e chamada à coleção à esquerda, composição de prata sobre pedra escura à direita. O trecho “O resto é você” ganhou azul gelo e itálico; os três valores da marca têm uma linha própria. A imagem reutiliza o painel central da campanha existente, com a logo, marcação 925 e legenda de imagem ilustrativa. A composição se empilha abaixo de 760 px, e a ação leva diretamente ao catálogo.
 
 Mudança restrita à apresentação e ao destino da chamada. Arquivos, sintaxe e referências locais foram verificados; os modelos de sacola, busca e montagem não foram alterados. A conferência em navegador permanece pendente no ambiente de prévia.
+
+
+## Revisão da seleção de joias
+
+Cada etapa agora usa opções de rádio nativas com rótulo cobrindo imagem e conteúdo do card. Só uma peça da categoria pode ficar selecionada. A escolha confirmada recebe destaque, e a indicação da peça atual aparece junto ao botão Continuar, acima dos cards. A área de ações acompanha a rolagem dentro da etapa. Até 1100 px, o resumo ocupa uma linha própria; no celular, os cards ficam em uma coluna para preservar nomes e controles legíveis.
+
+Quando uma peça exige variante, a confirmação só ocorre após escolher uma opção válida. A seleção anterior permanece preservada no rascunho confirmado durante essa escolha; o resumo e o avanço tratam a peça pendente como incompleta. Voltar cancela a opção ainda não confirmada. Uma montagem completa restaurada inicia na última etapa para facilitar a revisão.
+
+A suíte tem 64 testes aprovados, incluindo substituição de uma única joia, preservação dos outros componentes e validação de variantes. A checagem estrutural passou. A nova tentativa de prévia informou conexão recusada, apesar do supervisor em execução; o supervisor foi encerrado e a revisão visual segue pendente. Nenhuma infraestrutura alternativa foi usada.

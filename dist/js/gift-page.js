@@ -2,7 +2,7 @@ import { products } from '../data/catalog.js';
 import { wraps } from '../data/gifts.js';
 import { createSiteUI, node, icon, money } from './site-ui.js';
 import { giftSignature, priceCents } from './cart-store.js';
-import { giftSteps, giftChoices, selectGiftChoice, readGiftDraft, giftComponents, giftDraftTotal, giftProgress } from './gift-model.js';
+import { giftSteps, giftChoices, prepareGiftChoice, readGiftDraft, giftComponents, giftDraftTotal, giftProgress } from './gift-model.js';
 
 const ui = createSiteUI({ page: 'gift' });
 const catalog = { products, wraps };
@@ -12,7 +12,8 @@ try { draftStorage = window.sessionStorage; } catch { /* A montagem pode continu
 let previousDraft;
 try { previousDraft = readGiftDraft(draftStorage?.getItem(draftKey), catalog); } catch { previousDraft = {}; }
 let draft = { ...previousDraft };
-let step = giftProgress(draft, catalog).firstMissing;
+let pendingChoice = null;
+let step = giftProgress(selectionDraft(), catalog).firstMissing;
 let editing = null;
 let locked = false;
 let saving = false;
@@ -30,7 +31,7 @@ const nextButton = document.querySelector('#gift-next');
 const backButton = document.querySelector('#gift-back');
 const stepActions = document.querySelector('#gift-step-actions');
 const summaryDetails = document.querySelector('#gift-summary-details');
-const summaryMedia = matchMedia('(max-width: 850px)');
+const summaryMedia = matchMedia('(max-width: 1100px)');
 summaryDetails.open = !summaryMedia.matches;
 summaryMedia.addEventListener('change', event => { summaryDetails.open = !event.matches; });
 
@@ -44,10 +45,16 @@ function persistDraft() {
     message('Sua montagem continua nesta página. O navegador não permitiu guardar o rascunho para outra visita.');
   }
 }
+function selectionDraft() {
+  if (!pendingChoice) return draft;
+  const current = { ...draft };
+  delete current[pendingChoice.kind];
+  return current;
+}
 function gotoStep(index) {
-  if (locked || saved || saving || !giftProgress(draft, catalog).openable[index]) return;
+  if (locked || saved || saving || !giftProgress(selectionDraft(), catalog).openable[index]) return;
   if (pendingVariant && index > step) { message('Confirme a nova opção da peça antes de continuar.', true); return; }
-  pendingVariant = false;
+  pendingVariant = false; pendingChoice = null;
   step = index;
   message(''); render();
   stepTitle.focus({ preventScroll: true });
@@ -74,7 +81,7 @@ const editId = new URLSearchParams(location.search).get('editar');
 if (editId !== null) enterEdit(editId);
 
 function renderSteps() {
-  const progress = giftProgress(draft, catalog);
+  const progress = giftProgress(selectionDraft(), catalog);
   const navigation = document.querySelector('#gift-steps');
   navigation.replaceChildren();
   giftSteps.forEach((item, index) => {
@@ -88,18 +95,21 @@ function renderSteps() {
     button.addEventListener('click', () => gotoStep(index)); navigation.append(button);
   });
 }
-function choose(kind, choice, variantId) {
+function choose(kind, choice, variantId, focusVariant = false) {
   if (saved || saving || locked) return;
-  const next = selectGiftChoice(draft, kind, { id: choice.id, quantity: draft[kind]?.quantity || 1, variantId }, catalog);
-  if (!next) { message('Escolha uma opção válida antes de continuar.', true); return; }
-  draft = next; pendingVariant = false;
+  const result = prepareGiftChoice(draft, kind, { id: choice.id, quantity: draft[kind]?.quantity || 1, variantId }, catalog);
+  if (!result.ok) { message('Escolha uma opção válida antes de continuar.', true); return; }
+  draft = result.draft; pendingChoice = result.pending; pendingVariant = Boolean(pendingChoice);
   seeBag.hidden = true; newGift.hidden = true;
-  message(`${choice.name} ${kind === 'wrap' ? 'selecionada' : 'selecionado'}. Você pode continuar ou trocar sua escolha.`);
-  persistDraft(); render();
-  [...optionsHost.querySelectorAll('[data-choice-id]')].find(button => button.dataset.choiceId === choice.id)?.focus({ preventScroll: true });
+  message(pendingVariant ? `Escolha a opção de ${choice.name} para confirmar a peça.` : `${choice.name}: escolha atualizada.`);
+  if (!pendingVariant) persistDraft();
+  render();
+  const target = pendingVariant || focusVariant ? document.getElementById(`gift-variant-${choice.id}`) : [...optionsHost.querySelectorAll('[data-choice-id]')].find(input => input.dataset.choiceId === choice.id);
+  target?.focus({ preventScroll: true });
 }
 function renderChoices() {
   optionsHost.replaceChildren();
+  optionsHost.removeAttribute('role'); optionsHost.removeAttribute('aria-labelledby');
   if (locked) { optionsHost.append(node('p', 'Abra a sacola para revisar seu presente.', 'gift-data-note')); return; }
   if (saved) {
     const success = node('div', '', 'gift-saved-state');
@@ -107,67 +117,55 @@ function renderChoices() {
     success.append(mark, node('h3', 'Suas três escolhas estão juntas.'), node('p', 'O presente foi salvo. Você pode conferir a sacola ou começar outra combinação.'));
     optionsHost.append(success); return;
   }
+  optionsHost.setAttribute('role', 'radiogroup'); optionsHost.setAttribute('aria-labelledby', 'gift-step-title');
   const { kind, label } = giftSteps[step];
   for (const choice of giftChoices(kind, catalog)) {
-    const selected = draft[kind]?.id === choice.id;
-    const card = node('article', '', `gift-choice${selected ? ' is-selected' : ''}`);
+    const pending = pendingChoice?.kind === kind && pendingChoice.id === choice.id;
+    const selected = pendingChoice?.kind !== kind && draft[kind]?.id === choice.id;
+    const card = node('div', '', `gift-choice${selected ? ' is-selected' : pending ? ' is-pending' : ''}`);
+    const input = node('input', '', 'gift-choice-radio');
+    Object.assign(input, { id: `gift-choice-${choice.id}`, type: 'radio', name: `gift-${kind}`, value: choice.id, checked: selected || pending });
+    input.dataset.choiceId = choice.id;
+    input.setAttribute('aria-labelledby', `gift-name-${choice.id}`);
+    input.setAttribute('aria-describedby', `gift-price-${choice.id} gift-status-${choice.id}`);
+    const option = node('label', '', 'gift-choice-label'); option.htmlFor = input.id;
+    const media = node('span', '', 'gift-choice-media');
     if (kind === 'wrap') {
-      const placeholder = node('div', '', 'gift-wrap-placeholder');
-      placeholder.append(node('span', choice.id === 'wrap-paper' ? '01' : '02'), node('small', 'Fotografia em preparação'));
-      card.append(placeholder);
+      const placeholder = node('span', '', 'gift-wrap-placeholder');
+      placeholder.append(node('span', choice.id === 'wrap-paper' ? '01' : '02'), node('small', 'Fotografia em preparação')); media.append(placeholder);
     } else {
       const image = node('img', '', 'gift-choice-image');
       Object.assign(image, { src: choice.image, alt: `Ilustração provisória de ${choice.name}`, width: 1000, height: 1000 });
-      card.append(image, node('span', 'Ilustração', 'gift-choice-image-label'));
+      media.append(image, node('span', 'Ilustração', 'gift-choice-image-label'));
     }
-    const body = node('div', '', 'gift-choice-content');
-    const selectedVariant = choice.variants?.find(variant => variant.id === draft[kind]?.variantId);
-    const price = node('p', money.format(selected && selectedVariant ? selectedVariant.price ?? choice.price : choice.price), 'gift-choice-price');
+    const body = node('span', '', 'gift-choice-content');
+    const name = node('strong', choice.name, 'gift-choice-name'); name.id = `gift-name-${choice.id}`;
+    const variant = selected && choice.variants?.find(item => item.id === draft[kind].variantId);
+    const price = node('span', money.format(variant ? variant.price ?? choice.price : choice.price), 'gift-choice-price'); price.id = `gift-price-${choice.id}`;
     price.append(node('small', 'Valor demonstrativo'));
-    body.append(node('p', label, 'eyebrow light'), node('h3', choice.name), price);
-    let variantSelect;
+    const status = node('span', pending ? 'Escolha a opção abaixo' : selected ? '✓ Selecionada' : 'Selecionar esta opção', 'gift-choice-status'); status.id = `gift-status-${choice.id}`;
+    body.append(node('span', label, 'eyebrow light'), name, price, node('span', kind === 'wrap' ? 'Detalhes e fotografia aguardam confirmação.' : `${choice.material}${choice.measurement ? ` · ${choice.measurement}` : ''}`, 'gift-choice-meta'), status);
+    option.append(media, body); card.append(input, option);
     if (choice.variants?.length) {
-      const optionLabel = node('label', 'Escolha a opção', 'gift-choice-variant-label'); optionLabel.htmlFor = `gift-variant-${choice.id}`;
-      variantSelect = node('select'); variantSelect.id = optionLabel.htmlFor;
-      const placeholder = node('option', 'Selecione'); placeholder.value = ''; variantSelect.append(placeholder);
-      choice.variants.forEach(variant => { const option = node('option', variant.label); option.value = variant.id; variantSelect.append(option); });
-      if (selected) variantSelect.value = draft[kind].variantId || '';
-      body.append(optionLabel, variantSelect);
+      const variantArea = node('div', '', 'gift-variant-area');
+      const variantLabel = node('label', 'Escolha a opção', 'gift-choice-variant-label'); variantLabel.htmlFor = `gift-variant-${choice.id}`;
+      const select = node('select'); select.id = variantLabel.htmlFor; select.setAttribute('aria-label', `Opção de ${choice.name}`);
+      select.disabled = !(selected || pending);
+      const placeholder = node('option', 'Selecione'); placeholder.value = ''; select.append(placeholder);
+      choice.variants.forEach(item => { const option = node('option', item.label); option.value = item.id; select.append(option); });
+      if (selected) select.value = draft[kind].variantId || '';
+      select.addEventListener('change', () => choose(kind, choice, select.value, true));
+      variantArea.append(variantLabel, select); card.append(variantArea);
     }
-    body.append(node('p', kind === 'wrap' ? 'Detalhes e fotografia aguardam confirmação.' : `${choice.material}${choice.measurement ? ` · ${choice.measurement}` : ''}`, 'gift-choice-meta'));
-    const select = node('button', '', 'button button-light gift-choice-select'); select.type = 'button'; select.dataset.choiceId = choice.id;
-    const selectionLabel = kind === 'wrap' ? 'Embalagem selecionada' : 'Peça selecionada';
-    const text = node('span', selected ? selectionLabel : kind === 'wrap' ? 'Escolher embalagem' : 'Escolher peça');
-    select.append(text, selected ? node('span', '✓', 'gift-choice-check') : icon('arrow'));
-    select.setAttribute('aria-label', `${selected ? selectionLabel : 'Escolher'}: ${choice.name}`);
-    select.setAttribute('aria-pressed', String(selected));
-    variantSelect?.addEventListener('change', () => {
-      const variant = choice.variants.find(item => item.id === variantSelect.value);
-      price.firstChild.textContent = money.format(variant?.price ?? choice.price);
-      const confirmed = selected && variantSelect.value === draft[kind].variantId;
-      card.classList.toggle('is-selected', confirmed);
-      text.textContent = confirmed ? selectionLabel : 'Confirmar opção';
-      select.setAttribute('aria-pressed', String(confirmed));
-      select.setAttribute('aria-label', `${confirmed ? selectionLabel : 'Confirmar opção'}: ${choice.name}`);
-      select.lastChild.replaceWith(confirmed ? node('span', '✓', 'gift-choice-check') : icon('arrow'));
-      if (selected) {
-        pendingVariant = !confirmed;
-        message(pendingVariant ? 'Confirme a nova opção da peça antes de continuar.' : 'Opção escolhida mantida.');
-        renderSteps(); renderSummary();
-      }
-    });
-    select.addEventListener('click', () => {
-      if (choice.variants?.length && !variantSelect.value) { variantSelect.focus(); message('Escolha uma opção para continuar.', true); return; }
-      choose(kind, choice, variantSelect?.value);
-    });
-    body.append(select); card.append(body); optionsHost.append(card);
+    input.addEventListener('change', () => { if (input.checked) choose(kind, choice, draft[kind]?.id === choice.id ? draft[kind].variantId : undefined); });
+    optionsHost.append(card);
   }
 }
 function renderSummary() {
-  const progress = giftProgress(draft, catalog);
+  const progress = giftProgress(selectionDraft(), catalog);
   summaryItems.replaceChildren();
   giftSteps.forEach(({ kind, label }, index) => {
-    const selection = draft[kind];
+    const selection = selectionDraft()[kind];
     const choice = selection && giftChoices(kind, catalog).find(item => item.id === selection.id);
     const button = node('button', '', 'gift-summary-row'); button.type = 'button';
     button.disabled = locked || saved || saving || !progress.openable[index] || (pendingVariant && index > step);
@@ -187,34 +185,39 @@ function renderSummary() {
     button.append(text, node('span', saved ? '✓' : choice ? 'Alterar' : progress.openable[index] ? 'Escolher' : 'Depois', 'gift-summary-edit'));
     button.addEventListener('click', () => gotoStep(index)); summaryItems.append(button);
   });
-  const total = giftDraftTotal(draft, catalog);
+  const total = giftDraftTotal(selectionDraft(), catalog);
   document.querySelector('#gift-total-label').textContent = progress.ready ? 'Total do presente' : 'Total parcial';
   document.querySelector('#gift-total').textContent = !progress.selectedCount ? 'A selecionar' : total === null ? 'A conferir' : money.format(total / 100);
   document.querySelector('#gift-missing').textContent = saved ? 'Presente salvo na sacola.' : progress.ready ? 'Tudo escolhido. Confira os detalhes antes de salvar.' : `Falta escolher: ${giftSteps.filter((_, index) => !progress.valid[index]).map(({ label }) => label.toLocaleLowerCase('pt-BR')).join(', ')}.`;
   document.querySelector('#gift-progress').textContent = `${progress.selectedCount} de 3 escolhidos`;
   saveButton.hidden = saved || locked;
   saveButton.disabled = !progress.ready || saving || pendingVariant;
+  const currentKind = giftSteps[step].kind;
+  const current = selectionDraft()[currentKind];
+  const currentChoice = current && giftChoices(currentKind, catalog).find(item => item.id === current.id);
+  document.querySelector('#gift-selection-status').textContent = pendingVariant ? 'Escolha a opção para confirmar esta peça.' : saved ? 'Presente salvo.' : currentChoice ? `Sua escolha: ${currentChoice.name}` : 'Selecione uma opção para continuar.';
   saveButton.querySelector('span').textContent = saving ? 'Salvando…' : editing ? 'Revisar alterações' : 'Revisar presente';
   stepActions.hidden = saved || locked;
   backButton.hidden = step === 0;
   nextButton.disabled = !progress.valid[step] || saving || pendingVariant || (step === 2 && !progress.ready);
-  nextButton.querySelector('span').textContent = step === 2 ? 'Revisar presente' : `Continuar para ${giftSteps[step + 1].label.toLocaleLowerCase('pt-BR')}`;
+  nextButton.querySelector('span').textContent = step === 2 ? 'Revisar presente' : 'Continuar';
+  nextButton.setAttribute('aria-label', step === 2 ? 'Revisar presente' : `Continuar para ${giftSteps[step + 1].label.toLocaleLowerCase('pt-BR')}`);
 }
 function render() {
   renderSteps();
   document.querySelector('#gift-step-number').textContent = saved ? 'Combinação concluída' : `Etapa ${step + 1} de 3 — ${giftSteps[step].label}`;
   stepTitle.textContent = saved ? 'Seu presente está na sacola.' : giftSteps[step].title;
-  document.querySelector('#gift-step-copy').textContent = saved ? 'Cada detalhe escolhido por você.' : 'Selecione uma opção e use o botão abaixo para continuar.';
+  document.querySelector('#gift-step-copy').textContent = saved ? 'Cada detalhe escolhido por você.' : 'Clique no card para escolher uma opção. Você pode trocar antes de revisar.';
   renderChoices(); renderSummary();
 }
 function leaveEdit() {
-  editing = null; locked = false; saved = false; pendingVariant = false; banner.hidden = true;
-  draft = { ...previousDraft }; step = giftProgress(draft, catalog).firstMissing;
+  editing = null; locked = false; saved = false; pendingVariant = false; pendingChoice = null; banner.hidden = true;
+  draft = { ...previousDraft }; step = giftProgress(selectionDraft(), catalog).firstMissing;
   history.replaceState(null, '', '/presentes.html'); document.title = 'Monte um presente — ICE GEN';
   message(''); seeBag.hidden = true; newGift.hidden = true; render(); ui.openBag();
 }
 function saveGift() {
-  if (saving || saved || locked || pendingVariant || !giftProgress(draft, catalog).ready) return false;
+  if (saving || saved || locked || pendingVariant || !giftProgress(selectionDraft(), catalog).ready) return false;
   saving = true; renderSummary();
   const result = editing ? ui.cart.replaceGift(editing.id, giftComponents(draft), { signature: editing.signature }) : ui.cart.addGift(giftComponents(draft));
   if (!result.ok) {
@@ -237,7 +240,7 @@ function saveGift() {
   return true;
 }
 function reviewGift() {
-  if (locked || saved || saving || pendingVariant || !giftProgress(draft, catalog).ready) return;
+  if (locked || saved || saving || pendingVariant || !giftProgress(selectionDraft(), catalog).ready) return;
   ui.show(() => {
     ui.content.append(node('p', 'Última conferência', 'eyebrow'));
     ui.title(editing ? 'Revise suas alterações.' : 'Seu presente, do seu jeito.');
@@ -270,7 +273,7 @@ document.querySelector('#cancel-edit').addEventListener('click', leaveEdit);
 const newGift = node('button', 'Montar outro presente', 'gift-see-bag');
 newGift.type = 'button'; newGift.hidden = true; seeBag.after(newGift);
 newGift.addEventListener('click', () => {
-  draft = {}; previousDraft = {}; saved = false; pendingVariant = false; step = 0; message(''); seeBag.hidden = true; newGift.hidden = true;
+  draft = {}; previousDraft = {}; saved = false; pendingVariant = false; pendingChoice = null; step = 0; message(''); seeBag.hidden = true; newGift.hidden = true;
   persistDraft(); render(); stepTitle.focus({ preventScroll: true }); stepTitle.scrollIntoView({ block: 'start', behavior: 'auto' });
 });
 seeBag.addEventListener('click', () => ui.openBag());

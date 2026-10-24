@@ -19,6 +19,17 @@ export function selectGiftChoice(draft, kind, selection, catalog) {
   return { ...draft, [kind]: { id: choice.id, quantity: checked.quantity, ...(checked.variant ? { variantId: checked.variant.id } : {}) } };
 }
 
+export function prepareGiftChoice(draft, kind, selection, catalog) {
+  const choice = giftChoices(kind, catalog).find(item => item.id === selection?.id);
+  const checked = validateProductSelection(choice && { ...choice, category: choice.category || 'embalagem' }, selection);
+  if (checked.ok) return { ok: true, draft: selectGiftChoice(draft, kind, selection, catalog), pending: null };
+  const missingVariant = selection?.variantId === undefined || selection?.variantId === null || selection?.variantId === '';
+  if (checked.reason === 'variant' && choice?.variants?.length && missingVariant) {
+    return { ok: true, draft, pending: { kind, id: choice.id } };
+  }
+  return { ok: false, reason: checked.reason, draft, pending: null };
+}
+
 export function readGiftDraft(serialized, catalog) {
   let raw;
   try { raw = JSON.parse(serialized); } catch { return {}; }
@@ -61,7 +72,7 @@ export function giftProgress(draft, catalog) {
   return {
     valid,
     selectedCount: valid.filter(Boolean).length,
-    firstMissing: firstMissing < 0 ? 0 : firstMissing,
+    firstMissing: firstMissing < 0 ? giftSteps.length - 1 : firstMissing,
     ready: valid.every(Boolean) && giftDraftTotal(draft, catalog) !== null,
     openable: valid.map((_, index) => valid.slice(0, index).every(Boolean))
   };

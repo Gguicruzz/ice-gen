@@ -24,7 +24,7 @@ npm test
 
 O comando verifica a sintaxe dos arquivos JavaScript, referências locais de HTML/CSS/JS, existência de assets e importação do catálogo com dez IDs únicos. Âncoras, fragmentos de sprites e destinos externos não são acessados. Não substitui a inspeção no navegador em desktop, celular, teclado e preferências de movimento reduzido.
 
-`npm test` executa 61 testes de catálogo, favoritos, sacola, presentes, complementos e rascunho de WhatsApp com o runner nativo do Node. O estado atual e a revisão estão em [docs/SACOLA-FAVORITOS-WHATSAPP.md](docs/SACOLA-FAVORITOS-WHATSAPP.md); as etapas anteriores estão em [docs/CATALOGO.md](docs/CATALOGO.md) e [docs/PRODUTOS-PRESENTES.md](docs/PRODUTOS-PRESENTES.md).
+`npm test` executa 64 testes de catálogo, favoritos, sacola, presentes, complementos e rascunho de WhatsApp com o runner nativo do Node. O estado atual e a revisão estão em [docs/SACOLA-FAVORITOS-WHATSAPP.md](docs/SACOLA-FAVORITOS-WHATSAPP.md); as etapas anteriores estão em [docs/CATALOGO.md](docs/CATALOGO.md) e [docs/PRODUTOS-PRESENTES.md](docs/PRODUTOS-PRESENTES.md).
 
 A primeira rodada de acabamento visual está documentada em [docs/REFINAMENTO-VISUAL.md](docs/REFINAMENTO-VISUAL.md).
 
