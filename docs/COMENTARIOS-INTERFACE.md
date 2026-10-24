@@ -25,3 +25,10 @@ A checagem estrutural verifica sintaxe JavaScript, referências locais e os dez 
 A revisão visual e dos cliques em navegador permanece pendente neste ambiente, cuja prévia foi bloqueada na tentativa anterior. Estes testes de modelo não confirmam a composição renderizada ou o comportamento do foco em um navegador real.
 
 As fotos oficiais e as informações comerciais continuam pendentes de material validado.
+
+
+## Composição da seção de essência
+
+A seção final da Home passou a usar duas colunas: título editorial e chamada à coleção à esquerda, composição de prata sobre pedra escura à direita. O trecho “O resto é você” ganhou azul gelo e itálico; os três valores da marca têm uma linha própria. A imagem reutiliza o painel central da campanha existente, com a logo, marcação 925 e legenda de imagem ilustrativa. A composição se empilha abaixo de 760 px, e a ação leva diretamente ao catálogo.
+
+Mudança restrita à apresentação e ao destino da chamada. Arquivos, sintaxe e referências locais foram verificados; os modelos de sacola, busca e montagem não foram alterados. A conferência em navegador permanece pendente no ambiente de prévia.

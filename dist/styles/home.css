@@ -523,47 +523,6 @@
   margin-top: 17px
 }
 
-.essence {
-  background: #111c22;
-  color: var(--paper);
-  text-align: center;
-  position: relative;
-  border-bottom: 1px solid #ffffff1c
-}
-
-.essence-inner {
-  padding-block: 66px
-}
-
-.essence-spark {
-  width: 24px;
-  height: 24px;
-  fill: none;
-  stroke: var(--ice);
-  stroke-width: .7;
-  margin-bottom: 21px
-}
-
-.essence h2 {
-  font-size: 48px;
-  letter-spacing: -1.5px;
-  line-height: 1.18;
-  margin-top: 18px
-}
-
-.essence-inner>p:not(.eyebrow) {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #b6c1c5;
-  margin-top: 22px
-}
-
-.essence .text-link {
-  margin-top: 23px;
-  font-size: 9px;
-  letter-spacing: 1px
-}
-
 .site-footer {
   background: #0c151a;
   color: var(--paper);
@@ -1333,34 +1292,6 @@
     margin-top: 13px
   }
 
-  .essence-inner {
-    padding-block: 49px
-  }
-
-  .essence-spark {
-    width: 21px;
-    height: 21px;
-    margin-bottom: 18px
-  }
-
-  .essence h2 {
-    font-size: 31px;
-    letter-spacing: -1px;
-    line-height: 1.2;
-    margin-top: 17px
-  }
-
-  .essence-inner>p:not(.eyebrow) {
-    font-size: 16px;
-    margin-top: 19px
-  }
-
-  .essence .text-link {
-    font-size: 8px;
-    gap: 14px;
-    margin-top: 19px
-  }
-
   .site-footer {
     padding-top: 37px
   }
@@ -1596,4 +1527,78 @@
   .combination-card-visual img { aspect-ratio: 1.5; }
   .combination-card-title { font-size: 27px; }
   .combinations-heading > p { font-size: 15px; }
+}
+
+/* Closing brand composition. */
+.essence {
+  position: relative;
+  overflow: hidden;
+  color: var(--paper);
+  background: radial-gradient(ellipse at 91% 15%, #24425466, transparent 53%), #101b22;
+  border-bottom: 1px solid #84a6be33;
+}
+.essence-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 84px);
+  padding-block: 80px 88px;
+}
+.essence-copy { min-width: 0; }
+.essence-label { display: flex; align-items: center; gap: 13px; }
+.essence-label .icon { width: 19px; height: 19px; color: #a8cce4; }
+.essence h2 {
+  font-size: clamp(39px, 4.35vw, 64px);
+  line-height: 1.12;
+  letter-spacing: -1.8px;
+  margin-top: 24px;
+}
+.essence h2 em { display: block; margin-top: 9px; color: #b7d3e7; font-weight: 400; }
+.essence-description { max-width: 420px; margin-top: 26px; color: #bac8cf; font-size: 16px; line-height: 1.85; }
+.essence-values { display: flex; flex-wrap: wrap; gap: 10px 0; list-style: none; padding: 0; margin: 26px 0 0; }
+.essence-values li { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #a8c5d8; padding-right: 16px; }
+.essence-values li + li { padding-left: 16px; border-left: 1px solid #5b7c8e; }
+.essence-action { margin-top: 32px; min-height: 52px; }
+.essence-visual {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1;
+  margin: 0;
+  border: 1px solid #84a6be66;
+  background: #0b141a;
+  box-shadow: 16px 16px 0 -1px #182d38, 16px 16px 0 0 #84a6be38;
+}
+.essence-photo { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.essence-visual::after { position: absolute; inset: 0; content: ''; pointer-events: none; background: linear-gradient(180deg, #0b151b55, transparent 26%, transparent 48%, #08131bf2); }
+.essence-visual-brand { position: absolute; inset: 24px 24px auto; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; color: #d7e5ed; }
+.essence-visual-brand img { width: 28px; height: 45px; object-fit: contain; }
+.essence-visual-brand > span { font: 400 43px/1 var(--serif); letter-spacing: -2px; }
+.essence-caption { position: absolute; z-index: 1; bottom: 27px; left: 28px; right: 28px; }
+.essence-caption-line { display: block; width: 38px; height: 2px; background: #a8cce4; margin-bottom: 15px; }
+.essence-caption p { font: 400 28px/1.2 var(--serif); letter-spacing: -.4px; }
+.essence-caption small { display: block; font-size: 11px; line-height: 1.5; color: #b6c7d1; margin-top: 14px; }
+@media (max-width: 1000px) {
+  .essence-inner { gap: 38px; padding-block: 64px 72px; }
+  .essence h2 { font-size: 43px; letter-spacing: -1.3px; }
+  .essence-values li { letter-spacing: .6px; padding-right: 12px; }
+  .essence-values li + li { padding-left: 12px; }
+  .essence-caption { bottom: 23px; left: 24px; right: 24px; }
+  .essence-caption p { font-size: 25px; }
+}
+@media (max-width: 760px) {
+  .essence-inner { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 48px 60px; }
+  .essence-copy { max-width: 540px; }
+  .essence h2 { font-size: clamp(37px, 6.6vw, 49px); }
+  .essence-description { max-width: 450px; margin-top: 23px; }
+  .essence-visual { width: 100%; max-width: 520px; justify-self: center; box-shadow: 10px 10px 0 -1px #182d38, 10px 10px 0 0 #84a6be38; }
+}
+@media (max-width: 420px) {
+  .essence h2 { font-size: 37px; letter-spacing: -1.15px; }
+  .essence-values li { font-size: 10px; letter-spacing: .65px; padding-right: 10px; }
+  .essence-values li + li { padding-left: 10px; }
+  .essence-action { width: 100%; padding-inline: 14px; gap: 15px; }
+  .essence-visual-brand { inset: 20px 20px auto; }
+  .essence-visual-brand > span { font-size: 36px; }
+  .essence-caption { bottom: 22px; left: 22px; right: 22px; }
+  .essence-caption p { font-size: 25px; }
 }
