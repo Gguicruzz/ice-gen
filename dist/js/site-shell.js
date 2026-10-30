@@ -42,6 +42,7 @@ const footer = `<footer class="site-footer" id="contato">
       <div><h3>ICE GEN</h3><a href="#essencia">Nossa essência</a><button type="button" data-dialog="care">Cuidados com a prata</button><button type="button" data-dialog="contact">Fale com a ICE GEN</button></div>
       <div class="footer-contact"><h3>Vamos conversar</h3><p>Uma dúvida sobre as peças?<br>Confira as informações de atendimento.</p><button class="footer-contact-link" type="button" data-dialog="contact">Informações de contato <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
     </div>
+    <div class="footer-wordmark wrap" aria-hidden="true"><span>ICE GEN</span><small>Frio no tom.<br>Forte no gesto.</small></div>
     <div class="footer-bottom wrap"><p>© <span id="year">2026</span> ICE GEN</p><p class="preview-label">Prévia da Home · Imagens e catálogo demonstrativos</p><p>Frio no tom. Forte no gesto.</p></div>
   </footer>`;
 const dialog = `<dialog class="site-dialog" id="site-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span class="eyebrow">ICE GEN</span><button class="icon-button dialog-close" type="button" aria-label="Fechar janela"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div><div id="dialog-content"></div></dialog>`;

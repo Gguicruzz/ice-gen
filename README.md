@@ -30,6 +30,8 @@ A primeira rodada de acabamento visual está documentada em [docs/REFINAMENTO-VI
 
 As mudanças dos comentários na interface estão em [docs/COMENTARIOS-INTERFACE.md](docs/COMENTARIOS-INTERFACE.md).
 
+A revisão editorial de todas as páginas, inspirada na PTZ Joias, está em [docs/DIRECAO-VISUAL-PTZ.md](docs/DIRECAO-VISUAL-PTZ.md), com decisões visuais, animações, preservação dos fluxos e validação responsiva. A nova imagem ilustrativa e seu prompt estão em [docs/IMAGEM-EDITORIAL-V2.md](docs/IMAGEM-EDITORIAL-V2.md).
+
 ## Estrutura
 
 | Caminho | Finalidade |
@@ -37,6 +39,8 @@ As mudanças dos comentários na interface estão em [docs/COMENTARIOS-INTERFACE
 | `dist/` | Home, catálogo, produtos, presentes, sacola, favoritos e assets |
 | `dist/data/` | Dados e configuração preservados, com metadados demonstrativos |
 | `dist/js/site-shell.js` / `site-ui.js` | Cabeçalho, rodapé, menus, diálogos e feedback compartilhados |
+| `dist/js/site-motion.js` | Entradas progressivas, resposta dos contadores e movimento reduzido |
+| `dist/styles/visual.css` / `home-editorial.css` / `commerce-editorial.css` | Direção editorial compartilhada, Home e páginas de compra |
 | `dist/js/catalog-model.js` / `catalog-page.js` | Regras de busca/filtros/URL e apresentação do catálogo |
 | `dist/js/favorites-store.js` | Favoritos locais com compatibilidade da chave legada |
 | `dist/js/cart-store.js` | Sacola transacional, quantidades, centavos, variantes e grupos de presente |

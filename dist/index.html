@@ -10,13 +10,15 @@
   <link rel="preload" as="image" href="/assets/campaign-hero.webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=DM+Sans:wght@400;450;500;550;600;650;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/tokens.css">
   <link rel="stylesheet" href="/styles/home.css">
   <link rel="stylesheet" href="/styles/shop.css">
+  <link rel="stylesheet" href="/styles/visual.css">
+  <link rel="stylesheet" href="/styles/home-editorial.css">
   <script type="module" src="/js/home-page.js"></script>
 </head>
-<body>
+<body class="home-page">
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
   <div data-site-header></div>
 
@@ -25,15 +27,16 @@
       <div class="hero-image" role="img" aria-label="Imagem de campanha ilustrativa: corrente e pingente de prata sobre uma jaqueta preta"></div>
       <div class="hero-shade"></div>
       <div class="hero-content wrap">
-        <p class="eyebrow light"><span class="mini-line"></span> Joias em prata 925</p>
-        <h1 id="hero-title">Frio no tom.<br>Forte no gesto.</h1>
-        <p class="hero-copy">A prata tem seu jeito de aparecer.<br>O seu estilo também.</p>
-        <div class="hero-ctas">
+        <p class="eyebrow light" data-reveal><span class="mini-line"></span> ICE GEN · PRATA 925</p>
+        <h1 id="hero-title" aria-label="Frio no tom. Forte no gesto." data-reveal><span class="hero-title-top">Frio no tom.</span><strong class="hero-title-strong">FORTE</strong><em class="hero-title-bottom">no gesto.</em></h1>
+        <p class="hero-copy" data-reveal>A prata tem seu jeito de aparecer.<br>O seu estilo também.</p>
+        <div class="hero-ctas" data-reveal>
           <a class="button button-light" href="/catalogo.html">Descobrir a coleção <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="button button-outline" href="#combinacoes">Ver combinações</a>
+          <a class="button button-outline" href="/presentes.html">Montar um presente <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
       <div class="hero-bottom wrap">
+        <a class="hero-marker" href="#joias"><span>01 / A coleção</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <p class="hero-signature">Mais que joias.<br>Atitude em cada detalhe.</p>
       </div>
       <span class="image-credit">Imagem de campanha ilustrativa</span>
@@ -42,8 +45,8 @@
     <div class="brand-strip" aria-label="Identidade ICE GEN"><span class="brand-promise"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>PRATA 925</span><span class="brand-promise"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>PRESENÇA</span><span class="brand-promise"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>ESTILO EM CADA DETALHE</span><span class="brand-promise"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>ICE GEN</span></div>
 
     <section class="jewels-section section-space wrap" id="joias" aria-labelledby="jewels-title">
-      <div class="section-heading">
-        <div><p class="eyebrow">Encontre a sua próxima peça</p><h2 id="jewels-title">Presença nos detalhes.</h2></div>
+      <div class="section-heading" data-reveal>
+        <div><p class="eyebrow"><span class="home-section-number">01</span> A coleção</p><h2 id="jewels-title">Presença.<br><em>Em cada detalhe.</em></h2></div>
         <a class="text-link" href="/catalogo.html">Explorar o catálogo <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="category-links" aria-label="Categorias de joias">
@@ -54,16 +57,16 @@
         <a class="category-link" href="/catalogo.html?categoria=brinco">Brincos</a><span aria-hidden="true">/</span>
         <a class="category-link" href="/catalogo.html?categoria=alianca">Alianças</a>
       </div>
-      <div class="editorial-grid">
-        <a class="editorial-card" href="/catalogo.html?categoria=corrente" aria-label="Explorar correntes">
+      <div class="editorial-grid" data-stagger>
+        <a class="editorial-card" href="/catalogo.html?categoria=corrente" aria-label="Explorar correntes" data-reveal>
           <span class="editorial-photo photo-chain" role="img" aria-label="Composição ilustrativa de corrente prateada sobre pedra escura"></span>
           <span class="editorial-caption"><span><small>01 / Elos de presença</small><strong>Correntes</strong></span><span class="circle-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span>
         </a>
-        <a class="editorial-card" href="/catalogo.html?categoria=pingente" aria-label="Explorar pingentes">
+        <a class="editorial-card" href="/catalogo.html?categoria=pingente" aria-label="Explorar pingentes" data-reveal>
           <span class="editorial-photo photo-pendant" role="img" aria-label="Composição ilustrativa de pingente prateado sobre rocha"></span>
           <span class="editorial-caption"><span><small>02 / Símbolos que ficam</small><strong>Pingentes</strong></span><span class="circle-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span>
         </a>
-        <a class="editorial-card" href="#presentes" aria-label="Para presentear — conhecer presentes">
+        <a class="editorial-card" href="/presentes.html" aria-label="Para presentear — montar um presente" data-reveal>
           <span class="editorial-photo photo-gift" role="img" aria-label="Imagem ilustrativa de joia em uma caixa preta"></span>
           <span class="editorial-caption"><span><small>03 / Um gesto com significado</small><strong>Para presentear</strong></span><span class="circle-arrow"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span>
         </a>
@@ -73,30 +76,37 @@
 
     <section class="combinations section-space" id="combinacoes" aria-labelledby="combinations-title">
       <div class="wrap">
-        <div class="section-heading combinations-heading"><div><p class="eyebrow">Combinações</p><h2 id="combinations-title">Sozinha ou em conjunto.<br>Você escolhe.</h2></div><p>Veja as duas peças, compare os detalhes e encontre o seu jeito de combinar.</p></div>
-        <div class="combination-grid" id="combination-grid"></div>
+        <div class="section-heading combinations-heading" data-reveal><div><p class="eyebrow light"><span class="home-section-number">02</span> Combinações</p><h2 id="combinations-title">Sozinha.<br><em>Ou em conjunto.</em></h2></div><p>Você escolhe.<br>Compare os detalhes e encontre o seu jeito de combinar.</p></div>
+        <div class="combination-grid" id="combination-grid" data-stagger></div>
+        <p class="combination-collection-note">Peças vendidas separadamente. Ilustrações e valores demonstrativos.</p>
       </div>
     </section>
 
     <section class="gift-section wrap section-space" id="presentes" aria-labelledby="gift-title">
-      <div class="gift-visual"><span role="img" aria-label="Imagem ilustrativa de um presente com joia em uma caixa preta"></span><p>Um detalhe.<br>Muitos significados.</p></div>
-      <div class="gift-content"><p class="eyebrow">Montagem de presentes</p><h2 id="gift-title">Você escolhe as peças.<br>A gente ajuda a montar.</h2><p>Uma corrente, um pingente e uma embalagem.<br>Um presente com o seu jeito de dizer.</p><div class="gift-steps"><span><b>01</b> Corrente</span><span><b>02</b> Pingente</span><span><b>03</b> Embalagem</span></div><button class="button button-dark" type="button" data-dialog="gift">Conhecer a montagem <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small class="gift-note">Imagens ilustrativas. Embalagens sujeitas à confirmação.</small></div>
+      <div class="gift-visual" data-reveal><span role="img" aria-label="Imagem ilustrativa de um presente com joia em uma caixa preta"></span><p>Um detalhe.<br><em>Muitos significados.</em></p><small>Imagem de campanha ilustrativa</small></div>
+      <div class="gift-content" data-reveal><p class="eyebrow light"><span class="home-section-number">03</span> Montagem de presentes</p><h2 id="gift-title">Você escolhe as peças.<br><em>A gente ajuda a montar.</em></h2><p>Uma corrente, um pingente e uma embalagem.<br>Um presente com o seu jeito de dizer.</p><div class="gift-steps" aria-label="As três etapas do presente"><span><b>01</b> Corrente</span><span><b>02</b> Pingente</span><span><b>03</b> Embalagem</span></div><button class="button button-light" type="button" data-dialog="gift">Montar um presente <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small class="gift-note">Ilustrações provisórias. Embalagens sujeitas à confirmação.</small></div>
     </section>
 
     <section class="essence" id="essencia" aria-labelledby="essence-title">
       <div class="wrap essence-inner">
-        <div class="essence-copy">
-          <p class="eyebrow light essence-label"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>A essência ICE GEN</p>
-          <h2 id="essence-title">A prata é o<br>ponto de partida.<em>O resto é você.</em></h2>
+        <div class="essence-copy" data-reveal>
+          <p class="eyebrow essence-label"><span class="home-section-number">04</span>A essência ICE GEN</p>
+          <h2 id="essence-title"><span>A prata é o</span><strong>COMEÇO.</strong><em>O resto é você.</em></h2>
           <p class="essence-description">Presença, personalidade e liberdade para combinar. Joias para fazer parte da sua história — do seu jeito.</p>
           <ul class="essence-values" aria-label="A essência da marca"><li>Presença</li><li>Personalidade</li><li>Liberdade</li></ul>
-          <a class="button button-light essence-action" href="/catalogo.html">Encontre a sua expressão <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="text-link essence-action" href="/catalogo.html">Encontre a sua expressão <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="essence-visual">
-          <img class="essence-photo" src="/assets/joias-editorial.webp" alt="Imagem de campanha ilustrativa de um pingente prateado sobre pedra escura" width="2048" height="683" loading="lazy" decoding="async">
+        <figure class="essence-visual" data-reveal>
+          <img class="essence-photo" src="/assets/editorial-silver-v2.webp" alt="Composição editorial ilustrativa de formas prateadas sobre pedra escura" width="1536" height="1024" loading="lazy" decoding="async">
           <div class="essence-visual-brand" aria-hidden="true"><img src="/assets/ice-gen-logo-transparent.png" alt="" width="31" height="50"><span>925</span></div>
           <figcaption class="essence-caption"><span class="essence-caption-line"></span><p>Seu estilo.<br>Em cada detalhe.</p><small>Imagem de campanha ilustrativa</small></figcaption>
         </figure>
+      </div>
+    </section>
+    <section class="home-contact" aria-labelledby="home-contact-title">
+      <div class="wrap home-contact-inner" data-reveal>
+        <div><p class="eyebrow light">Vamos conversar</p><h2 id="home-contact-title">O próximo detalhe<br><em>começa com você.</em></h2></div>
+        <div class="home-contact-action"><p>Uma dúvida sobre as peças ou a sua combinação? Converse com a ICE GEN.</p><button type="button" class="button button-light" data-dialog="contact">Falar com a ICE GEN <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
       </div>
     </section>
   </main>

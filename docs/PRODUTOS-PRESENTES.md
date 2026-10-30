@@ -41,3 +41,28 @@ A tela completa de sacola/favoritos e suas funções adicionais pertencem à par
 - Rascunho novo de R$ 387 foi restaurado após cancelar edição de outro presente; foco retornou ao título. Remover o presente em uma segunda aba durante edição impediu a gravação e a recriação do item.
 - Resumo móvel recolhido, total e ação final visível após terceira escolha, acessos de cabeçalho/rodapé, cards e contador compartilhado conferidos. Screenshots locais em `previews/produto-desktop.jpg`, `produto-mobile.jpg`, `presentes-desktop.jpg` e `presentes-mobile.jpg` (não publicados no pacote).
 - Bloqueio real de armazenamento no navegador não foi emulado; falhas e recuperação foram exercitadas com storage controlado nos testes de unidade. Não foi afirmada correspondência exata com o Figma, que continuou indisponível conforme registro em `REFERENCIAS.md`.
+
+## Revisão da ficha de produto — 24/10/2026
+
+Revisão feita na pasta local escolhida pelo proprietário. A versão mais recente do ZIP não foi importada. Identidade, assets, dados demonstrativos e modelos de sacola e presentes foram preservados.
+
+### Correções
+
+- Os cards de complementos herdavam `height: 100%` no link da imagem. A mídia ocupava toda a altura do card e empurrava preço e ação para fora dele, sobre o rodapé. A ficha agora usa altura automática nessa mídia, preservando a proporção quadrada e o espaço do conteúdo.
+- A janela de imagem ganhou largura própria na ficha. Em 1440 px, a imagem principal tinha 627 px e a antiga janela mostrava apenas 594 px; a janela revisada mostra 919 px. Os demais diálogos mantêm suas dimensões.
+- Editar quantidade ou variante limpa erros e confirmações referentes à seleção anterior.
+- Os botões de quantidade recuperam entradas manuais inválidas para um inteiro entre 1 e 99. A digitação manual continua sendo validada antes de gravar a sacola.
+
+### Verificação desta revisão
+
+- `npm run check`: passou, com 25 arquivos JavaScript, 128 referências locais e dez IDs únicos.
+- `npm test`: 56 testes passaram, sem falhas.
+- As dez fichas abriram no navegador em 1440 px; os complementos permaneceram dentro dos cards, sem rolagem horizontal.
+- A ficha da Corrente Veneziana foi conferida em 320, 390 e 768 px, sem rolagem horizontal ou conteúdo escapando dos cards.
+- Quantidade zero foi rejeitada; editar o campo limpou o alerta. Após incluir duas unidades, alterar a quantidade ocultou a confirmação antiga.
+- Recuperação pelos botões: `2,5 → + → 3`, `2,5 → − → 2`, `100 → − → 99` e campo vazio `→ + → 1`. Os limites 1 e 99 desabilitam o botão correspondente.
+- Duas unidades de R$ 189,00 resultaram em R$ 378,00 na sacola. O favorito persistiu após recarga. Os dados criados para estes testes foram removidos ao concluir.
+- Abas responderam às setas, Home e End. Escape fechou a ampliação e devolveu o foco ao botão. O diálogo de compartilhamento apresentou a URL da peça. ID inexistente mostrou retorno ao catálogo.
+- Nenhum erro ou aviso foi registrado no console durante os fluxos conferidos.
+
+Registros locais em `previews/produto-revisao-complementos.jpg`, `previews/produto-revisao-desktop.jpg` e `previews/produto-revisao-mobile.jpg`, ignorados pelo Git. A conferência móvel usou viewport do navegador, sem aparelho físico. Não há variantes comerciais cadastradas para exercitar seu seletor na interface; a validação de variantes permanece coberta pelos testes existentes dos modelos. Fotos, medidas ausentes e dados comerciais continuam sujeitos à validação do proprietário.

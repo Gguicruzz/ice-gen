@@ -116,6 +116,7 @@ if (!product) {
     product.variants.forEach(variant => { const option = node('option', variant.label); option.value = variant.id; variantSelect.append(option); });
     variantSelect.addEventListener('change', () => {
       variantSelect.removeAttribute('aria-invalid');
+      clearSelectionFeedback();
       const variant = product.variants.find(item => item.id === variantSelect.value);
       price.firstChild.textContent = money.format(variant?.price ?? product.price);
     });
@@ -127,10 +128,22 @@ if (!product) {
   const input = node('input'); Object.assign(input, { id: 'product-quantity', name: 'quantity', type: 'number', min: '1', max: '99', step: '1', value: '1', required: true, inputMode: 'numeric' });
   input.setAttribute('aria-describedby', 'quantity-hint product-selection-feedback');
   const more = node('button', '+'); more.type = 'button'; more.setAttribute('aria-label', 'Aumentar quantidade');
-  function syncQuantity() { less.disabled = Number(input.value) <= 1; more.disabled = Number(input.value) >= 99; input.removeAttribute('aria-invalid'); }
-  less.addEventListener('click', () => { input.value = String(Math.max(1, (Number(input.value) || 1) - 1)); syncQuantity(); });
-  more.addEventListener('click', () => { input.value = String(Math.min(99, (Number(input.value) || 0) + 1)); syncQuantity(); });
-  input.addEventListener('input', syncQuantity); syncQuantity();
+  function syncQuantity() {
+    const quantity = Number(input.value);
+    less.disabled = quantity === 1;
+    more.disabled = quantity === 99;
+    input.removeAttribute('aria-invalid');
+  }
+  function stepQuantity(direction) {
+    const quantity = Number(input.value);
+    const next = direction > 0 ? Math.floor(quantity) + 1 : Math.ceil(quantity) - 1;
+    input.value = String(Math.min(99, Math.max(1, Number.isFinite(next) ? next : 1)));
+    syncQuantity();
+    clearSelectionFeedback();
+  }
+  less.addEventListener('click', () => stepQuantity(-1));
+  more.addEventListener('click', () => stepQuantity(1));
+  input.addEventListener('input', () => { syncQuantity(); clearSelectionFeedback(); }); syncQuantity();
   controls.append(less, input, more);
   const hint = node('p', 'De 1 a 99 unidades por peça.', 'quantity-hint'); hint.id = 'quantity-hint';
   const actions = node('div', '', 'product-purchase-actions');
@@ -149,6 +162,11 @@ if (!product) {
   const feedback = node('p', '', 'product-selection-feedback'); feedback.id = 'product-selection-feedback'; feedback.setAttribute('role', 'alert');
   const success = node('div', '', 'product-success'); success.hidden = true;
   const successText = node('p'); successText.setAttribute('role', 'status');
+  function clearSelectionFeedback() {
+    feedback.textContent = '';
+    success.hidden = true;
+    successText.textContent = '';
+  }
   const seeBag = node('button', 'Ver sacola →'); seeBag.type = 'button'; seeBag.addEventListener('click', () => ui.openBag());
   success.append(successText, seeBag);
   let adding = false;

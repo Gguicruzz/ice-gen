@@ -1,4 +1,5 @@
 import { mountSiteShell } from './site-shell.js';
+import { initializeSiteMotion } from './site-motion.js';
 import { createFavoritesStore } from './favorites-store.js';
 import { products } from '../data/catalog.js';
 import { categories, normalizeSearch, selectProducts } from './catalog-model.js';
@@ -33,6 +34,7 @@ export function catalogUrl({ query = '', category = '', favorites = false } = {}
 
 export function createSiteUI({ page = 'home', onAction, wraps = giftWraps } = {}) {
   mountSiteShell({ page });
+  initializeSiteMotion();
   const dialog = document.querySelector('#site-dialog');
   const content = document.querySelector('#dialog-content');
   const menu = document.querySelector('#mobile-menu');
