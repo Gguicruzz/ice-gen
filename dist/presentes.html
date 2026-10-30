@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="/styles/gifts.css">
   <link rel="stylesheet" href="/styles/visual.css">
   <link rel="stylesheet" href="/styles/commerce-editorial.css">
+  <link rel="stylesheet" href="/styles/gift-builder.css">
   <script type="module" src="/js/gift-page.js"></script>
 </head>
 <body class="gifts-page">
@@ -34,14 +35,17 @@
         <div class="gift-workspace" id="gift-builder">
           <section class="gift-options-area" aria-label="Escolher os componentes">
             <nav id="gift-steps" class="gift-steps" aria-label="Etapas da montagem"></nav>
-            <div class="gift-step-heading"><p class="eyebrow light" id="gift-step-number"></p><h2 id="gift-step-title" tabindex="-1"></h2><p id="gift-step-copy"></p></div>
-            <div class="gift-step-actions" id="gift-step-actions"><button type="button" class="gift-back" id="gift-back">← Voltar</button><p class="gift-selection-status" id="gift-selection-status"></p><button type="button" class="button button-light" id="gift-next" disabled><span>Continuar</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+            <div class="gift-step-heading"><div class="gift-step-heading-top"><p class="eyebrow light" id="gift-step-number"></p><span id="gift-choice-count"></span></div><h2 id="gift-step-title" tabindex="-1"></h2><p id="gift-step-copy"></p></div>
             <div class="gift-options" id="gift-options"></div>
+            <div class="gift-step-actions" id="gift-step-actions"><p class="gift-selection-status" id="gift-selection-status"></p><div class="gift-navigation"><button type="button" class="gift-back" id="gift-back">← Voltar</button><button type="button" class="button button-light" id="gift-next" disabled><span>Escolher pingente</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div></div>
             <p class="gift-data-note">Ilustrações provisórias. As embalagens ainda não têm fotografia oficial. Não há confirmação de estoque ou prazo de envio nesta prévia.</p>
           </section>
           <aside class="gift-summary" aria-labelledby="gift-summary-title">
             <div class="gift-summary-heading"><h2 id="gift-summary-title">Sua combinação</h2><span id="gift-progress">Etapa 01 / 03</span></div>
-            <details id="gift-summary-details" open><summary>Ver peças escolhidas <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div id="gift-summary-items"></div></details>
+            <div class="gift-preview" id="gift-preview" role="group" aria-label="Prévia das escolhas"></div>
+            <p class="gift-preview-caption" id="gift-preview-caption">Suas peças, lado a lado.</p>
+            <progress class="gift-preview-progress" id="gift-preview-progress" max="3" value="0" aria-label="Peças escolhidas"></progress>
+            <details id="gift-summary-details" open><summary>Ver peças e valores <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div id="gift-summary-items"></div></details>
             <div class="gift-total"><span id="gift-total-label">Total parcial</span><strong id="gift-total" aria-live="polite">A selecionar</strong></div>
             <p id="gift-missing" class="gift-missing"></p>
             <button type="button" class="button gift-submit" id="save-gift" disabled><span>Revisar presente</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>

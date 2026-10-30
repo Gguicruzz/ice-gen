@@ -41,3 +41,15 @@ Cada etapa agora usa opções de rádio nativas com rótulo cobrindo imagem e co
 Quando uma peça exige variante, a confirmação só ocorre após escolher uma opção válida. A seleção anterior permanece preservada no rascunho confirmado durante essa escolha; o resumo e o avanço tratam a peça pendente como incompleta. Voltar cancela a opção ainda não confirmada. Uma montagem completa restaurada inicia na última etapa para facilitar a revisão.
 
 A suíte tem 64 testes aprovados, incluindo substituição de uma única joia, preservação dos outros componentes e validação de variantes. A checagem estrutural passou. A nova tentativa de prévia informou conexão recusada, apesar do supervisor em execução; o supervisor foi encerrado e a revisão visual segue pendente. Nenhuma infraestrutura alternativa foi usada.
+
+## Escolher e montar o presente — 30/10/2026
+
+Refino restrito ao montador marcado pelo proprietário. Os cartões ficaram mais compactos, com imagem e conteúdo lado a lado no celular. A indicação de escolha é um estado discreto; o rádio nativo e o contorno identificam a opção selecionada. “Ver detalhes” permite conferir descrição, material, medida e preço sem sair da montagem, e escolher a peça pela própria janela.
+
+O avanço fica depois das opções, em uma faixa inferior dentro da área de escolha. Os botões indicam o destino: “Escolher pingente”, “Escolher embalagem” e “Revisar presente”. Cada etapa usa sua descrição específica e mostra quantas opções estão disponíveis. Selecionar continua sem avançar automaticamente.
+
+O resumo ganhou uma prévia dos três componentes reais, progresso e detalhes expansíveis com valores e ação de alterar. As escolhas são exibidas lado a lado, sem simular uma fotografia da joia montada. O resumo começa recolhido e conserva a preferência ao redimensionar a tela; quando expandido, pode rolar normalmente. Variante e quantidade de cada componente continuam consideradas.
+
+Verificação em navegador: seleção e troca pelo teclado, fechamento por Escape com retorno de foco, escolha pela janela de detalhes, avanço bloqueado sem escolha, prévia e soma de R$ 189,00 + R$ 119,00, revisão do presente de R$ 347,00 e fechamento sem gravar. A edição de embalagem foi revisada em R$ 367,00 e conservou o ID do presente e uma única seleção na sacola. Os itens criados no teste local foram removidos; o rascunho do site publicado foi preservado em sua origem.
+
+Layouts conferidos em larguras de 320, 390, 740, 1024 e 1395 px, sem rolagem horizontal no montador. O botão mais longo foi conferido na menor largura. A janela de detalhes da embalagem também coube no celular pequeno. Sem erros de console observados. Checagem estrutural aprovada com 26 arquivos JS e 145 referências locais; 64 testes passaram. Os modelos e dados do catálogo não foram alterados.

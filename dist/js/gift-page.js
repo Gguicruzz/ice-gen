@@ -31,9 +31,7 @@ const nextButton = document.querySelector('#gift-next');
 const backButton = document.querySelector('#gift-back');
 const stepActions = document.querySelector('#gift-step-actions');
 const summaryDetails = document.querySelector('#gift-summary-details');
-const summaryMedia = matchMedia('(max-width: 1100px)');
-summaryDetails.open = !summaryMedia.matches;
-summaryMedia.addEventListener('change', event => { summaryDetails.open = !event.matches; });
+summaryDetails.open = false;
 
 function message(text, error = false) {
   feedback.textContent = text;
@@ -58,7 +56,7 @@ function gotoStep(index) {
   step = index;
   message(''); render();
   stepTitle.focus({ preventScroll: true });
-  stepTitle.scrollIntoView({ block: 'start', behavior: 'auto' });
+  document.querySelector('#gift-steps').scrollIntoView({ block: 'start', behavior: 'auto' });
 }
 function enterEdit(id) {
   const matches = ui.cart.getItems().filter(item => item.id === id);
@@ -88,11 +86,40 @@ function renderSteps() {
     const button = node('button', '', progress.valid[index] ? 'is-complete' : ''); button.type = 'button';
     const number = node('span', progress.valid[index] ? '✓' : String(index + 1).padStart(2, '0'));
     number.setAttribute('aria-hidden', 'true');
-    button.append(number, node('span', item.label));
+    const label = node('span', item.label, 'gift-step-label');
+    label.append(node('small', progress.valid[index] ? 'Escolhida' : index === step ? 'Agora' : 'Em seguida', 'gift-step-state'));
+    button.append(number, label);
     button.disabled = locked || saved || saving || !progress.openable[index] || (pendingVariant && index > step);
     if (step === index && !saved) button.setAttribute('aria-current', 'step');
     button.setAttribute('aria-label', `Etapa ${index + 1}: ${item.label}${progress.valid[index] ? ', escolhida' : ''}`);
     button.addEventListener('click', () => gotoStep(index)); navigation.append(button);
+  });
+}
+function choiceDetails(kind, choice) {
+  ui.show(() => {
+    ui.content.append(node('p', `Conheça a sua ${kind === 'wrap' ? 'embalagem' : 'peça'}`, 'eyebrow'));
+    ui.title(choice.name);
+    const media = node('div', '', 'gift-choice-detail-media');
+    if (kind !== 'wrap') {
+      const image = node('img');
+      Object.assign(image, { src: choice.image, alt: `Ilustração provisória de ${choice.name}`, width: 1000, height: 1000 });
+      media.append(image);
+    } else media.append(node('span', choice.id === 'wrap-paper' ? '01' : '02'), node('small', 'Fotografia em preparação'));
+    const current = draft[kind]?.id === choice.id && choice.variants?.find(item => item.id === draft[kind].variantId);
+    const description = node('div', '', 'gift-choice-detail-copy');
+    description.append(node('p', money.format(current?.price ?? choice.price), 'gift-choice-detail-price'));
+    const specifications = [choice.material, choice.measurement, current?.label].filter(Boolean).join(' · ');
+    if (specifications) description.append(node('p', specifications, 'gift-choice-detail-specs'));
+    description.append(node('p', choice.description || 'Detalhes e fotografia desta embalagem aguardam confirmação.', 'dialog-lead'));
+    const layout = node('div', '', 'gift-choice-detail-view'); layout.append(media, description); ui.content.append(layout);
+    ui.note('Ilustração e valor demonstrativos. Você pode trocar esta escolha antes de revisar o presente.');
+    const select = node('button', kind === 'wrap' ? 'Escolher esta embalagem' : 'Escolher esta peça', 'button button-dark dialog-action'); select.type = 'button';
+    select.append(icon('arrow'));
+    select.addEventListener('click', () => {
+      ui.dialog.addEventListener('close', () => choose(kind, choice, draft[kind]?.id === choice.id ? draft[kind].variantId : undefined), { once: true });
+      ui.dialog.close();
+    });
+    ui.content.append(select);
   });
 }
 function choose(kind, choice, variantId, focusVariant = false) {
@@ -143,7 +170,7 @@ function renderChoices() {
     const variant = selected && choice.variants?.find(item => item.id === draft[kind].variantId);
     const price = node('span', money.format(variant ? variant.price ?? choice.price : choice.price), 'gift-choice-price'); price.id = `gift-price-${choice.id}`;
     price.append(node('small', 'Valor demonstrativo'));
-    const status = node('span', pending ? 'Escolha a opção abaixo' : selected ? '✓ Selecionada' : 'Selecionar esta opção', 'gift-choice-status'); status.id = `gift-status-${choice.id}`;
+    const status = node('span', pending ? 'Falta escolher a opção' : selected ? '✓ Escolhida' : 'Escolher', 'gift-choice-status'); status.id = `gift-status-${choice.id}`;
     body.append(node('span', label, 'eyebrow light'), name, price, node('span', kind === 'wrap' ? 'Detalhes e fotografia aguardam confirmação.' : `${choice.material}${choice.measurement ? ` · ${choice.measurement}` : ''}`, 'gift-choice-meta'), status);
     option.append(media, body); card.append(input, option);
     if (choice.variants?.length) {
@@ -157,16 +184,41 @@ function renderChoices() {
       select.addEventListener('change', () => choose(kind, choice, select.value, true));
       variantArea.append(variantLabel, select); card.append(variantArea);
     }
+    const details = node('button', 'Ver detalhes', 'gift-choice-details'); details.type = 'button';
+    details.setAttribute('aria-label', `Ver detalhes de ${choice.name}`); details.setAttribute('aria-haspopup', 'dialog');
+    details.dataset.focusKey = `gift-details-${choice.id}`;
+    details.addEventListener('click', () => choiceDetails(kind, choice)); card.append(details);
     input.addEventListener('change', () => { if (input.checked) choose(kind, choice, draft[kind]?.id === choice.id ? draft[kind].variantId : undefined); });
     optionsHost.append(card);
   }
 }
+function renderPreview(progress) {
+  const preview = document.querySelector('#gift-preview');
+  preview.replaceChildren();
+  giftSteps.forEach(({ kind, label }, index) => {
+    const selection = selectionDraft()[kind];
+    const choice = selection && giftChoices(kind, catalog).find(item => item.id === selection.id);
+    const variant = choice?.variants?.find(item => item.id === selection.variantId);
+    const slot = node('div', '', `gift-preview-slot${choice ? ' is-filled' : ''}${index === step && !saved ? ' is-current' : ''}`);
+    const media = node('span', '', 'gift-preview-media'); media.setAttribute('aria-hidden', 'true');
+    if (choice?.image && kind !== 'wrap') {
+      const image = node('img'); Object.assign(image, { src: choice.image, alt: '', width: 96, height: 96 }); media.append(image);
+    } else media.append(node('span', choice ? '✓' : String(index + 1).padStart(2, '0')));
+    const name = choice ? [choice.name, variant?.label, selection.quantity > 1 ? `${selection.quantity} unidades` : ''].filter(Boolean).join(' · ') : 'A escolher';
+    const caption = node('span', name, 'gift-preview-name'); caption.title = name;
+    slot.append(media, node('small', label), caption); preview.append(slot);
+  });
+  document.querySelector('#gift-preview-caption').textContent = saved ? 'Seu presente foi salvo com estas três escolhas.' : progress.ready ? 'Sua combinação está pronta para revisar.' : 'Escolha uma opção em cada etapa.';
+  document.querySelector('#gift-preview-progress').value = progress.selectedCount;
+}
 function renderSummary() {
   const progress = giftProgress(selectionDraft(), catalog);
+  renderPreview(progress);
   summaryItems.replaceChildren();
   giftSteps.forEach(({ kind, label }, index) => {
     const selection = selectionDraft()[kind];
     const choice = selection && giftChoices(kind, catalog).find(item => item.id === selection.id);
+    if (!choice) return;
     const button = node('button', '', 'gift-summary-row'); button.type = 'button';
     button.disabled = locked || saved || saving || !progress.openable[index] || (pendingVariant && index > step);
     button.setAttribute('aria-label', `${choice ? 'Alterar' : 'Escolher'} ${label.toLocaleLowerCase('pt-BR')}${choice ? `: ${choice.name}` : ''}`);
@@ -186,28 +238,39 @@ function renderSummary() {
     button.addEventListener('click', () => gotoStep(index)); summaryItems.append(button);
   });
   const total = giftDraftTotal(selectionDraft(), catalog);
+  summaryDetails.hidden = !progress.selectedCount;
   document.querySelector('#gift-total-label').textContent = progress.ready ? 'Total do presente' : 'Total parcial';
   document.querySelector('#gift-total').textContent = !progress.selectedCount ? 'A selecionar' : total === null ? 'A conferir' : money.format(total / 100);
   document.querySelector('#gift-missing').textContent = saved ? 'Presente salvo na sacola.' : progress.ready ? 'Tudo escolhido. Confira os detalhes antes de salvar.' : `Falta escolher: ${giftSteps.filter((_, index) => !progress.valid[index]).map(({ label }) => label.toLocaleLowerCase('pt-BR')).join(', ')}.`;
   document.querySelector('#gift-progress').textContent = `${progress.selectedCount} de 3 escolhidos`;
-  saveButton.hidden = saved || locked;
+  saveButton.hidden = saved || locked || !progress.ready;
   saveButton.disabled = !progress.ready || saving || pendingVariant;
   const currentKind = giftSteps[step].kind;
   const current = selectionDraft()[currentKind];
   const currentChoice = current && giftChoices(currentKind, catalog).find(item => item.id === current.id);
-  document.querySelector('#gift-selection-status').textContent = pendingVariant ? 'Escolha a opção para confirmar esta peça.' : saved ? 'Presente salvo.' : currentChoice ? `Sua escolha: ${currentChoice.name}` : 'Selecione uma opção para continuar.';
+  const selectionStatus = document.querySelector('#gift-selection-status');
+  const variant = currentChoice?.variants?.find(item => item.id === current.variantId);
+  const selectionPrice = currentChoice ? money.format(priceCents(variant?.price ?? currentChoice.price) * current.quantity / 100) : '';
+  selectionStatus.replaceChildren(
+    node('strong', pendingVariant ? 'Falta confirmar a opção' : currentChoice ? currentChoice.name : `Escolha ${currentKind === 'wrap' ? 'uma embalagem' : currentKind === 'chain' ? 'uma corrente' : 'um pingente'}`, 'gift-selection-name'),
+    node('span', pendingVariant ? 'Confira a opção da peça destacada.' : currentChoice ? `${selectionPrice}${current.quantity > 1 ? ` · ${current.quantity} unidades` : ''} · Escolha confirmada` : 'Marque uma opção para continuar.', 'gift-selection-hint')
+  );
   saveButton.querySelector('span').textContent = saving ? 'Salvando…' : editing ? 'Revisar alterações' : 'Revisar presente';
   stepActions.hidden = saved || locked;
   backButton.hidden = step === 0;
   nextButton.disabled = !progress.valid[step] || saving || pendingVariant || (step === 2 && !progress.ready);
-  nextButton.querySelector('span').textContent = step === 2 ? 'Revisar presente' : 'Continuar';
-  nextButton.setAttribute('aria-label', step === 2 ? 'Revisar presente' : `Continuar para ${giftSteps[step + 1].label.toLocaleLowerCase('pt-BR')}`);
+  const nextLabel = step === 2 ? editing ? 'Revisar alterações' : 'Revisar presente' : `Escolher ${giftSteps[step + 1].label.toLocaleLowerCase('pt-BR')}`;
+  nextButton.querySelector('span').textContent = nextLabel;
+  nextButton.setAttribute('aria-label', nextLabel);
+  backButton.replaceChildren(node('span', '←'), node('span', step ? giftSteps[step - 1].label : 'Voltar', 'gift-back-label'));
+  backButton.setAttribute('aria-label', step ? `Voltar para ${giftSteps[step - 1].label.toLocaleLowerCase('pt-BR')}` : 'Voltar');
 }
 function render() {
   renderSteps();
   document.querySelector('#gift-step-number').textContent = saved ? 'Combinação concluída' : `Etapa ${step + 1} de 3 — ${giftSteps[step].label}`;
   stepTitle.textContent = saved ? 'Seu presente está na sacola.' : giftSteps[step].title;
-  document.querySelector('#gift-step-copy').textContent = saved ? 'Cada detalhe escolhido por você.' : 'Clique no card para escolher uma opção. Você pode trocar antes de revisar.';
+  document.querySelector('#gift-step-copy').textContent = saved ? 'Cada detalhe escolhido por você.' : giftSteps[step].description;
+  document.querySelector('#gift-choice-count').textContent = saved || locked ? '' : `${giftChoices(giftSteps[step].kind, catalog).length} opções · escolha 1`;
   renderChoices(); renderSummary();
 }
 function leaveEdit() {
@@ -274,7 +337,7 @@ const newGift = node('button', 'Montar outro presente', 'gift-see-bag');
 newGift.type = 'button'; newGift.hidden = true; seeBag.after(newGift);
 newGift.addEventListener('click', () => {
   draft = {}; previousDraft = {}; saved = false; pendingVariant = false; pendingChoice = null; step = 0; message(''); seeBag.hidden = true; newGift.hidden = true;
-  persistDraft(); render(); stepTitle.focus({ preventScroll: true }); stepTitle.scrollIntoView({ block: 'start', behavior: 'auto' });
+  persistDraft(); render(); stepTitle.focus({ preventScroll: true }); document.querySelector('#gift-steps').scrollIntoView({ block: 'start', behavior: 'auto' });
 });
 seeBag.addEventListener('click', () => ui.openBag());
 backButton.addEventListener('click', () => gotoStep(step - 1));
