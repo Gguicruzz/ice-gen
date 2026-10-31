@@ -599,16 +599,6 @@
   color: #9faeb6
 }
 
-.footer-bottom>p:last-child {
-  letter-spacing: 1.6px;
-  text-transform: uppercase
-}
-
-.footer-bottom .preview-label {
-  color: #99afb9;
-  font-size: 11px
-}
-
 .site-dialog {
   color: var(--ink);
   background: var(--paper);
@@ -992,9 +982,6 @@
     flex-wrap: wrap
   }
 
-  .footer-bottom>p:last-child {
-    display: none
-  }
 }
 
 @media (max-width:600px) {
@@ -1362,10 +1349,6 @@
     font-size: 11px;
     align-items: flex-start;
     flex-direction: column
-  }
-
-  .footer-bottom .preview-label {
-    font-size: 11px
   }
 
   .site-dialog {

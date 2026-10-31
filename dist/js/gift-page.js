@@ -20,7 +20,6 @@ let saving = false;
 let saved = false;
 let pendingVariant = false;
 const feedback = document.querySelector('#gift-feedback');
-const saveButton = document.querySelector('#save-gift');
 const banner = document.querySelector('#gift-edit-banner');
 const bannerCopy = document.querySelector('#gift-edit-copy');
 const optionsHost = document.querySelector('#gift-options');
@@ -128,7 +127,7 @@ function choose(kind, choice, variantId, focusVariant = false) {
   if (!result.ok) { message('Escolha uma opção válida antes de continuar.', true); return; }
   draft = result.draft; pendingChoice = result.pending; pendingVariant = Boolean(pendingChoice);
   seeBag.hidden = true; newGift.hidden = true;
-  message(pendingVariant ? `Escolha a opção de ${choice.name} para confirmar a peça.` : `${choice.name}: escolha atualizada.`);
+  message('');
   if (!pendingVariant) persistDraft();
   render();
   const target = pendingVariant || focusVariant ? document.getElementById(`gift-variant-${choice.id}`) : [...optionsHost.querySelectorAll('[data-choice-id]')].find(input => input.dataset.choiceId === choice.id);
@@ -171,7 +170,9 @@ function renderChoices() {
     const price = node('span', money.format(variant ? variant.price ?? choice.price : choice.price), 'gift-choice-price'); price.id = `gift-price-${choice.id}`;
     price.append(node('small', 'Valor demonstrativo'));
     const status = node('span', pending ? 'Falta escolher a opção' : selected ? '✓ Escolhida' : 'Escolher', 'gift-choice-status'); status.id = `gift-status-${choice.id}`;
-    body.append(node('span', label, 'eyebrow light'), name, price, node('span', kind === 'wrap' ? 'Detalhes e fotografia aguardam confirmação.' : `${choice.material}${choice.measurement ? ` · ${choice.measurement}` : ''}`, 'gift-choice-meta'), status);
+    body.append(node('span', label, 'eyebrow light'), name, price);
+    if (kind !== 'wrap') body.append(node('span', `${choice.material}${choice.measurement ? ` · ${choice.measurement}` : ''}`, 'gift-choice-meta'));
+    body.append(status);
     option.append(media, body); card.append(input, option);
     if (choice.variants?.length) {
       const variantArea = node('div', '', 'gift-variant-area');
@@ -208,7 +209,6 @@ function renderPreview(progress) {
     const caption = node('span', name, 'gift-preview-name'); caption.title = name;
     slot.append(media, node('small', label), caption); preview.append(slot);
   });
-  document.querySelector('#gift-preview-caption').textContent = saved ? 'Seu presente foi salvo com estas três escolhas.' : progress.ready ? 'Sua combinação está pronta para revisar.' : 'Escolha uma opção em cada etapa.';
   document.querySelector('#gift-preview-progress').value = progress.selectedCount;
 }
 function renderSummary() {
@@ -241,10 +241,10 @@ function renderSummary() {
   summaryDetails.hidden = !progress.selectedCount;
   document.querySelector('#gift-total-label').textContent = progress.ready ? 'Total do presente' : 'Total parcial';
   document.querySelector('#gift-total').textContent = !progress.selectedCount ? 'A selecionar' : total === null ? 'A conferir' : money.format(total / 100);
-  document.querySelector('#gift-missing').textContent = saved ? 'Presente salvo na sacola.' : progress.ready ? 'Tudo escolhido. Confira os detalhes antes de salvar.' : `Falta escolher: ${giftSteps.filter((_, index) => !progress.valid[index]).map(({ label }) => label.toLocaleLowerCase('pt-BR')).join(', ')}.`;
+  const missing = document.querySelector('#gift-missing');
+  missing.hidden = saved || progress.ready;
+  missing.textContent = missing.hidden ? '' : `Falta escolher: ${giftSteps.filter((_, index) => !progress.valid[index]).map(({ label }) => label.toLocaleLowerCase('pt-BR')).join(', ')}.`;
   document.querySelector('#gift-progress').textContent = `${progress.selectedCount} de 3 escolhidos`;
-  saveButton.hidden = saved || locked || !progress.ready;
-  saveButton.disabled = !progress.ready || saving || pendingVariant;
   const currentKind = giftSteps[step].kind;
   const current = selectionDraft()[currentKind];
   const currentChoice = current && giftChoices(currentKind, catalog).find(item => item.id === current.id);
@@ -253,9 +253,8 @@ function renderSummary() {
   const selectionPrice = currentChoice ? money.format(priceCents(variant?.price ?? currentChoice.price) * current.quantity / 100) : '';
   selectionStatus.replaceChildren(
     node('strong', pendingVariant ? 'Falta confirmar a opção' : currentChoice ? currentChoice.name : `Escolha ${currentKind === 'wrap' ? 'uma embalagem' : currentKind === 'chain' ? 'uma corrente' : 'um pingente'}`, 'gift-selection-name'),
-    node('span', pendingVariant ? 'Confira a opção da peça destacada.' : currentChoice ? `${selectionPrice}${current.quantity > 1 ? ` · ${current.quantity} unidades` : ''} · Escolha confirmada` : 'Marque uma opção para continuar.', 'gift-selection-hint')
+    node('span', pendingVariant ? 'Confira a opção da peça destacada.' : currentChoice ? `${selectionPrice}${current.quantity > 1 ? ` · ${current.quantity} unidades` : ''}` : 'Marque uma opção para continuar.', 'gift-selection-hint')
   );
-  saveButton.querySelector('span').textContent = saving ? 'Salvando…' : editing ? 'Revisar alterações' : 'Revisar presente';
   stepActions.hidden = saved || locked;
   backButton.hidden = step === 0;
   nextButton.disabled = !progress.valid[step] || saving || pendingVariant || (step === 2 && !progress.ready);
@@ -324,7 +323,7 @@ function reviewGift() {
     const total = node('div', '', 'gift-review-total');
     total.append(node('span', 'Total do presente'), node('strong', money.format(giftDraftTotal(draft, catalog) / 100)));
     ui.content.append(list, total);
-    ui.note('Valores demonstrativos. As três escolhas serão salvas como um único presente.');
+    ui.note('O presente reúne as três escolhas na sacola; não confirma um pedido.');
     const actions = node('div', '', 'gift-review-actions');
     const confirm = node('button', editing ? 'Salvar alterações' : 'Adicionar presente à sacola', 'button button-dark'); confirm.type = 'button'; confirm.append(icon('bag'));
     confirm.addEventListener('click', () => { confirm.disabled = true; if (!saveGift()) confirm.disabled = false; });
@@ -342,5 +341,4 @@ newGift.addEventListener('click', () => {
 seeBag.addEventListener('click', () => ui.openBag());
 backButton.addEventListener('click', () => gotoStep(step - 1));
 nextButton.addEventListener('click', () => step === 2 ? reviewGift() : gotoStep(step + 1));
-saveButton.addEventListener('click', reviewGift);
 render();

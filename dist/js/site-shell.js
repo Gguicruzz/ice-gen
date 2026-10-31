@@ -39,11 +39,11 @@ const footer = `<footer class="site-footer" id="contato">
     <div class="wrap footer-grid">
       <div class="footer-brand"><a class="brand" href="#inicio"><img src="/assets/ice-gen-logo-transparent.png" alt="" width="31" height="50"><span class="brand-type">ICE GEN<small>PRATA 925</small></span></a><p>Atitude em cada detalhe.</p></div>
       <div><h3>Explore</h3><a href="#joias">Nossas joias</a><a href="#combinacoes">Combinações</a><a href="#presentes">Montagem de presentes</a><a href="/favoritos.html">Meus favoritos</a><a href="/sacola.html">Minha sacola</a></div>
-      <div><h3>ICE GEN</h3><a href="#essencia">Nossa essência</a><button type="button" data-dialog="care">Cuidados com a prata</button><button type="button" data-dialog="contact">Fale com a ICE GEN</button></div>
-      <div class="footer-contact"><h3>Vamos conversar</h3><p>Uma dúvida sobre as peças?<br>Confira as informações de atendimento.</p><button class="footer-contact-link" type="button" data-dialog="contact">Informações de contato <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+      <div><h3>ICE GEN</h3><a href="#essencia">Nossa essência</a><button type="button" data-dialog="care">Cuidados com a prata</button></div>
+      <div class="footer-contact"><h3>Vamos conversar</h3><p>Dúvidas sobre uma peça ou combinação?</p><button class="footer-contact-link" type="button" data-dialog="contact">Informações de contato <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
     </div>
     <div class="footer-wordmark wrap" aria-hidden="true"><span>ICE GEN</span><small>Frio no tom.<br>Forte no gesto.</small></div>
-    <div class="footer-bottom wrap"><p>© <span id="year">2026</span> ICE GEN</p><p class="preview-label">Prévia da Home · Imagens e catálogo demonstrativos</p><p>Frio no tom. Forte no gesto.</p></div>
+    <div class="footer-bottom wrap"><p>© <span id="year">2026</span> ICE GEN</p></div>
   </footer>`;
 const dialog = `<dialog class="site-dialog" id="site-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span class="eyebrow">ICE GEN</span><button class="icon-button dialog-close" type="button" aria-label="Fechar janela"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div><div id="dialog-content"></div></dialog>`;
 
@@ -88,5 +88,4 @@ export function mountSiteShell({ page = 'home' } = {}) {
   favoriteButton.append(counter);
   if (page === 'favorites') favoriteButton.setAttribute('aria-current', 'page');
   if (page === 'bag') headerHost.querySelector('.bag-button').setAttribute('aria-current', 'page');
-  footerHost.querySelector('.preview-label').textContent = 'Prévia da coleção · Imagens e preços demonstrativos';
 }

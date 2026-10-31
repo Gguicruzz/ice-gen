@@ -32,6 +32,8 @@ As mudanças dos comentários na interface estão em [docs/COMENTARIOS-INTERFACE
 
 A revisão editorial de todas as páginas, inspirada na PTZ Joias, está em [docs/DIRECAO-VISUAL-PTZ.md](docs/DIRECAO-VISUAL-PTZ.md), com decisões visuais, animações, preservação dos fluxos e validação responsiva. A nova imagem ilustrativa e seu prompt estão em [docs/IMAGEM-EDITORIAL-V2.md](docs/IMAGEM-EDITORIAL-V2.md).
 
+Os sete cortes de conteúdo e ações repetidas aprovados pelo proprietário estão em [docs/LIMPEZA-REPETICOES.md](docs/LIMPEZA-REPETICOES.md).
+
 ## Estrutura
 
 | Caminho | Finalidade |

@@ -37,6 +37,7 @@
 .home-page .editorial-card::after { background: linear-gradient(0deg, #071015f2 0%, #07101575 31%, transparent 63%); }
 .home-page .editorial-photo { background-size: auto 112%; }
 .home-page .editorial-card:first-child .editorial-photo { background-size: 300% auto; }
+.home-page .editorial-photo.photo-bracelet { background-image: url('/assets/campaign-bracelet.webp'); background-position: center; background-size: cover; }
 .home-page .editorial-caption { bottom: 26px; left: 23px; right: 23px; gap: 15px; }
 .home-page .editorial-caption small { font-size: 12px; letter-spacing: 1.4px; color: #c3d3db; line-height: 1.6; }
 .home-page .editorial-caption strong { font-size: 37px; letter-spacing: -.8px; }
@@ -101,12 +102,6 @@
 .home-page .essence-caption-line { width: 48px; height: 1px; display: block; background: #adc9db; margin-bottom: 20px; }
 .home-page .essence-caption p { font: 400 34px/1.15 var(--serif); letter-spacing: -.6px; }
 .home-page .essence-caption > small { display: block; font-size: 12px; color: #b4cad7; margin-top: 14px; }
-.home-contact { background: #0b1115; color: #f3f1ec; padding-block: 88px; border-bottom: 1px solid #32444f; }
-.home-contact-inner { display: grid; grid-template-columns: 1.2fr 1fr; align-items: end; gap: 100px; }
-.home-contact h2 { font-size: 47px; letter-spacing: -1.3px; line-height: 1.15; margin-top: 20px; }
-.home-contact h2 em { font-weight: 400; color: #bed3df; }
-.home-contact-action > p { color: #b8cad3; font-size: 16px; max-width: 380px; margin-bottom: 26px; line-height: 1.9; }
-.home-contact .button { font-size: 14px; min-height: 54px; }
 
 @media (max-width: 1150px) {
   .home-page .hero h1 { max-width: 62%; }
@@ -122,7 +117,6 @@
   .home-page .gift-section { padding: 38px; gap: 38px; }
   .home-page .gift-steps { flex-wrap: wrap; justify-content: flex-start; gap: 18px; }
   .home-page .essence-inner { gap: 50px; }
-  .home-contact-inner { gap: 60px; }
 }
 @media (max-width: 900px) {
   .home-page .hero { min-height: 740px; }
@@ -166,9 +160,6 @@
   .home-page .essence h2 > em { font-size: 31px; }
   .home-page .essence-visual { aspect-ratio: .65; }
   .home-page .essence-description { font-size: 16px; }
-  .home-contact { padding-block: 70px; }
-  .home-contact-inner { gap: 45px; }
-  .home-contact h2 { font-size: 38px; }
 }
 @media (max-width: 600px) {
   .home-page .hero { min-height: 730px; }
@@ -240,11 +231,6 @@
   .home-page .essence-caption { left: 24px; right: 24px; bottom: 25px; }
   .home-page .essence-caption p { font-size: 32px; }
   .home-page .essence-caption > small { font-size: 12px; }
-  .home-contact { padding-block: 58px; }
-  .home-contact-inner { grid-template-columns: 1fr; gap: 31px; }
-  .home-contact h2 { font-size: 39px; letter-spacing: -1px; }
-  .home-contact-action > p { font-size: 16px; margin-bottom: 23px; }
-  .home-contact .button { width: 100%; justify-content: space-between; }
 }
 
 @media (prefers-reduced-motion: reduce) {

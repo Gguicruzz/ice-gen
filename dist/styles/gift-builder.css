@@ -81,7 +81,6 @@ body.gifts-page .gift-preview-slot.is-filled .gift-preview-media { border-color:
 body.gifts-page .gift-preview-slot.is-current .gift-preview-media { border-color: #c6e1f2; box-shadow: 0 0 0 1px #98bbd0; }
 body.gifts-page .gift-preview-slot > small { display: block; color: #aec8d8; font-size: 12px; margin-top: 10px; }
 body.gifts-page .gift-preview-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; color: #e7f0f5; font-size: 12px; line-height: 1.55; margin-top: 3px; min-height: 3.1em; }
-body.gifts-page .gift-preview-caption { color: #b6cbd8; font-size: 12px; line-height: 1.6; margin-top: 14px; }
 body.gifts-page .gift-preview-progress { display: block; appearance: none; width: 100%; height: 3px; overflow: hidden; border: 0; background: #3a5263; color: #bddbeb; margin: 13px 0 9px; }
 body.gifts-page .gift-preview-progress::-webkit-progress-bar { background: #3a5263; }
 body.gifts-page .gift-preview-progress::-webkit-progress-value { background: #bddbeb; }

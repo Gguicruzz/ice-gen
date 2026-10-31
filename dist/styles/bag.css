@@ -78,7 +78,7 @@
 .bag-suggestion > p { font-size: 16px; margin-top: 8px; }
 .bag-suggestion > p > small { color: var(--muted); font-size: 12px; }
 .bag-suggestion .button { margin-top: 17px; width: 100%; font-size: 14px; gap: 12px; }
-.bag-data-note { font-size: 13px; color: var(--muted); line-height: 1.9; margin-top: 45px; max-width: 740px; }
+.bag-data-note { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 18px; max-width: 740px; }
 
 @media (max-width: 1100px) {
   .bag-workspace { grid-template-columns: minmax(0,1fr) 300px; gap: 30px; }
@@ -126,7 +126,7 @@
   .bag-suggestions-heading h2 { font-size: 31px; }
   .bag-suggestions-grid { grid-template-columns: minmax(0,1fr); gap: 30px; }
   .bag-suggestion-image img { aspect-ratio: 1.5; }
-  .bag-data-note { margin-top: 30px; }
+  .bag-data-note { margin-top: 18px; }
 }
 
 .bag-empty-symbol { background: #101a1f; border-color: #547a93; color: var(--paper); gap: 10px; }

@@ -7,6 +7,18 @@ const ui = createSiteUI({ page: 'product' });
 const host = document.querySelector('#product-content');
 const id = new URLSearchParams(location.search).get('id');
 const product = products.find(item => item.id === id);
+const productIntros = {
+  'corrente-veneziana': 'Malha discreta para usar sozinha ou em camadas.',
+  'corrente-cartier': 'Elos aparentes para compor com correntes mais curtas.',
+  'pingente-luz': 'Um ponto de brilho para acompanhar correntes finas.',
+  'pingente-coracao': 'Formato de coração para composições com correntes finas.',
+  'brinco-argola': 'Argola para o dia a dia e combinações com outras peças.',
+  'brinco-gota': 'Formato alongado para usar com argolas pequenas.',
+  'pulseira-riviera': 'Brilho contínuo para compor com pulseiras ou relógio.',
+  'pulseira-elo': 'Elos visíveis para combinar com pulseiras mais finas.',
+  'anel-liso': 'Aro liso para combinar com anéis de outras larguras.',
+  'alianca-classica': 'Linhas simples para usar sozinha ou com outro anel.'
+};
 
 function link(text, href, className) {
   const element = node('a', text, className);
@@ -92,7 +104,7 @@ if (!product) {
     const enlarged = image.cloneNode();
     enlarged.className = 'product-zoom-image';
     ui.content.append(enlarged);
-    ui.note('Ilustração provisória. A fotografia oficial ainda não está disponível.');
+    ui.note('Ilustração provisória.');
   }));
   const caption = node('div', '', 'product-gallery-caption');
   caption.append(node('span', 'Ilustração provisória do catálogo'), node('span', '01 / 01'));
@@ -100,7 +112,8 @@ if (!product) {
   const info = node('div', '', 'product-info');
   const price = node('p', money.format(product.price), 'product-detail-price');
   price.append(node('small', 'Valor demonstrativo'));
-  info.append(node('p', 'ICE GEN · PRATA 925', 'eyebrow'), node('h1', product.name), price, node('p', product.description, 'product-intro'));
+  const intro = productIntros[product.id] || `${product.categoryLabel} em ${product.material}.`;
+  info.append(node('p', 'ICE GEN · PRATA 925', 'eyebrow'), node('h1', product.name), price, node('p', intro, 'product-intro'));
   const specs = node('dl', '', 'product-specs');
   for (const [label, value] of [['Material', product.material], ['Medida', product.measurement || 'A confirmar']]) {
     const pair = node('div'); pair.append(node('dt', label), node('dd', value)); specs.append(pair);
@@ -188,7 +201,7 @@ if (!product) {
     setTimeout(() => { adding = false; add.disabled = false; }, 700);
   });
   form.append(quantityLabel, controls, hint, actions, feedback, success);
-  info.append(form, node('p', 'Prévia demonstrativa. Ilustração, preço, medidas e disponibilidade aguardam confirmação. A sacola serve para simular suas escolhas; não há finalização de pedido.', 'product-demo-note'));
+  info.append(form, node('p', 'Prévia demonstrativa: imagens e valores sujeitos à confirmação. A sacola simula escolhas; não confirma pedidos.', 'product-demo-note'));
   const share = node('button', 'Compartilhar esta peça ↗', 'product-share'); share.type = 'button';
   share.addEventListener('click', () => ui.show(() => {
     ui.title('Compartilhe um detalhe.');

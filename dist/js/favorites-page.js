@@ -7,6 +7,7 @@ const grid = document.querySelector('#favorites-grid');
 const empty = document.querySelector('#favorites-empty');
 const count = document.querySelector('#favorites-result-count');
 const heading = document.querySelector('#favorites-results-title');
+const explore = document.querySelector('#favorites-explore');
 let removalFocus = null;
 
 function link(text, href, className) {
@@ -94,6 +95,7 @@ function render() {
   grid.replaceChildren(...favorites.map(card));
   grid.hidden = !favorites.length;
   empty.hidden = favorites.length > 0;
+  explore.hidden = !favorites.length;
   count.textContent = `${favorites.length} ${favorites.length === 1 ? 'peça salva' : 'peças salvas'}`;
   if (removalFocus) {
     const next = removalFocus === 'heading' ? heading : [...grid.querySelectorAll('[data-focus-key]')].find(button => button.dataset.focusKey === `favorite-remove-${removalFocus}`);
